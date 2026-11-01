@@ -13,6 +13,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "benchmark-results/2026-11-01-optimized.json",
+      "output": {
+        "resource": {
+          "relative_path": "benchmark-results/2026-11-01-optimized.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "benchmark-results/2026-11-01.json",
       "output": {
         "resource": {

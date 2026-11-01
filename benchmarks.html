@@ -109,7 +109,146 @@
 official PixInsight certification or a claim that these are the fastest possible
 readers. Their versions are pinned in <code>tools/interop/requirements.txt</code>. They are
 development dependencies; the Core package does not depend on Python.</p>
-<h2 id="recorded-results-2026-11-01">Recorded results: 2026-11-01</h2>
+<h2 id="optimized-results-2026-11-01">Optimized results: 2026-11-01</h2>
+<p>The current implementation removes per-element boxing and intermediate arrays from
+binary XISF matrices, takes internal ownership of newly decoded property values,
+scans matching floating-point pixels in vectors, and reads uncompressed attached
+XISF data directly into matching typed output arrays. Common exact type conversions
+use range and significant-bit checks instead of allocating rational values per pixel.
+The arbitrary scaling path, checksums, metadata and public ownership guarantees remain.</p>
+<p>The <a href="benchmark-results/2026-11-01-optimized.json">optimized aggregate evidence</a> uses
+exactly the same local and synthetic input bytes as the baseline below, with two
+warmups and seven measured iterations. Raw reports remain local alongside the baseline.
+The only pre-existing working-tree modification during measurement was documentation
+whitespace; the production implementation is committed and recorded in the evidence.
+Results are from an interactive machine and describe warm load latency.</p>
+<!-- optimized-results:start -->
+<h3 id="local-corpus-files-at-least-1-mib">Local corpus: files at least 1 MiB</h3>
+<table>
+<thead>
+<tr>
+<th>Format / workload</th>
+<th style="text-align: right;">Matched files</th>
+<th style="text-align: right;">AstroView native (ms)</th>
+<th style="text-align: right;">AstroView indexed (ms)</th>
+<th style="text-align: right;">Reference (ms)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FITS: Header discovery</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">n/a</td>
+<td style="text-align: right;">2.84</td>
+<td style="text-align: right;">17.29</td>
+</tr>
+<tr>
+<td>FITS: Decoded storage</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">899.55</td>
+<td style="text-align: right;">837.53</td>
+<td style="text-align: right;">1018.93</td>
+</tr>
+<tr>
+<td>FITS: Typed arrays + masks</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">1716.11</td>
+<td style="text-align: right;">1819.36</td>
+<td style="text-align: right;">2387.61</td>
+</tr>
+<tr>
+<td>XISF: Header discovery</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">n/a</td>
+<td style="text-align: right;">69.19</td>
+<td style="text-align: right;">152.24</td>
+</tr>
+<tr>
+<td>XISF: Decoded storage</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">831.53</td>
+<td style="text-align: right;">936.29</td>
+<td style="text-align: right;">983.15</td>
+</tr>
+<tr>
+<td>XISF: Typed arrays + masks</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">991.32</td>
+<td style="text-align: right;">962.09</td>
+<td style="text-align: right;">1631.93</td>
+</tr>
+</tbody>
+</table>
+<h3 id="synthetic-xisf-decoded-storage-loading">Synthetic XISF: decoded storage loading</h3>
+<table>
+<thead>
+<tr>
+<th>Codec</th>
+<th style="text-align: right;">Matched files</th>
+<th style="text-align: right;">AstroView native (ms)</th>
+<th style="text-align: right;">AstroView indexed (ms)</th>
+<th style="text-align: right;">Python xisf (ms)</th>
+<th style="text-align: right;">Native speedup</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>uncompressed</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">13.56</td>
+<td style="text-align: right;">13.93</td>
+<td style="text-align: right;">20.39</td>
+<td style="text-align: right;">1.50x</td>
+</tr>
+<tr>
+<td>zlib+sh</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">176.40</td>
+<td style="text-align: right;">169.35</td>
+<td style="text-align: right;">286.58</td>
+<td style="text-align: right;">1.62x</td>
+</tr>
+<tr>
+<td>lz4+sh</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">80.20</td>
+<td style="text-align: right;">81.86</td>
+<td style="text-align: right;">175.72</td>
+<td style="text-align: right;">2.19x</td>
+</tr>
+<tr>
+<td>lz4hc+sh</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">91.24</td>
+<td style="text-align: right;">93.94</td>
+<td style="text-align: right;">174.16</td>
+<td style="text-align: right;">1.91x</td>
+</tr>
+<tr>
+<td>zstd+sh</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">100.07</td>
+<td style="text-align: right;">102.89</td>
+<td style="text-align: right;">181.48</td>
+<td style="text-align: right;">1.81x</td>
+</tr>
+</tbody>
+</table>
+<!-- optimized-results:end -->
+<p>For the large-file groups, native typed-array loading fell from 5456.91 to
+1716.11 ms for FITS (<strong>3.18x faster</strong>) and from 3670.97 to 991.32 ms for XISF
+(<strong>3.70x faster</strong>). Indexed typed loading improved by 3.00x and 4.01x respectively.
+The current native path is 1.39x faster than Astropy and 1.65x faster than Python
+xisf on those matched groups. These ratios are sums of per-file medians, not
+whole-run elapsed time or a guarantee for every file.</p>
+<p>All 672 local and 96 synthetic before/after cases retain identical input hashes,
+result fingerprints and adapter outcomes. The 84 local files have 648 verified
+rows plus eight reference errors and 16 unpaired Core rows; every Core load succeeds.
+All 96 synthetic rows are verified. The four reference limitations remain visible.
+FITS storage-only reading was unchanged by this implementation; variation in that
+stage should not be attributed to the typed-decoder optimization.</p>
+<h2 id="baseline-results-2026-11-01">Baseline results: 2026-11-01</h2>
+<p>These historical results predate the loading optimizations and are retained unchanged.</p>
 <p>Measured on Windows with an AMD Ryzen 7 8840HS, 14.8 GB usable RAM, .NET 10.0.14
 (workstation GC), Python 3.13.17, Astropy 8.0.2, Python xisf 0.9.7 and NumPy 2.5.4.
 This was an interactive development machine, with warmed caches and no CPU affinity.
@@ -127,7 +266,7 @@ They are not the elapsed duration of the entire benchmark. The reference is
 Astropy for FITS and Python xisf for XISF. Synthetic XISF codec rows each combine
 the 32 MiB UInt16 and 48 MiB Float32 cases; <code>+sh</code> means byte shuffle.</p>
 <!-- benchmark-results:start -->
-<h3 id="local-corpus-files-at-least-1-mib">Local corpus: files at least 1 MiB</h3>
+<h3 id="local-corpus-files-at-least-1-mib-1">Local corpus: files at least 1 MiB</h3>
 <table>
 <thead>
 <tr>
@@ -183,7 +322,7 @@ the 32 MiB UInt16 and 48 MiB Float32 cases; <code>+sh</code> means byte shuffle.
 </tr>
 </tbody>
 </table>
-<h3 id="synthetic-xisf-decoded-storage-loading">Synthetic XISF: decoded storage loading</h3>
+<h3 id="synthetic-xisf-decoded-storage-loading-1">Synthetic XISF: decoded storage loading</h3>
 <table>
 <thead>
 <tr>
@@ -246,11 +385,10 @@ long for FITS and 2.73x as long for XISF in this corpus; this extra processing m
 not be confused with the storage-only result. The synthetic compressed XISF
 storage cases favored AstroView by 1.55x to 1.84x. Input size, type and workload
 change the result, so there is no universal fastest-reader claim.</p>
-<p>The gaps identify useful profiling targets: large uncompressed XISF buffers,
-and typed Float32 copying, byte-order conversion and missing-mask creation.
-These measurements do not establish the root cause. The library was not changed
-to improve or suppress a benchmark result. Both AstroView's native and indexed
-APIs remain visible in the evidence, including slower cases.</p>
+<p>These baseline gaps prompted profiling of numeric metadata, typed Float32 decoding
+and temporary buffers. The optimized results above retain the same workload and
+verification requirements. Both native and indexed APIs remain visible, including
+slower cases. No checksum, mask, supported type or precision policy was disabled.</p>
 <h2 id="what-is-timed">What is timed</h2>
 <p><strong>Headers</strong> measures fresh opening, discovery of every primary image and closing
 input handles. AstroView uses its metadata-only index. Astropy disables lazy HDU

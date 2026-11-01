@@ -161,8 +161,9 @@ physical value exactly; binary64 0.1, for example, is not decimal 0.1.</p>
 zero. It still rejects overflow, including a finite binary64 value overflowing to
 binary32 infinity. It never clamps or wraps integers. General scaled floating
 conversion uses a binary64 approximation; use Exact when scientific precision
-must be guaranteed. Unscaled matching types use direct byte copies rather than
-per-sample rational arithmetic.</p>
+must be guaranteed. Unscaled matching types use bulk byte-order conversion and vectorized missing-value
+scans. Common unscaled conversions use range and significant-bit checks, avoiding
+per-sample rational allocations without relaxing Exact semantics.</p>
 <p><code>PixelBuffer&lt;T&gt;.Missing</code> marks integer BLANK and NaN values. Infinity is valid
 unless scaling makes it NaN. Physical BLANK/real NaN becomes NaN in floating-point
 outputs and zero in integer/decimal outputs; the mask remains authoritative.
@@ -225,8 +226,19 @@ HDUs remain usable. Index attachment reads are serialized; do not dispose the
 index concurrently with outstanding lazy reads. Full detachment and bounded
 row/region/plane I/O remain later roadmap steps. Current typed reads allocate a
 complete selected-image array plus a boolean mask, and compressed XISF requires
-whole-block decoding.</p>
-<p>Evidence: <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/TypedPixelTests.cs">typed precision regressions</a>,
+whole-block decoding. Uncompressed attached XISF samples are read directly into the
+final matching typed array when the requested type and channel layout match storage;
+this avoids a full-sized temporary byte buffer. Checksums are verified before samples
+are returned and before byte-order conversion. Other representations retain the full
+decoder and its resource policies.</p>
+<p>Binary XISF numeric properties are decoded directly into their final vectors or
+rectangular matrices, including 128-bit and complex values. Public property construction
+and <code>Value</code> access still copy arrays to preserve caller ownership; internal parsing
+takes ownership of freshly decoded arrays. Metadata decoding remains eager for native
+models, so this optimization does not defer validation or discard properties.</p>
+<p>Evidence: <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/PixelFastPathTests.cs">fast-path, ownership and allocation regressions</a>,
+<a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/XisfBulkPropertyTests.cs">bulk property regressions</a>,
+<a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/TypedPixelTests.cs">typed precision regressions</a>,
 <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/AstroFileTests.cs">index and selective-read regressions</a>.
 The unsigned offset convention follows the
 <a href="https://heasarc.gsfc.nasa.gov/docs/software/fitsio/c/c_user/node23.html">NASA/HEASARC CFITSIO documentation</a>.</p>

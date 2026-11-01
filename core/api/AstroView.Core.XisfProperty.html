@@ -140,7 +140,7 @@ Class XisfProperty  <a class="header-action link-secondary" title="View source" 
   <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfDocument.cs"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>A parsed typed property, display hints, and its original XML element.</p>
+  <div class="markdown level1 summary"><p>Creates a property with detached copies of array values and XML.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -452,7 +452,8 @@ Class XisfProperty  <a class="header-action link-secondary" title="View source" 
   <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfDocument.cs"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Deconstructs a property, returning detached array and XML values.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
@@ -462,17 +463,23 @@ Class XisfProperty  <a class="header-action link-secondary" title="View source" 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
     <dt><code>Id</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd></dd>
+    <dd><p>The identifier.</p>
+</dd>
     <dt><code>Type</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd></dd>
+    <dd><p>The declared type.</p>
+</dd>
     <dt><code>Value</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
-    <dd></dd>
+    <dd><p>The decoded value.</p>
+</dd>
     <dt><code>Format</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd></dd>
+    <dd><p>The optional display format.</p>
+</dd>
     <dt><code>Xml</code> <span class="xref">XElement</span></dt>
-    <dd></dd>
+    <dd><p>The original representation.</p>
+</dd>
     <dt><code>Comment</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd></dd>
+    <dd><p>The optional comment.</p>
+</dd>
   </dl>
 
 

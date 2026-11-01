@@ -77,7 +77,18 @@
 <p><code>AstroFile</code> supports bounded <a href="image-access.html">header-only indexing and selective content access</a>.
 A scan does not allocate unrelated image/table payloads. Shared typed reads
 allocate the selected image and its missing mask; exact arbitrary scaling has
-additional rational-arithmetic costs.</p>
+additional rational-arithmetic costs. Common unscaled exact conversions use range
+and significant-bit checks without per-sample rational allocations. Matching real
+floating types use vectorized NaN scans, with a scalar fallback on other hardware.</p>
+<p>Uncompressed attached XISF pixels can be read directly into a matching typed output
+array, avoiding a separate complete raw byte buffer. Native <code>GetSamples&lt;T&gt;</code> benefits
+from this path too. Different requested types/layouts, inline/embedded/external blocks
+and compressed data keep their complete decoding paths. Digests are checked before
+returning samples. FITS still retains its raw HDU payload alongside typed output.</p>
+<p>Binary XISF numeric vectors and matrices are decoded into their final array shapes.
+The parser takes ownership of these new arrays; public property constructors and
+<code>Value</code> access retain defensive copying. Numeric metadata remains fully decoded and
+validated when a native document/image is constructed, including large matrices.</p>
 <p>Current readers and operations are not a general streaming or memory-mapped
 processing API. FITS loads retain materialized HDU payloads. XISF path loads can
 defer blocks, but a pixel read/decompression materializes a complete block.

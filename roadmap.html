@@ -172,6 +172,11 @@ excludes per-sample boxing/rational allocation. Full selected images still
 materialize; region/streaming work remains Phase 4. Gzip is recognized with an
 explicit unsupported-opening diagnostic pending AV-008. Existing APIs remain;
 precision-sensitive callers can migrate to <code>ReadPixels&lt;T&gt;</code>.</p>
+<p>Loading-performance follow-up: <a href="benchmarks.html">before/after benchmark evidence</a>
+records bulk numeric metadata decoding, direct attached XISF reads into typed arrays,
+vectorized missing-value scans and allocation-free common exact conversions. Precision,
+metadata preservation, digest verification and public buffer ownership remain covered
+by the <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/PixelFastPathTests.cs">fast-path regressions</a>.</p>
 <h2 id="phase-3--support-common-compressed-fits-images">Phase 3 — Support common compressed FITS images</h2>
 <ul>
 <li><p>[ ] <strong>AV-008 — Integrate gzip-wrapped FITS (<code>.fits.gz</code>).</strong> Add automatic reading
