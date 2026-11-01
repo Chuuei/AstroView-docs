@@ -100,7 +100,30 @@ on local <code>file:</code> URLs can interfere with search and navigation reques
 Download/extract it and serve that directory, for example with Python:</p>
 <pre><code class="lang-sh">python -m http.server 8080 --bind 127.0.0.1 --directory path/to/extracted/site
 </code></pre>
-<p>This workflow builds artifacts; it does not enable public hosting or GitHub Pages.</p>
+<h2 id="github-pages-publication">GitHub Pages publication</h2>
+<p>The documentation is hosted at <a href="https://chuuei.github.io/AstroView-docs/">https://chuuei.github.io/AstroView-docs/</a>.
+The source repository is private, and the account's current plan does not allow
+Pages on that repository. The public <code>Chuuei/AstroView-docs</code> repository contains
+only the generated site and its Pages deployment workflow.</p>
+<p>After a successful main-branch push CI run, refresh the hosted documentation:</p>
+<pre><code class="lang-powershell">./eng/Publish-Documentation.ps1 -RunId 123456789
+</code></pre>
+<p>Replace the number with the successful <strong>CI</strong> run ID. The command downloads its
+validated <code>documentation-site</code> artifact, checks its contents/links, and pushes
+only the generated site to the documentation repository. That repository's
+workflow deploys the update through GitHub Pages. Git and Python 3.10+ are needed;
+Git Credential Manager supplies the maintainer's existing GitHub credentials.
+No account credential is stored in the public repository or an Actions secret.</p>
+<p>The publisher rejects failed/non-main/non-push CI runs, expired artifacts,
+application/package binaries and scientific image files. <code>build-info.json</code>
+identifies the source commit and CI run. Local Git staging uses a fresh checkout
+under <code>artifacts/pages-publication/</code>; unrelated source changes are not published.</p>
+<p>Verify the deployed pages and exact source commit:</p>
+<pre><code class="lang-sh">python eng/documentation.py published --url https://chuuei.github.io/AstroView-docs/ --commit SOURCE_COMMIT_SHA
+</code></pre>
+<p>The workflow template and documentation repository README are maintained in
+<code>eng/pages/</code>. Update them through the publisher rather than adding a private
+source-repository credential to a public deployment workflow.</p>
 <h2 id="structure">Structure</h2>
 <table>
 <thead>
