@@ -134,26 +134,26 @@ distortion and independent coordinate reference values. The downloaded legacy
 <p>See <a href="interoperability.html">interoperability</a> for provenance, exact coverage and required follow-up.</p>
 <h2 id="phase-2--build-a-consistent-scientific-image-access-foundation">Phase 2 — Build a consistent scientific image-access foundation</h2>
 <ul>
-<li><p>[ ] <strong>AV-004 — Design shared typed image and pixel-access contracts.</strong> Support
+<li><p>[x] <strong>AV-004 — Design shared typed image and pixel-access contracts.</strong> Support
 explicit axes, channels, layout, sample types, scaling and missing-value masks.
 Keep native FITS/XISF documents accessible so a common view does not discard
 metadata. Preserve existing APIs or provide a documented migration path. <strong>Done when:</strong> the same operation can consume
 either format without first
 converting the entire file or forcing all samples through <code>double</code>.</p>
 </li>
-<li><p>[ ] <strong>AV-005 — Add exact typed FITS pixel reads.</strong> Expose stored and physical
+<li><p>[x] <strong>AV-005 — Add exact typed FITS pixel reads.</strong> Expose stored and physical
 values explicitly, including unsigned offset conventions and integer boundaries.
 Define behaviour when arbitrary scaling cannot be represented exactly. <strong>Done when:</strong> UInt64 values above 2^53, signed
 integers, BLANK, floating-point
 special values and overflow policies have independent regression tests. <strong>Depends on:</strong> AV-004.</p>
 </li>
-<li><p>[ ] <strong>AV-006 — Add metadata-only opening and source indexing.</strong> Inspect headers,
+<li><p>[x] <strong>AV-006 — Add metadata-only opening and source indexing.</strong> Inspect headers,
 HDUs/images, geometry and block locations without materializing every payload.
 Define source lifetime, ownership and behaviour if source files change. <strong>Done when:</strong> a large-file header scan uses
 bounded memory and selected content
 can be opened without loading unrelated HDUs/images.</p>
 </li>
-<li><p>[ ] <strong>AV-007 — Add format detection and a convenient opening API.</strong> Detect content
+<li><p>[x] <strong>AV-007 — Add format detection and a convenient opening API.</strong> Detect content
 rather than relying solely on filename extensions. Offer native-document access
 alongside shared image access, with clear unsupported/corrupt-input diagnostics. <strong>Done when:</strong> FITS,
 monolithic/distributed XISF headers and supported transport
@@ -161,6 +161,17 @@ wrappers are identified consistently, including misleading filenames. <strong>De
 as compression is implemented.</p>
 </li>
 </ul>
+<p>Phase 2 evidence (0.3.0 development): <a href="core/image-access.html">shared access guide</a>,
+<a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/TypedPixelTests.cs">typed precision tests</a>,
+<a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/AstroFileTests.cs">index/selective-read tests</a>
+and <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Desktop.Tests/ScientificAccessTests.cs">desktop workflow test</a>.
+Local metadata indexing passed for all 84 example files / 90 images (6,138,687,831
+source bytes). The 8 GiB virtual FITS regression reads only header blocks and a
+selected small extension. Typed UInt64 reads have an allocation regression that
+excludes per-sample boxing/rational allocation. Full selected images still
+materialize; region/streaming work remains Phase 4. Gzip is recognized with an
+explicit unsupported-opening diagnostic pending AV-008. Existing APIs remain;
+precision-sensitive callers can migrate to <code>ReadPixels&lt;T&gt;</code>.</p>
 <h2 id="phase-3--support-common-compressed-fits-images">Phase 3 — Support common compressed FITS images</h2>
 <ul>
 <li><p>[ ] <strong>AV-008 — Integrate gzip-wrapped FITS (<code>.fits.gz</code>).</strong> Add automatic reading

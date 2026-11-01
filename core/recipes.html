@@ -111,7 +111,7 @@ success message only after every recipe completes.</p>
 </tr>
 <tr>
 <td><code>ExactIntegers</code></td>
-<td>UInt64 boundaries through supported FITS/XISF conversion</td>
+<td>UInt64 boundaries through direct exact FITS pixel reads</td>
 <td><a href="fits.html#exact-64-bit-values">FITS</a></td>
 </tr>
 <tr>
@@ -169,6 +169,10 @@ they can also serve as a simple integration smoke test.</p>
 <p>These examples verify AstroView's own operations. For independently produced
 files and reference-reader comparisons, use the separate
 <a href="../interoperability.html">interoperability suite</a>.</p>
+<p><code>IndexedAccess</code> demonstrates identical typed operations on content-detected FITS
+and XISF files. <code>TypedMissingValues</code> demonstrates exact scaling, stored sentinels,
+separate masks and explicit integer truncation. Both are compiled and run with
+the other recipes; see <a href="image-access.html">scientific access</a>.</p>
 
 </article>
 

@@ -74,6 +74,10 @@
 <h1 id="resource-policy-and-performance">Resource policy and performance</h1>
 
 <h2 id="understand-the-memory-model-first">Understand the memory model first</h2>
+<p><code>AstroFile</code> supports bounded <a href="image-access.html">header-only indexing and selective content access</a>.
+A scan does not allocate unrelated image/table payloads. Shared typed reads
+allocate the selected image and its missing mask; exact arbitrary scaling has
+additional rational-arithmetic costs.</p>
 <p>Current readers and operations are not a general streaming or memory-mapped
 processing API. FITS loads retain materialized HDU payloads. XISF path loads can
 defer blocks, but a pixel read/decompression materializes a complete block.
@@ -240,7 +244,7 @@ A synthetic compression ratio or one codec benchmark does not predict all
 astronomical workloads.</li>
 </ul>
 <p>See <a href="../testing.html">testing</a> for local corpus tests and the repository's performance
-tool. Broader streaming, shared typed access and compressed FITS are recorded in
+tool. Broader streaming, region I/O and compressed FITS are recorded in
 the <a href="../roadmap.html">roadmap</a>.</p>
 
 </article>

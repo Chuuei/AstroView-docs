@@ -81,6 +81,21 @@
 Classes
 </h3>
     <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.AstroFile.html">AstroFile</a></dt>
+      <dd><p>A disposable, header-only FITS/XISF index with selected native and typed access.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.AstroFileOptions.html">AstroFileOptions</a></dt>
+      <dd><p>Resource and security policies for indexed opening.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.AstroImageInfo.html">AstroImageInfo</a></dt>
+      <dd><p>A discoverable native image; no sample buffers are decoded to construct an entry.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="AstroView.Core.AstronomyImageMetadata.html">AstronomyImageMetadata</a></dt>
       <dd><p>Common observation and instrument metadata extracted from XISF properties or FITS keywords.</p>
 </dd>
@@ -133,6 +148,11 @@ Classes
     <dl class="jumplist">
       <dt><a class="xref" href="AstroView.Core.FitsHdu.html">FitsHdu</a></dt>
       <dd><p>A FITS header/data unit with raw payload, decoded content, and checksum results.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.FitsHduInfo.html">FitsHduInfo</a></dt>
+      <dd><p>A header-only FITS HDU entry, with byte locations relative to the file origin.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -223,6 +243,26 @@ Classes
     <dl class="jumplist">
       <dt><a class="xref" href="AstroView.Core.FitsWriterOptions.html">FitsWriterOptions</a></dt>
       <dd><p>Controls optional FITS checksum generation.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.ImageDescriptor.html">ImageDescriptor</a></dt>
+      <dd><p>Storage geometry and numeric interpretation, independent of the native document.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.ImagePixels.html">ImagePixels</a></dt>
+      <dd><p>Creates shared views without converting a native document.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.PixelBuffer-1.html">PixelBuffer&lt;T&gt;</a></dt>
+      <dd><p>An owned typed sample array and a parallel undefined-value mask.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.PixelReadOptions.html">PixelReadOptions</a></dt>
+      <dd><p>Options for a complete typed image read. The default is exact physical values in planar order.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -773,9 +813,22 @@ Structs
       <dd><p>An IEEE 754 binary128 value that preserves all 128 bits without converting through double.</p>
 </dd>
     </dl>
+    <h3 id="interfaces">
+Interfaces
+</h3>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.IImageSource.html">IImageSource</a></dt>
+      <dd><p>A scientific image view that retains access to its native image and metadata.</p>
+</dd>
+    </dl>
     <h3 id="enums">
 Enums
 </h3>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.AstroFileFormat.html">AstroFileFormat</a></dt>
+      <dd><p>A content signature, independent of the filename extension.</p>
+</dd>
+    </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="AstroView.Core.ConversionEffect.html">ConversionEffect</a></dt>
       <dd><p>The effect of a conversion on a source feature.</p>
@@ -807,8 +860,28 @@ Enums
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.ImagePixelLayout.html">ImagePixelLayout</a></dt>
+      <dd><p>Whether channel samples occupy planes or alternate within pixels.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.ImageSampleType.html">ImageSampleType</a></dt>
+      <dd><p>The scientific type of one stored sample, before FITS scaling.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="AstroView.Core.MetadataDefinitionSource.html">MetadataDefinitionSource</a></dt>
       <dd><p>The authority or evidence behind a metadata definition.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.PixelConversionMode.html">PixelConversionMode</a></dt>
+      <dd><p>Controls representational loss; overflow always throws.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.PixelValueKind.html">PixelValueKind</a></dt>
+      <dd><p>Which numeric values a typed read returns.</p>
 </dd>
     </dl>
     <dl class="jumplist">

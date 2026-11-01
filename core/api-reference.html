@@ -242,6 +242,14 @@ defines which associated conventions are evaluated, editable or preserved.</p>
 public XML comments with code changes; rebuild the reference rather than editing
 generated HTML/YAML. Follow <a href="../building-documentation.html">documentation maintenance</a>
 when adding types or recipes.</p>
+<h2 id="shared-scientific-access-030-development">Shared scientific access (0.3.0 development)</h2>
+<p><code>AstroFile</code>, <code>AstroFileOptions</code>, <code>AstroFileFormat</code>, <code>FitsHduInfo</code> and <code>AstroImageInfo</code>
+provide content detection, metadata indexing and selected native access.
+<code>IImageSource</code>, <code>ImagePixels</code>, <code>ImageDescriptor</code>, <code>PixelBuffer&lt;T&gt;</code>, <code>PixelReadOptions</code>,
+<code>PixelValueKind</code>, <code>PixelConversionMode</code>, <code>ImageSampleType</code> and <code>ImagePixelLayout</code>
+define exact typed reads and masks. See the <a href="image-access.html">access guide</a> for
+precision, lifetime, security and memory contracts. All public members are included
+in the generated API reference.</p>
 
 </article>
 

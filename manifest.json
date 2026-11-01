@@ -33,6 +33,62 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "core/api/AstroView.Core.AstroFile.yml",
+      "output": {
+        ".html": {
+          "relative_path": "core/api/AstroView.Core.AstroFile.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AstroView.Core.AstroFile",
+      "Summary": "<p sourcefile=\"core/api/AstroView.Core.AstroFile.yml\" sourcestartlinenumber=\"1\">A disposable, header-only FITS/XISF index with selected native and typed access.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "core/api/AstroView.Core.AstroFileFormat.yml",
+      "output": {
+        ".html": {
+          "relative_path": "core/api/AstroView.Core.AstroFileFormat.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AstroView.Core.AstroFileFormat",
+      "Summary": "<p sourcefile=\"core/api/AstroView.Core.AstroFileFormat.yml\" sourcestartlinenumber=\"1\">A content signature, independent of the filename extension.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "core/api/AstroView.Core.AstroFileOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "core/api/AstroView.Core.AstroFileOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AstroView.Core.AstroFileOptions",
+      "Summary": "<p sourcefile=\"core/api/AstroView.Core.AstroFileOptions.yml\" sourcestartlinenumber=\"1\">Resource and security policies for indexed opening.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "core/api/AstroView.Core.AstroImageInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "core/api/AstroView.Core.AstroImageInfo.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AstroView.Core.AstroImageInfo",
+      "Summary": "<p sourcefile=\"core/api/AstroView.Core.AstroImageInfo.yml\" sourcestartlinenumber=\"1\">A discoverable native image; no sample buffers are decoded to construct an entry.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "core/api/AstroView.Core.AstronomyImageMetadata.yml",
       "output": {
         ".html": {
@@ -226,6 +282,20 @@
       "IsMRef": true,
       "Title": "AstroView.Core.FitsHdu",
       "Summary": "<p sourcefile=\"core/api/AstroView.Core.FitsHdu.yml\" sourcestartlinenumber=\"1\">A FITS header/data unit with raw payload, decoded content, and checksum results.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "core/api/AstroView.Core.FitsHduInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "core/api/AstroView.Core.FitsHduInfo.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AstroView.Core.FitsHduInfo",
+      "Summary": "<p sourcefile=\"core/api/AstroView.Core.FitsHduInfo.yml\" sourcestartlinenumber=\"1\">A header-only FITS HDU entry, with byte locations relative to the file origin.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -523,6 +593,76 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "core/api/AstroView.Core.IImageSource.yml",
+      "output": {
+        ".html": {
+          "relative_path": "core/api/AstroView.Core.IImageSource.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AstroView.Core.IImageSource",
+      "Summary": "<p sourcefile=\"core/api/AstroView.Core.IImageSource.yml\" sourcestartlinenumber=\"1\">A scientific image view that retains access to its native image and metadata.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "core/api/AstroView.Core.ImageDescriptor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "core/api/AstroView.Core.ImageDescriptor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AstroView.Core.ImageDescriptor",
+      "Summary": "<p sourcefile=\"core/api/AstroView.Core.ImageDescriptor.yml\" sourcestartlinenumber=\"1\">Storage geometry and numeric interpretation, independent of the native document.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "core/api/AstroView.Core.ImagePixelLayout.yml",
+      "output": {
+        ".html": {
+          "relative_path": "core/api/AstroView.Core.ImagePixelLayout.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AstroView.Core.ImagePixelLayout",
+      "Summary": "<p sourcefile=\"core/api/AstroView.Core.ImagePixelLayout.yml\" sourcestartlinenumber=\"1\">Whether channel samples occupy planes or alternate within pixels.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "core/api/AstroView.Core.ImagePixels.yml",
+      "output": {
+        ".html": {
+          "relative_path": "core/api/AstroView.Core.ImagePixels.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AstroView.Core.ImagePixels",
+      "Summary": "<p sourcefile=\"core/api/AstroView.Core.ImagePixels.yml\" sourcestartlinenumber=\"1\">Creates shared views without converting a native document.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "core/api/AstroView.Core.ImageSampleType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "core/api/AstroView.Core.ImageSampleType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AstroView.Core.ImageSampleType",
+      "Summary": "<p sourcefile=\"core/api/AstroView.Core.ImageSampleType.yml\" sourcestartlinenumber=\"1\">The scientific type of one stored sample, before FITS scaling.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "core/api/AstroView.Core.MetadataDefinitionSource.yml",
       "output": {
         ".html": {
@@ -534,6 +674,62 @@
       "IsMRef": true,
       "Title": "AstroView.Core.MetadataDefinitionSource",
       "Summary": "<p sourcefile=\"core/api/AstroView.Core.MetadataDefinitionSource.yml\" sourcestartlinenumber=\"1\">The authority or evidence behind a metadata definition.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "core/api/AstroView.Core.PixelBuffer-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "core/api/AstroView.Core.PixelBuffer-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AstroView.Core.PixelBuffer<T>",
+      "Summary": "<p sourcefile=\"core/api/AstroView.Core.PixelBuffer-1.yml\" sourcestartlinenumber=\"1\">An owned typed sample array and a parallel undefined-value mask.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "core/api/AstroView.Core.PixelConversionMode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "core/api/AstroView.Core.PixelConversionMode.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AstroView.Core.PixelConversionMode",
+      "Summary": "<p sourcefile=\"core/api/AstroView.Core.PixelConversionMode.yml\" sourcestartlinenumber=\"1\">Controls representational loss; overflow always throws.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "core/api/AstroView.Core.PixelReadOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "core/api/AstroView.Core.PixelReadOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AstroView.Core.PixelReadOptions",
+      "Summary": "<p sourcefile=\"core/api/AstroView.Core.PixelReadOptions.yml\" sourcestartlinenumber=\"1\">Options for a complete typed image read. The default is exact physical values in planar order.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "core/api/AstroView.Core.PixelValueKind.yml",
+      "output": {
+        ".html": {
+          "relative_path": "core/api/AstroView.Core.PixelValueKind.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "AstroView.Core.PixelValueKind",
+      "Summary": "<p sourcefile=\"core/api/AstroView.Core.PixelValueKind.yml\" sourcestartlinenumber=\"1\">Which numeric values a typed read returns.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -2224,6 +2420,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "core/image-access.md",
+      "output": {
+        ".html": {
+          "relative_path": "core/image-access.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "core/imaging-analysis.md",
       "output": {
         ".html": {
@@ -2564,6 +2770,16 @@
       "output": {
         "resource": {
           "relative_path": "images/desktop-integrity.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/desktop-scientific-access.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/desktop-scientific-access.png"
         }
       },
       "version": ""

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Indexed opening and typed scientific pixels | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Indexed opening and typed scientific pixels | AstroView documentation ">
+      
+      
+      <link rel="icon" href="../images/astroview.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Chuuei/AstroView/blob/main/docs/core/image-access.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="indexed-opening-and-typed-scientific-pixels">Indexed opening and typed scientific pixels</h1>
+
+<p>These APIs are available in <strong>0.3.0 development builds</strong>. The published 0.2.0 release
+predates Phase 2. Existing native readers and converters remain available; no
+existing method was removed. New applications can use <code>AstroFile</code> for discovery
+and <code>IImageSource</code> for operations shared by FITS and XISF.</p>
+<h2 id="open-by-content-and-select-an-image">Open by content and select an image</h2>
+<p><code>AstroFile.Open</code> inspects signatures instead of filename extensions. It recognizes
+FITS primary headers, monolithic XISF and distributed XISF XML headers. It reports
+gzip as a recognized transport and throws a specific <code>NotSupportedException</code> when
+opening it; gzip FITS support is AV-008. Unknown content also throws
+<code>NotSupportedException</code>. Recognized malformed headers throw <code>FitsFormatException</code>
+or <code>XisfFormatException</code>.</p>
+<!-- snippet: indexed-access -->
+<pre><code class="lang-csharp">public static void IndexedAccess(string directory)
+{
+    foreach (string name in new[] { &quot;image.fits&quot;, &quot;image.xisf&quot; })
+    {
+        using var file = AstroFile.Open(Path.Combine(directory, name));
+        AstroImageInfo entry = file.Images[0];
+        Console.WriteLine($&quot;{file.Format}: {entry.Descriptor!.SampleCount} samples&quot;);
+        IImageSource source = entry.OpenImage();
+        PixelBuffer&lt;ushort&gt; pixels = source.ReadPixels&lt;ushort&gt;();
+        if (!pixels.Samples.SequenceEqual(new ushort[] { 0, 100, 200, 65535 }))
+            throw new InvalidOperationException(&quot;Shared typed read failed.&quot;);
+        if (source.NativeImage is FitsImage fits)
+            Console.WriteLine($&quot;Native FITS BITPIX: {fits.BitPix}&quot;);
+        else if (source.NativeImage is XisfImage xisf)
+            Console.WriteLine($&quot;Native XISF properties: {xisf.Properties.Count}&quot;);
+    }
+}
+</code></pre>
+<p>The same typed operation consumes either format without converting the document
+or passing integer pixels through <code>double</code>. <code>NativeImage</code> exposes the original
+<code>FitsImage</code>, <code>XisfImage</code> or <code>XisfImageData</code>. For an existing native image, call
+<code>ImagePixels.From(image)</code>. <code>FitsImage.ReadPixels&lt;T&gt;()</code> is a convenience entry point
+to the same implementation.</p>
+<p><code>Images</code> lists discoverable native images. <code>NativeIndex</code> is the FITS HDU index or
+the XISF image index; it can differ from the position in <code>Images</code>. Unsupported
+XISF sample types remain indexed with a null <code>Descriptor</code> and an
+<code>UnsupportedReason</code>; opening them throws <code>XisfUnsupportedFeatureException</code>.
+Image processing utilities still have their existing XISF-oriented APIs. The
+shared view is a scientific access contract, not a replacement rendering engine.</p>
+<h2 id="geometry-layout-and-numeric-meaning">Geometry, layout and numeric meaning</h2>
+<p><code>ImageDescriptor.Dimensions</code> contains width first, then height and further
+scientific axes. FITS axes are preserved with <strong>one channel</strong>; a third axis of
+length three is never silently interpreted as RGB. XISF channels remain separate
+from its spatial/scientific dimensions. <code>SampleCount</code> includes channels and counts
+each complex pair as one sample. Axis lengths and sample counts are 64-bit in the
+index; native materialization is still constrained by supported CLR arrays.</p>
+<p><code>StoredType</code>, <code>IsBigEndian</code> and <code>Layout</code> describe the native samples. Output arrays
+use host byte order. <code>PixelReadOptions.Layout</code> selects planar (the default) or
+interleaved output. For two RGB pixels these orders are <code>R0 R1 G0 G1 B0 B1</code> and
+<code>R0 G0 B0 R1 G1 B1</code>. A missing-value mask follows the same permutation.</p>
+<p><code>Values = Physical</code> applies FITS <code>physical = stored * BSCALE + BZERO</code>. <code>Stored</code>
+returns raw numeric samples after byte-order decoding, retaining BLANK sentinel
+values. XISF values are its native scientific values: bounds, display functions,
+pedestal metadata and color transforms are not applied by this API.</p>
+<h2 id="exactness-rounding-and-undefined-values">Exactness, rounding and undefined values</h2>
+<!-- snippet: typed-missing-values -->
+<pre><code class="lang-csharp">public static void TypedMissingValues()
+{
+    var fits = FitsImage.FromRaw(new byte[] { 0, 1, 2 }, 8, [3, 1],
+        bScale: 0.5, bZero: 1, blank: 2);
+    PixelBuffer&lt;decimal&gt; physical = fits.ReadPixels&lt;decimal&gt;();
+    if (!physical.Samples.SequenceEqual(new[] { 1m, 1.5m, 0m }) || !physical.Missing[2])
+        throw new InvalidOperationException(&quot;Scaled values or missing mask failed.&quot;);
+    PixelBuffer&lt;byte&gt; stored = fits.ReadPixels&lt;byte&gt;(new() { Values = PixelValueKind.Stored });
+    if (stored.Samples[2] != 2 || !stored.Missing[2])
+        throw new InvalidOperationException(&quot;Stored BLANK sentinel was not retained.&quot;);
+    // Physical integer reads must opt into truncation when fractions are present.
+    var rounded = fits.ReadPixels&lt;int&gt;(new() { Conversion = PixelConversionMode.Checked });
+    if (rounded.Samples[1] != 1) throw new InvalidOperationException(&quot;Explicit truncation failed.&quot;);
+}
+</code></pre>
+<p><code>Conversion = Exact</code> is the default. A finite sample that cannot be represented
+exactly in the destination raises <code>ArithmeticException</code>; out-of-range values
+raise <code>OverflowException</code>. Use a matching integer type to retain UInt64 values
+above 2^53. The unsigned FITS offset conventions use integer operations, including
+<code>BZERO = 2^63</code>. Parsed Int64-valued scaling cards are retained exactly for typed
+reads and FITS output, even when their approximate <code>BScale</code>/<code>BZero</code> double
+properties cannot express their low bits. Floating-point scaling coefficients
+use their parsed binary64 values, not exact decimal arithmetic on header text.
+Arbitrary scaling uses exact rational arithmetic to avoid intermediate rounding
+or cancellation. A <code>decimal</code> result is accepted only when it represents that
+physical value exactly; binary64 0.1, for example, is not decimal 0.1.</p>
+<p><code>Checked</code> explicitly allows floating-point rounding and integer truncation toward
+zero. It still rejects overflow, including a finite binary64 value overflowing to
+binary32 infinity. It never clamps or wraps integers. General scaled floating
+conversion uses a binary64 approximation; use Exact when scientific precision
+must be guaranteed. Unscaled matching types use direct byte copies rather than
+per-sample rational arithmetic.</p>
+<p><code>PixelBuffer&lt;T&gt;.Missing</code> marks integer BLANK and NaN values. Infinity is valid
+unless scaling makes it NaN. Physical BLANK/real NaN becomes NaN in floating-point
+outputs and zero in integer/decimal outputs; the mask remains authoritative.
+Stored reads retain integer sentinel values. Complex images require
+<code>System.Numerics.Complex</code>; both component values are retained, and either NaN
+component marks the sample missing. Complex32 components expand exactly to
+binary64. Arrays and masks belong to the caller; changing them does not edit the
+native image.</p>
+<p>The older <code>GetPhysicalSamples()</code> remains a convenient, explicitly approximate
+double API. Migrate precision-sensitive code to <code>ReadPixels&lt;T&gt;()</code>; migrate
+explicitly approximate calculations to <code>Conversion = Checked</code>.</p>
+<h2 id="what-a-metadata-only-scan-reads">What a metadata-only scan reads</h2>
+<ul>
+<li>FITS: padded header cards for every HDU, native type, geometry, data offsets,
+payload lengths and header diagnostics. Payloads and data padding are skipped
+with seeks. Empty HDUs, tables and unknown extensions remain in <code>FitsHdus</code>.</li>
+<li>XISF: the bounded XML header, image geometry and original location/compression
+attributes. Property blocks, table cells, ICC blocks and image pixels are not
+fetched or decoded during indexing. Inline/embedded encoded data is part of the
+XML header itself and counts toward the header budget. <code>XisfHeader</code> is a detached XML copy that
+retains global metadata, unknown extensions and block descriptors.</li>
+</ul>
+<p><code>AstroFileOptions.MaximumMetadataBytes</code> defaults to 64 MiB across all FITS headers
+or the XISF XML header. Native header/count/geometry security budgets also apply.
+Selected-payload byte budgets apply when content is requested, so a FITS index can
+describe an image larger than the configured materialization limit. Each selected
+HDU must fit <code>MaximumDataSize</code> and <code>MaximumTotalDecodedBytes</code>; this is not a
+cumulative limit on buffers the caller chooses to retain across repeated reads.
+Keep full scientific images within your application's memory budget.</p>
+<p><code>ReadFitsHdu(nativeIndex)</code> loads just one native HDU, validates its checksums and
+padding, and decodes its supported image/table content. <code>ReadFitsDocument()</code>
+explicitly reads every HDU. <code>ReadXisfDocument()</code> parses the full native XML model
+and decodes its properties/tables; image pixels remain lazy. Merely opening an
+index does <strong>not</strong> validate data checksums, decode codecs, or prove that external
+resources exist. A corrupt unrelated payload does not prevent selected access.</p>
+<h2 id="source-ownership-and-changes">Source ownership and changes</h2>
+<p>Dispose an index with <code>using</code>. Path opening owns a read-only file handle. Stream
+opening requires readable, seekable input at position zero and defaults to
+<code>leaveOpen: true</code>. Input is not copied wholesale; non-seekable callers can still
+use the existing native reader APIs with their buffering budgets. Failed opening
+leaves caller streams open and restores their position. Successful indexed reads
+also preserve the shared stream position. Detection alone preserves its starting
+position and inspects at most 64 KiB; XML roots following larger prologs are not
+recognized by the detector.</p>
+<p>Keep path sources available and unchanged. The index checks the main file's size
+and last-write time before/after selected native reads and before lazy XISF block
+reads. On Windows, the read-sharing mode additionally prevents ordinary writes
+while the index owns the handle. These checks are not cryptographic snapshots;
+same-size edits with a restored timestamp cannot be guaranteed detectable.
+Caller-owned streams must not be edited or used concurrently; length changes are
+detected, same-length edits are the caller's responsibility.</p>
+<p>Local external XISF resources are fingerprinted on their <strong>first read</strong> and later
+changes raise <code>IOException</code>; a header scan intentionally does not access them.
+Network resources have no snapshot guarantee and remain disabled by default.
+Use the native resource policy for opt-in access, path traversal and timeouts.
+Reopen the index after a reported change.</p>
+<p>After disposal, index reads and source-backed XISF block reads raise
+<code>ObjectDisposedException</code>. Already returned typed buffers and materialized FITS
+HDUs remain usable. Index attachment reads are serialized; do not dispose the
+index concurrently with outstanding lazy reads. Full detachment and bounded
+row/region/plane I/O remain later roadmap steps. Current typed reads allocate a
+complete selected-image array plus a boolean mask, and compressed XISF requires
+whole-block decoding.</p>
+<p>Evidence: <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/TypedPixelTests.cs">typed precision regressions</a>,
+<a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/AstroFileTests.cs">index and selective-read regressions</a>.
+The unsigned offset convention follows the
+<a href="https://heasarc.gsfc.nasa.gov/docs/software/fitsio/c/c_user/node23.html">NASA/HEASARC CFITSIO documentation</a>.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/docs/core/image-access.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

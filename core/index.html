@@ -82,6 +82,8 @@ validation and supported astrometric transforms. All public APIs use the
 <p>The library is independent of Avalonia and the AstroView desktop application.
 Compression and XML cryptography have managed package dependencies, distributed
 with the Core release or restored through NuGet. No XISFLib package is required.</p>
+<p>Phase 2 in 0.3.0 development builds adds <a href="image-access.html">indexed opening and shared typed
+pixels</a>, including exact physical/stored FITS reads and masks.</p>
 <h2 id="choose-the-appropriate-operation">Choose the appropriate operation</h2>
 <table>
 <thead>
@@ -109,7 +111,7 @@ with the Core release or restored through NuGet. No XISFLib package is required.
 </tr>
 <tr>
 <td>Work with exact pixels and channel layout</td>
-<td>Typed sample methods and <code>XisfImageExtensions</code></td>
+<td><code>IImageSource</code>, <code>ImagePixels</code>, native typed methods</td>
 <td><a href="data-model.html">Data model</a></td>
 </tr>
 <tr>

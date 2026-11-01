@@ -74,7 +74,7 @@
 <h1 id="versioning-and-releases">Versioning and releases</h1>
 
 <p>AstroView uses Semantic Versioning. The next release version is defined once in
-<code>eng/Versions.props</code>; this implementation advances it from <code>0.1.0</code> to <code>0.2.0</code>.
+<code>eng/Versions.props</code>; Phase 2 development targets <code>0.3.0</code> after the published <code>0.2.0</code> release.
 While the major version is zero, minor releases can include documented API changes.
 Patch releases are reserved for compatible corrections. Record changes in <code>CHANGELOG.md</code>.</p>
 <table>
@@ -87,31 +87,31 @@ Patch releases are reserved for compatible corrections. Record changes in <code>
 <tbody>
 <tr>
 <td>Local/default</td>
-<td><code>0.2.0-dev</code></td>
+<td><code>0.3.0-dev</code></td>
 </tr>
 <tr>
 <td>CI push or pull request</td>
-<td><code>0.2.0-ci.&lt;run-number&gt;.&lt;attempt&gt;</code></td>
+<td><code>0.3.0-ci.&lt;run-number&gt;.&lt;attempt&gt;</code></td>
 </tr>
 <tr>
-<td>Tag <code>v0.2.0-rc.1</code></td>
-<td><code>0.2.0-rc.1</code></td>
+<td>Tag <code>v0.3.0-rc.1</code></td>
+<td><code>0.3.0-rc.1</code></td>
 </tr>
 <tr>
-<td>Tag <code>v0.2.0</code></td>
-<td><code>0.2.0</code></td>
+<td>Tag <code>v0.3.0</code></td>
+<td><code>0.3.0</code></td>
 </tr>
 </tbody>
 </table>
-<p>Assembly/file versions use the numeric release prefix (<code>0.2.0.0</code>). Informational
+<p>Assembly/file versions use the numeric release prefix (<code>0.3.0.0</code>). Informational
 versions retain the package version and SDK-provided Git commit metadata for
 traceability. A tag must match the configured version; CI rejects mismatches and
 invalid prerelease identifiers. Build metadata belongs in the informational
 version, not the release tag. CI reruns receive distinct prerelease package versions.</p>
 <h2 id="building-a-version-explicitly">Building a version explicitly</h2>
-<pre><code class="lang-sh">dotnet build AstroView.sln -c Release -p:Version=0.2.0-rc.1
+<pre><code class="lang-sh">dotnet build AstroView.sln -c Release -p:Version=0.3.0-rc.1
 dotnet test AstroView.sln -c Release --no-build
-dotnet pack src/AstroView.Core/AstroView.Core.csproj -c Release --no-build -p:Version=0.2.0-rc.1 -o artifacts/packages
+dotnet pack src/AstroView.Core/AstroView.Core.csproj -c Release --no-build -p:Version=0.3.0-rc.1 -o artifacts/packages
 </code></pre>
 <p>Build and pack must use the same version. CI resolves it once with
 <code>eng/Get-BuildVersion.ps1</code> and reuses it throughout the workflow. Run

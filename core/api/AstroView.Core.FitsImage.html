@@ -435,6 +435,54 @@ Class FitsImage  <a class="header-action link-secondary" title="View source" hre
 
 
 
+  <a id="AstroView_Core_FitsImage_ReadPixels_" data-uid="AstroView.Core.FitsImage.ReadPixels*"></a>
+
+  <h3 id="AstroView_Core_FitsImage_ReadPixels__1_AstroView_Core_PixelReadOptions_" data-uid="AstroView.Core.FitsImage.ReadPixels``1(AstroView.Core.PixelReadOptions)">
+  ReadPixels&lt;T&gt;(PixelReadOptions?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsImage.Pixels.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads exact typed physical or stored samples with a separate undefined-value mask.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PixelBuffer&lt;T&gt; ReadPixels&lt;T&gt;(PixelReadOptions? options = null) where T : unmanaged, INumberBase&lt;T&gt;</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>options</code> <a class="xref" href="AstroView.Core.PixelReadOptions.html">PixelReadOptions</a></dt>
+    <dd><p>Defaults to exact physical samples; opt into rounding explicitly.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="AstroView.Core.PixelBuffer-1.html">PixelBuffer</a>&lt;T&gt;</dt>
+    <dd><p>Owned samples and a mask; physical BLANK becomes NaN for floating destinations or zero otherwise.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>The destination numeric type.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="AstroView_Core_FitsImage_ReadPixels__1_AstroView_Core_PixelReadOptions__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Arbitrary scaling uses the exact binary values of BSCALE and BZERO. Overflow always throws.</p>
+</div>
+
+
+
+
   <a id="AstroView_Core_FitsImage_ReadRawData_" data-uid="AstroView.Core.FitsImage.ReadRawData*"></a>
 
   <h3 id="AstroView_Core_FitsImage_ReadRawData" data-uid="AstroView.Core.FitsImage.ReadRawData">

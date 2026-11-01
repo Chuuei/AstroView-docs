@@ -73,6 +73,8 @@
         <article data-uid="">
 <h1 id="documents-pixels-and-ownership">Documents, pixels and ownership</h1>
 
+<p>Phase 2 adds <a href="image-access.html">indexed opening and shared typed access</a> without
+removing the native models described below.</p>
 <h2 id="native-documents-and-editable-content">Native documents and editable content</h2>
 <table>
 <thead>
@@ -185,7 +187,7 @@ not interchangeable.</p>
 <p>Every integer up to 2^53 is exactly representable in binary64; above that, some
 integers are not. Do not route UInt64 through <code>double</code> before formatting or
 serializing it. <a href="fits.html#exact-64-bit-values">The exact-integer recipe</a> demonstrates
-a typed FITS-to-XISF path for unsigned storage conventions.</p>
+direct typed FITS access for unsigned storage conventions.</p>
 <h2 id="ownership-and-concurrency">Ownership and concurrency</h2>
 <p>Caller-provided streams remain open. XISF stream loads buffer input within the
 configured budget; path loads retain source information and may reopen files.

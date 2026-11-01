@@ -74,7 +74,7 @@
 <h1 id="feature-lab-and-reader-settings">Feature lab and reader settings</h1>
 
 <p><strong>Feature lab</strong> contains a capability guide, a scientific image generator, a
-color calculator, reader-policy settings and activity history.</p>
+header/pixel access inspector, color calculator, reader-policy settings and activity history.</p>
 <p><img src="../images/desktop-feature-lab.png" alt="Feature lab listing Core capabilities and their workspace entry points"></p>
 <h2 id="feature-guide">Feature guide</h2>
 <p>Use the search box to find a capability or workspace. Each row lists an area,
@@ -84,6 +84,37 @@ as planned/unimplemented cannot be enabled by changing a setting.</p>
 <p>The guide is useful when deciding whether to inspect a native file, re-encode it
 or convert it. For example, CFA metadata can be preserved without debayering,
 and an ICC profile can be retained without a complete ICC color-management engine.</p>
+<h2 id="scientific-access-030-development">Scientific access (0.3.0 development)</h2>
+<p>Use <strong>Scientific access</strong> to experiment with the shared Core image-access API.
+This tab is available in development builds after 0.2.0.</p>
+<p><img src="../images/desktop-scientific-access.png" alt="Scientific access showing a header index and exact UInt64 physical values"></p>
+<ol>
+<li>Enter a file path or click <strong>Browse…</strong>. Leaving the path blank uses the selected
+document's original file. The file extension does not determine its format.</li>
+<li>Click <strong>Inspect headers</strong>. The report lists native HDUs, header/data byte
+locations, image indices, axes, channels, sample type, byte order, scaling,
+missing sentinel and XISF block/compression descriptors. This does not load
+image/table payloads, fetch external blocks or verify data checksums.</li>
+<li>Select the zero-based <strong>Image index</strong> from that report. This is an image-list
+index, which can differ from a native FITS HDU index.</li>
+<li>Choose a <strong>Destination type</strong>, <strong>Value interpretation</strong> and <strong>Output layout</strong>.
+<strong>Physical</strong> applies FITS scaling; <strong>Stored</strong> retains raw numeric values and
+BLANK sentinels. FITS scientific axes remain separate from color channels.</li>
+<li>Keep <strong>Exact</strong> to reject representational loss, or choose <strong>Checked</strong> to permit
+rounding and integer truncation. Overflow always produces an error. For exact
+UInt64 FITS values choose UInt64/Physical; choose Int64/Stored for their signed
+on-disk encoding. Complex images require Complex.</li>
+<li>Set <strong>Sample start</strong> and <strong>Displayed samples</strong> (1–256), then click
+<strong>Read typed pixels</strong>. The report shows the selected values, total missing
+count and <code>[missing]</code> beside undefined values. A zero at a missing integer
+position is a placeholder, not a valid measurement.</li>
+</ol>
+<p>Typed reading loads the <strong>entire selected image</strong>, even when only a few values
+are displayed. Reader-policy settings and block limits apply. Other images/HDUs
+are not materialized. Close/reopen the inspection after modifying a source;
+Core checks source size/timestamps and rejects detected changes. A header scan
+can succeed when a later block read fails (missing external file, checksum error,
+unsupported codec, or a materialization budget exceeded).</p>
 <h2 id="image-generator">Image generator</h2>
 <ol>
 <li>Select <strong>Image generator</strong>.</li>

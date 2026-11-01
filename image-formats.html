@@ -110,7 +110,7 @@ double[] physicalPixels = fits.Images.First().GetPhysicalSamples();
 <code>[height, width]</code> or <code>[height, width, channel]</code>. Parsed typed reads default to
 planar channel order. FITS scientific axes remain scientific axes unless RGB/RGBA
 interpretation is explicitly selected. Physical-double reads cannot retain every
-Int64/UInt64 integer exactly above 2^53; use the exact typed conversion paths when
+Int64/UInt64 integer exactly above 2^53; use <code>ReadPixels&lt;T&gt;()</code> for exact stored/physical access when
 that precision is required.</p>
 <p><code>FitsConverter</code> converts between the two image models. Cross-format conversion
 can omit metadata or unsupported content: the default loss policy rejects such
@@ -138,6 +138,9 @@ and rendering baselines. Additional on-disk tests use hand-constructed FITS/XISF
 bytes. Upstream external photograph corpus tests and batch-converter application
 tests are excluded, including the converter-specific assertions in metadata tests.
 These tests do not establish interoperability with every real-world file variant.</p>
+<p>For 0.3.0 development APIs, see <a href="core/image-access.html">metadata-only indexing and shared typed
+access</a>. The original native Load methods retain their
+existing eager-FITS/lazy-XISF behavior.</p>
 
 </article>
 

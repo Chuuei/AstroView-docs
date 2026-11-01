@@ -74,6 +74,7 @@
 <h1 id="fitsxisf-support-matrix">FITS/XISF support matrix</h1>
 
 <p>Baseline updated against the source, regression tests and independent fixtures on 2026-11-01.
+Phase 2 APIs below target 0.3.0 development builds; the published 0.2.0 release does not contain them.
 This is an implementation contract and gap inventory, not certification of full
 FITS 4.0 or XISF Revision 1 conformance. Update the matrix with each release and
 link new independent interoperability evidence as it becomes available.</p>
@@ -130,8 +131,8 @@ above file-format I/O. A missing processing operation is not missing format deco
 <td>Yes</td>
 <td>Yes</td>
 <td>Yes</td>
-<td>Partial</td>
-<td>Raw storage is available. <code>GetPhysicalSamples()</code> returns doubles, so not every large integer is exactly representable in that view. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsDocument.cs">Samples</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/FitsEdgeCaseTests.cs">independent-byte tests</a>.</td>
+<td>Yes</td>
+<td>Native bytes plus exact <code>ReadPixels&lt;T&gt;</code> stored/physical access and masks. The legacy double convenience API remains approximate. <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/TypedPixelTests.cs">Typed tests</a>.</td>
 </tr>
 <tr>
 <td>BSCALE/BZERO, integer BLANK and standard unsigned image offsets — Format/convention</td>
@@ -139,8 +140,8 @@ above file-format I/O. A missing processing operation is not missing format deco
 <td>Yes</td>
 <td>Yes</td>
 <td>Yes</td>
-<td>Partial</td>
-<td>Physical doubles apply scaling and map integer BLANK to NaN. Exact unsigned conversion paths exist in <code>FitsConverter</code>; arbitrary scaling can round and inexact signed-64 conversion is rejected. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsConverter.cs">Converter</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/Imported/FitsPerformanceRegressionTests.cs">boundary tests</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/Imported/ReviewRegressionTests.cs">conversion tests</a>.</td>
+<td>Yes</td>
+<td>Exact integer offsets, Int64 scaling cards and missing masks. Arbitrary finite binary64 scaling is exact or rejected for the requested destination; explicit Checked allows rounding, never overflow. Cross-format conversion retains its separate fidelity limits. <a href="core/image-access.html">Typed access</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/TypedPixelTests.cs">tests</a>.</td>
 </tr>
 <tr>
 <td>Scientific N-dimensional image storage — Format</td>
@@ -523,21 +524,21 @@ above file-format I/O. A missing processing operation is not missing format deco
 </tr>
 <tr>
 <td>Shared format-neutral scientific image facade — API</td>
-<td>No</td>
-<td>No</td>
-<td>No</td>
+<td>Yes</td>
 <td>—</td>
-<td>No</td>
-<td>Existing image utilities are principally XISF-oriented. FITS users can convert or use native models. Planned AV-004–AV-007.</td>
+<td>—</td>
+<td>Yes</td>
+<td>Yes</td>
+<td><code>IImageSource</code>, <code>ImagePixels</code> and typed buffers retain native images, scientific axes, channels, storage layout, scaling and missing masks without document conversion. Complete-image reads; processing utilities retain their existing native APIs. <a href="core/image-access.html">Guide</a>.</td>
 </tr>
 <tr>
 <td>Metadata-only/selective opening — API</td>
-<td>Partial</td>
+<td>Yes</td>
 <td>—</td>
 <td>—</td>
+<td>Yes</td>
 <td>—</td>
-<td>—</td>
-<td>XISF path opening keeps image blocks lazy; FITS materializes all HDU payloads. No general shared header-only/index API. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsReader.cs">FITS reader</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfReader.cs">XISF reader</a>.</td>
+<td><code>AstroFile</code> scans bounded headers/XML, records native HDU/block locations and opens selected content. Source ownership/change checks are explicit. FITS scans skip payloads; XISF scans do not resolve property/table/image blocks. <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/AstroFileTests.cs">Index tests</a>.</td>
 </tr>
 <tr>
 <td>Region/channel access — API</td>
@@ -650,6 +651,9 @@ through a feature guide and interactive tools. Its demonstration files are not
 independent producer fixtures. GUI integration also protects the optional absence
 of an ordered interval for complex
 samples: <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/XisfComplexValidationTests.cs">bounds validation regressions</a>.</p>
+<p>Content detection uses signatures for FITS, monolithic XISF and XML distributed
+headers, including misleading filename extensions. Gzip is recognized but
+opening it remains AV-008. Detection preserves a seekable stream position.</p>
 
 </article>
 

@@ -112,8 +112,10 @@ additional image extensions use <code>false</code> after a valid primary HDU.</p
 want the writer to generate <code>CHECKSUM</code> and <code>DATASUM</code>. After loading, checksum
 results are nullable: <strong>missing</strong>, <strong>valid</strong> and <strong>invalid</strong> are different states.</p>
 <h2 id="exact-64-bit-values">Exact 64-bit values</h2>
-<p>Physical double access can round large integer samples. For supported unsigned
-offset storage, use the typed conversion path and keep the result in <code>ulong</code>.</p>
+<p>Physical double access can round large integer samples. Use <code>ReadPixels&lt;ulong&gt;()</code>
+for unsigned offset storage and retain the separate missing-value mask. See
+<a href="image-access.html">indexed opening and typed pixels</a> for signed samples, arbitrary
+scaling, precision policy and metadata-only discovery.</p>
 <!-- snippet: exact-integers -->
 <pre><code class="lang-csharp">public static void ExactIntegers()
 {
@@ -123,8 +125,7 @@ offset storage, use the typed conversion path and keep the result in <code>ulong
     FitsWriter.Write(stream, new FitsDocument([hdu]));
     stream.Position = 0;
     var fits = FitsReader.Load(stream);
-    var converted = FitsConverter.ConvertToXisf(fits);
-    ulong[] exact = converted.Value[0].GetSamples&lt;ulong&gt;();
+    ulong[] exact = fits.Images.First().ReadPixels&lt;ulong&gt;().Samples;
     if (!exact.SequenceEqual(pixels))
         throw new InvalidOperationException(&quot;Exact UInt64 conversion failed.&quot;);
     // GetPhysicalSamples() returns double and cannot retain all these integers.
