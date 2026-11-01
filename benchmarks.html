@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>FITS and XISF load benchmarks | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="FITS and XISF load benchmarks | AstroView documentation ">
+      
+      
+      <link rel="icon" href="images/astroview.ico">
+      <link rel="stylesheet" href="public/docfx.min.css">
+      <link rel="stylesheet" href="public/main.css">
+      <meta name="docfx:navrel" content="toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Chuuei/AstroView/blob/main/docs/benchmarks.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="index.html">
+            <img id="logo" class="svg" src="images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="fits-and-xisf-load-benchmarks">FITS and XISF load benchmarks</h1>
+
+<p>The benchmark compares production AstroView APIs with independent readers:</p>
+<table>
+<thead>
+<tr>
+<th>Implementation</th>
+<th>Format</th>
+<th>Measured entry points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>astroview-indexed</code></td>
+<td>FITS/XISF</td>
+<td><code>AstroFile.Open</code>, selected HDU/image access, <code>ReadPixels&lt;T&gt;</code></td>
+</tr>
+<tr>
+<td><code>astroview-native</code></td>
+<td>FITS/XISF</td>
+<td><code>FitsReader.Load</code> / <code>XisfReader.Load</code>, followed by <code>ReadPixels&lt;T&gt;</code></td>
+</tr>
+<tr>
+<td><code>astropy</code></td>
+<td>FITS</td>
+<td><code>astropy.io.fits.open</code>, image arrays and owned native-endian copies</td>
+</tr>
+<tr>
+<td><code>python-xisf</code></td>
+<td>XISF</td>
+<td><code>XISF(path)</code>, <code>read_image(channels_first)</code> and owned copies</td>
+</tr>
+</tbody>
+</table>
+<p>Astropy and Python xisf are independent comparison implementations, not an
+official PixInsight certification or a claim that these are the fastest possible
+readers. Their versions are pinned in <code>tools/interop/requirements.txt</code>. They are
+development dependencies; the Core package does not depend on Python.</p>
+<h2 id="recorded-results-2026-11-01">Recorded results: 2026-11-01</h2>
+<p>Measured on Windows with an AMD Ryzen 7 8840HS, 14.8 GB usable RAM, .NET 10.0.14
+(workstation GC), Python 3.13.17, Astropy 8.0.2, Python xisf 0.9.7 and NumPy 2.5.4.
+This was an interactive development machine, with warmed caches and no CPU affinity.
+The <a href="benchmark-results/2026-11-01.json">aggregate JSON evidence</a> records source
+revisions, policies, package versions, sizes, matched counts and results by sample
+type. Local raw reports retain every timing sample and fingerprint.</p>
+<p>The local suite contains 84 files / 90 primary images / 6.14 GB of source data.
+The tables below separate the 11 large FITS files and 18 large XISF files from
+small controls. All comparable cases matched their pixels and masks. Four XISF
+files raised <code>KeyError</code> in the reference reader's pixel-loading path; those four
+are retained as failures and excluded from storage/pixel rankings. All AstroView
+cases loaded, and all 12 synthetic cases were independently verified.</p>
+<p>Times are the <strong>sum of per-file medians</strong>, in milliseconds; lower is better.
+They are not the elapsed duration of the entire benchmark. The reference is
+Astropy for FITS and Python xisf for XISF. Synthetic XISF codec rows each combine
+the 32 MiB UInt16 and 48 MiB Float32 cases; <code>+sh</code> means byte shuffle.</p>
+<!-- benchmark-results:start -->
+<h3 id="local-corpus-files-at-least-1-mib">Local corpus: files at least 1 MiB</h3>
+<table>
+<thead>
+<tr>
+<th>Format / workload</th>
+<th style="text-align: right;">Matched files</th>
+<th style="text-align: right;">AstroView native (ms)</th>
+<th style="text-align: right;">AstroView indexed (ms)</th>
+<th style="text-align: right;">Reference (ms)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FITS: Header discovery</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">n/a</td>
+<td style="text-align: right;">2.04</td>
+<td style="text-align: right;">14.15</td>
+</tr>
+<tr>
+<td>FITS: Decoded storage</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">623.51</td>
+<td style="text-align: right;">613.50</td>
+<td style="text-align: right;">915.42</td>
+</tr>
+<tr>
+<td>FITS: Typed arrays + masks</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">5456.91</td>
+<td style="text-align: right;">5461.15</td>
+<td style="text-align: right;">2064.56</td>
+</tr>
+<tr>
+<td>XISF: Header discovery</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">n/a</td>
+<td style="text-align: right;">60.77</td>
+<td style="text-align: right;">131.54</td>
+</tr>
+<tr>
+<td>XISF: Decoded storage</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">1424.33</td>
+<td style="text-align: right;">1436.60</td>
+<td style="text-align: right;">765.41</td>
+</tr>
+<tr>
+<td>XISF: Typed arrays + masks</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">3670.97</td>
+<td style="text-align: right;">3858.53</td>
+<td style="text-align: right;">1344.28</td>
+</tr>
+</tbody>
+</table>
+<h3 id="synthetic-xisf-decoded-storage-loading">Synthetic XISF: decoded storage loading</h3>
+<table>
+<thead>
+<tr>
+<th>Codec</th>
+<th style="text-align: right;">Matched files</th>
+<th style="text-align: right;">AstroView native (ms)</th>
+<th style="text-align: right;">AstroView indexed (ms)</th>
+<th style="text-align: right;">Python xisf (ms)</th>
+<th style="text-align: right;">Native speedup</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>uncompressed</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">15.86</td>
+<td style="text-align: right;">16.94</td>
+<td style="text-align: right;">23.05</td>
+<td style="text-align: right;">1.45x</td>
+</tr>
+<tr>
+<td>zlib+sh</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">187.35</td>
+<td style="text-align: right;">192.13</td>
+<td style="text-align: right;">290.82</td>
+<td style="text-align: right;">1.55x</td>
+</tr>
+<tr>
+<td>lz4+sh</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">111.88</td>
+<td style="text-align: right;">114.04</td>
+<td style="text-align: right;">181.71</td>
+<td style="text-align: right;">1.62x</td>
+</tr>
+<tr>
+<td>lz4hc+sh</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">94.23</td>
+<td style="text-align: right;">105.54</td>
+<td style="text-align: right;">172.94</td>
+<td style="text-align: right;">1.84x</td>
+</tr>
+<tr>
+<td>zstd+sh</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">97.00</td>
+<td style="text-align: right;">104.95</td>
+<td style="text-align: right;">155.07</td>
+<td style="text-align: right;">1.60x</td>
+</tr>
+</tbody>
+</table>
+<!-- benchmark-results:end -->
+<p>On these large local images, native FITS storage loading was 1.47x faster than
+Astropy, while native XISF storage loading took 1.86x as long as Python xisf.
+Header discovery was faster in AstroView. Typed arrays plus masks took 2.64x as
+long for FITS and 2.73x as long for XISF in this corpus; this extra processing must
+not be confused with the storage-only result. The synthetic compressed XISF
+storage cases favored AstroView by 1.55x to 1.84x. Input size, type and workload
+change the result, so there is no universal fastest-reader claim.</p>
+<p>The gaps identify useful profiling targets: large uncompressed XISF buffers,
+and typed Float32 copying, byte-order conversion and missing-mask creation.
+These measurements do not establish the root cause. The library was not changed
+to improve or suppress a benchmark result. Both AstroView's native and indexed
+APIs remain visible in the evidence, including slower cases.</p>
+<h2 id="what-is-timed">What is timed</h2>
+<p><strong>Headers</strong> measures fresh opening, discovery of every primary image and closing
+input handles. AstroView uses its metadata-only index. Astropy disables lazy HDU
+discovery, memory mapping and checksum reads. Python xisf's constructor also
+processes properties, which can include attached metadata. These are each
+reader's discovery workflows; they do not decode identical amounts of metadata.
+The eager native FITS API is deliberately absent from this comparison.</p>
+<p><strong>Storage</strong> isolates loading and decompression into reader-owned storage buffers
+that remain readable after closing the file. It retains file byte order and
+channel layout, with no typed-array normalization or missing-mask construction.
+FITS exposes retained HDU image payloads; XISF forces <code>ReadRawData</code> / <code>read_image</code>.
+A reference NumPy view may retain its reader-owned backing buffer in this stage;
+it is not a memory map or a lazy source. Every decoded storage byte and its
+geometry/type/layout/byte order are verified outside timing. This is the closest
+comparison to loading complete sample storage for later processing.</p>
+<p><strong>Pixels</strong> measures fresh opening and loading <strong>all primary images</strong> into owned,
+contiguous, native-endian, planar typed arrays, plus matching boolean masks.
+FITS uses <strong>stored values</strong>, retaining signed storage, unsigned-offset encodings
+and BLANK sentinels. Physical scaling is not part of this workload. XISF uses its
+native sample type. NaN is missing; infinity is not. Thumbnails, rendering, color
+transforms and saving are excluded. Complex32 expands to Complex64 for
+AstroView's shared API; unsupported reference types are reported explicitly.</p>
+<p>In the Pixels workload, reference arrays are copied even if the reader returns a view. Merely
+opening a lazy document or a memory-mapped array cannot count as a full load.
+Headers are compared by geometry/type; typed pixels are compared by <strong>SHA-256 of all
+canonical little-endian planar samples and every mask byte</strong>, outside timing.
+Mismatches fail the run and never enter speed comparisons. The source files are
+hashed before/after their benchmark cases and are never edited.</p>
+<p>Present FITS checksums are verified. The native AstroView FITS reader also
+materializes tables and checks all HDUs; the indexed path only materializes
+selected image HDUs. Astropy verifies all declared FITS checksums but does not
+decode all table cells. Files with substantial tables can therefore involve
+different work despite matching pixels. The local photographic FITS corpus is
+more representative of image loading than the tiny multi-table smoke fixture.</p>
+<p>Forced collection outside the interval makes this an isolated load-latency
+benchmark. Runtime allocation/deallocation behavior still differs, and these
+numbers do not measure sustained throughput including all eventual cleanup.</p>
+<p><strong>XISF integrity work differs:</strong> AstroView verifies declared block digests, while
+Python xisf 0.9.7 does not. The report records declared image checksum algorithms.
+Byte hashing after timing validates comparison results but does not equalize the
+readers' timed integrity work. Treat the numbers as complete reader workflows,
+not isolated decompressor throughput.</p>
+<h2 id="measurement-policy">Measurement policy</h2>
+<ul>
+<li>Each file/implementation/mode has its own sequential child process. No readers
+compete with one another for CPU or memory. Process startup, module imports,
+optimized JIT compilation, forced collection and result hashing are excluded.</li>
+<li>Default: two untimed warmups and seven measured loads. Both runtimes collect
+outside each iteration. Collections that occur during a load remain timed.
+.NET tiered compilation is disabled so its warmup uses optimized code.</li>
+<li>Files and implementation order are shuffled with a recorded fixed seed.
+Filesystem caches are warmed by the warmups; caches are <strong>not evicted</strong>. These
+are neither cold-disk nor first-application-launch measurements.</li>
+<li>Raw milliseconds, median, minimum and interpolated p95 are retained. With seven
+samples, p95 is descriptive, not a confidence interval. System activity,
+filesystem, CPU, thermal state and runtime versions affect the results.</li>
+<li>Summaries split small files from files at least 1 MiB and group by format,
+workload and codec. Ratios use the <strong>same successfully verified files</strong> for
+each implementation/reference pair. Each row states its matched-file count.
+Aggregate throughput divides source/decoded bytes by the sum of per-file median
+times. Source MiB/s for header discovery is not actual bytes-read throughput.</li>
+<li>Errors, timeouts, unsupported formats and missing comparisons remain visible.
+Reference limitations are not patched or silently replaced with a custom
+decoder. <code>--strict</code> makes every failed/unpaired adapter a failure for CI's
+known-compatible fixture subset. Timing has no pass/fail threshold.</li>
+</ul>
+<h2 id="run-locally">Run locally</h2>
+<p>Use .NET 10 and Python 3.13. From the repository root, install the pinned
+development packages into a dedicated environment:</p>
+<pre><code class="lang-powershell">python -m venv .local/benchmark-python
+.local/benchmark-python/Scripts/python.exe -m pip install setuptools==84.2.1 wheel==0.48.0
+.local/benchmark-python/Scripts/python.exe -m pip install --no-build-isolation -r tools/interop/requirements.txt
+dotnet restore AstroView.sln --locked-mode
+dotnet build tools/AstroView.Performance -c Release --no-restore
+.local/benchmark-python/Scripts/python.exe tools/benchmarks/load.py `
+  --directory C:\Code\AstroExamples `
+  --astroview tools/AstroView.Performance/bin/Release/net10.0/AstroView.Performance.dll `
+  --output artifacts/load-benchmarks/local-run `
+  --warmups 2 --iterations 7
+</code></pre>
+<p>On Linux/macOS use <code>python3 -m venv .local/benchmark-python</code>, its <code>bin/python</code>
+executable, and ordinary shell line continuation. The benchmark CLI and worker
+are portable; timings must be measured on the platform of interest.</p>
+<p>For a smaller run, repeat <code>--include</code> glob filters, e.g.
+<code>--include 'libxisf/UInt16_Gray_*.xisf'</code>. Use <code>--modes storage</code> for decoded storage loading, or <code>--modes pixels</code> for the
+additional typed-array/mask workload. By default all three stages run. <code>--timeout</code> caps each child process (180 seconds by default).
+Input files are discovered recursively by supported extensions and classified by
+content. Use a <strong>fresh output directory</strong> each time; measurements are never
+overwritten or mixed with previous runs. Large images require space for decoded
+storage, arrays and masks, potentially several times their on-disk size.</p>
+<h2 id="reports-and-verification">Reports and verification</h2>
+<p>The output directory contains:</p>
+<ul>
+<li><code>report.json</code>: settings, machine/runtime/package versions, source revision,
+input hashes, every raw iteration, full image/mask fingerprints and failures.</li>
+<li><code>report.csv</code>: per-file timing/status rows for spreadsheet analysis.</li>
+<li><code>report.md</code>: grouped comparisons and a failure table.</li>
+<li><code>workers/</code>: individual child-process results for diagnosing failures.</li>
+</ul>
+<p>Local reports can contain file names and paths in error messages. They stay in
+ignored <code>artifacts/</code>; the photographs and their scientific metadata are not
+published. Published summaries contain aggregate measurements only.</p>
+<p>CI builds the same Release worker, tests the report and canonicalization
+contracts, and runs a strict smoke comparison against independent FITS and XISF
+fixtures covering unsigned boundaries, cubes, multiple HDUs and every supported
+XISF codec. The <code>file-load-benchmark-smoke</code> artifact is diagnostic; CI runners are
+not stable performance baselines. This does not mark the unrelated allocation
+hotspots in roadmap AV-027 as complete.</p>
+<p>The earlier median/MAD microbenchmark remains available through
+<code>dotnet run --project tools/AstroView.Performance -c Release</code> with no worker
+arguments.</p>
+<p>References: <a href="https://docs.astropy.org/en/stable/io/fits/api/files.html">Astropy FITS opening options</a>,
+<a href="https://pypi.org/project/xisf/">Python xisf support and API</a>.</p>
+<h2 id="reproducible-large-compression-cases">Reproducible large compression cases</h2>
+<p>The current local photographs have large uncompressed XISF images. To measure
+codecs separately from tiny-file opening overhead, generate independent cases:</p>
+<pre><code class="lang-sh">python tools/benchmarks/generate.py --output artifacts/load-benchmarks/synthetic-images
+python tools/benchmarks/load.py --directory artifacts/load-benchmarks/synthetic-images --astroview tools/AstroView.Performance/bin/Release/net10.0/AstroView.Performance.dll --output artifacts/load-benchmarks/synthetic-run
+</code></pre>
+<p>Default data: a 4096 x 4096 UInt16 monochrome image (32 MiB) and a 2048 x 2048 RGB
+Float32 image (48 MiB). Seeded gradients plus noise produce identical decoded
+values for each codec. Python xisf writes uncompressed, zlib, LZ4, LZ4HC and
+Zstandard files, with byte shuffling for compression. Astropy writes matching
+uncompressed FITS images with declared checksums. XISF files have no block digests,
+so this set also compares decoding without the readers' digest-policy difference.
+The writer can decline ineffective compression; the manifest and reports record
+the codec actually selected. FITS retains its standard unsigned offset encoding.</p>
+<p>The generated <code>manifest.json</code> records producer versions, seed, file hashes and
+canonical physical-pixel hashes. Pixel values are reproducible with the pinned
+NumPy version; creation timestamps can change file bytes between generations.
+Use <code>--size 64</code> for a quick functional check. Generation requires a fresh directory
+and never imports AstroView. Generated images and full local results stay outside
+Git; aggregate results can be shared independently of the photo corpus.</p>
+<h2 id="publish-aggregate-results-safely">Publish aggregate results safely</h2>
+<p>Keep full reports under ignored <code>artifacts/</code>. Export aggregate evidence with
+<code>tools/benchmarks/summarize.py --dataset 'Label=path/to/report.json' --output path/to/aggregate.json</code>. Repeating a label combines disjoint stages while rejecting
+duplicate measurements, changed source bytes and different machines/packages.
+Photo filenames, paths, individual hashes and error text are omitted. Publication
+rejects incomplete runs and unresolved pixel mismatches.</p>
+<p>The recorded guide tables are generated from the checked-in aggregate JSON.
+CI verifies them using:</p>
+<pre><code class="lang-sh">python tools/benchmarks/summarize.py --output docs/benchmark-results/2026-11-01.json --markdown docs/benchmarks.md --check
+</code></pre>
+<p>Omit <code>--check</code> to synchronize the tables after replacing the recorded evidence.
+Update the surrounding interpretation when a new run changes the conclusions.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/docs/benchmarks.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

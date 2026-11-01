@@ -142,6 +142,9 @@ compatibility changes, remaining limitations, and the median/MAD benchmark.
 Run the benchmark with <code>dotnet run --project tools/AstroView.Performance -c Release</code>.
 It checks result equivalence and reports timing/allocation measurements; CI does
 not assert machine-dependent timing thresholds.</p>
+<p>The <a href="benchmarks.html">file-load benchmark</a> compares AstroView with Astropy and Python
+xisf using validated pixel/mask hashes. CI runs a tiny fixture smoke comparison
+and report-contract tests; timing values are diagnostic and never CI thresholds.</p>
 
 </article>
 

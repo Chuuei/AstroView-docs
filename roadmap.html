@@ -305,12 +305,26 @@ relevant geometry/astrometry capabilities.</p>
 </ul>
 <h2 id="phase-8--profile-and-fill-specialist-coverage">Phase 8 — Profile and fill specialist coverage</h2>
 <ul>
-<li><p>[ ] <strong>AV-027 — Benchmark remaining allocation hotspots.</strong> Measure table-cell
+<li>[ ] <strong>AV-027 — Benchmark remaining allocation hotspots.</strong> Measure table-cell
 boxing, matrix decoding, rectangular-array factories, typed row copies and
 per-pixel Lab transforms before specializing them. <strong>Done when:</strong> reproducible before/after throughput and allocation
 results show a
 benefit without weakening precision, ownership, checksums or readability.
-Can proceed alongside earlier phases when real workloads identify a bottleneck.</p>
+Can proceed alongside earlier phases when real workloads identify a bottleneck.</li>
+</ul>
+<p>Reader-load benchmarking is available in <a href="benchmarks.html">file-load benchmarks</a>,
+with independent pixel verification and separate header/full-image workloads.
+This evidence does not complete the allocation hotspots listed in AV-027.</p>
+<ul>
+<li><p>[ ] <strong>AV-027.1 - Profile large uncompressed XISF storage loading.</strong> Use the
+recorded local-corpus benchmark and preserve native buffer ownership and digest
+validation. <strong>Done when:</strong> allocation/copy/I/O measurements identify the cause
+and repeatable before/after results retain exact decoded bytes.</p>
+</li>
+<li><p>[ ] <strong>AV-027.2 - Profile typed Float32 reads and missing masks.</strong> Separate
+copying, byte-order handling and mask scanning from storage loading. <strong>Done
+when:</strong> measured changes improve real large-image cases without changing NaN,
+signed-zero, mask, precision or ownership semantics.</p>
 </li>
 <li><p>[ ] <strong>AV-028 — Add specialist FITS capabilities by demand.</strong> Assess random-groups/
 UVFITS, compressed tables and other survey/radio conventions separately from

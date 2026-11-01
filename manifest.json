@@ -12,6 +12,26 @@
       }
     },
     {
+      "type": "Resource",
+      "source_relative_path": "benchmark-results/2026-11-01.json",
+      "output": {
+        "resource": {
+          "relative_path": "benchmark-results/2026-11-01.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "benchmarks.md",
+      "output": {
+        ".html": {
+          "relative_path": "benchmarks.html"
+        }
+      },
+      "version": ""
+    },
+    {
       "type": "Conceptual",
       "source_relative_path": "building-documentation.md",
       "output": {
