@@ -109,7 +109,10 @@
 official PixInsight certification or a claim that these are the fastest possible
 readers. Their versions are pinned in <code>tools/interop/requirements.txt</code>. They are
 development dependencies; the Core package does not depend on Python.</p>
-<h2 id="optimized-results-2026-11-01">Optimized results: 2026-11-01</h2>
+<p>For the subsequent CPU-vectorization changes, see the <a href="simd-performance.html">SIMD workflow measurements</a>,
+including separate AVX2, no-AVX and scalar results. The historical load results below
+remain unchanged.</p>
+<h2 id="bulk-loading-improvements-2026-11-01">Bulk-loading improvements: 2026-11-01</h2>
 <p>The current implementation removes per-element boxing and intermediate arrays from
 binary XISF matrices, takes internal ownership of newly decoded property values,
 scans matching floating-point pixels in vectors, and reads uncompressed attached

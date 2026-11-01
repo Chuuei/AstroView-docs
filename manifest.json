@@ -23,6 +23,26 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "benchmark-results/2026-11-01-simd-codecs.json",
+      "output": {
+        "resource": {
+          "relative_path": "benchmark-results/2026-11-01-simd-codecs.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "benchmark-results/2026-11-01-simd.json",
+      "output": {
+        "resource": {
+          "relative_path": "benchmark-results/2026-11-01-simd.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "benchmark-results/2026-11-01.json",
       "output": {
         "resource": {
@@ -2893,6 +2913,16 @@
       "output": {
         ".html": {
           "relative_path": "roadmap.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "simd-performance.md",
+      "output": {
+        ".html": {
+          "relative_path": "simd-performance.html"
         }
       },
       "version": ""

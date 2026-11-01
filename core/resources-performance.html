@@ -99,6 +99,19 @@ sample storage by three; a BGRA preview adds roughly 400 MB. Compressed input,
 temporary codec buffers, typed copies, metadata and application state add more.
 Use these estimates for planning rather than interpreting them as peak-memory
 guarantees.</p>
+<h2 id="hardware-acceleration">Hardware acceleration</h2>
+<p>CPU support is detected automatically; no AVX-capable machine is required. XISF byte
+shuffling/unshuffling uses AVX2 for 32 items per block, or SSE2/Arm64 SIMD for 16.
+The vector paths cover 2-, 4-, 8- and 16-byte items; other item sizes and partial
+items retain the scalar format rules. Small blocks avoid vector setup work.</p>
+<p>Float32-to-double reads, unsigned FITS offset decoding, integer BLANK scans,
+normalization and median absolute-deviation preparation use vector operations where
+supported. Byte order, NaN behavior, output ownership and conversion policy remain
+unchanged. Arbitrary exact FITS scaling retains its rational implementation, and
+stable statistical reductions retain their evaluation order. Runtime/library byte
+copies, byte swapping and existing NaN scans already use hardware acceleration.</p>
+<p>The <a href="../simd-performance.html">SIMD measurements</a> distinguish in-memory workflows from
+complete file loads and document both accelerated and fallback verification.</p>
 <h2 id="xisf-defaults">XISF defaults</h2>
 <table>
 <thead>

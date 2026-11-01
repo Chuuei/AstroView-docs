@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>SIMD acceleration and measurements | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="SIMD acceleration and measurements | AstroView documentation ">
+      
+      
+      <link rel="icon" href="images/astroview.ico">
+      <link rel="stylesheet" href="public/docfx.min.css">
+      <link rel="stylesheet" href="public/main.css">
+      <meta name="docfx:navrel" content="toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Chuuei/AstroView/blob/main/docs/simd-performance.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="index.html">
+            <img id="logo" class="svg" src="images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="simd-acceleration-and-measurements">SIMD acceleration and measurements</h1>
+
+<p>AstroView selects CPU implementations at runtime. SIMD improves independent sample
+operations; it does not replace exact FITS scaling with approximate arithmetic.
+There are no new native dependencies or CPU requirements.</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Accelerated implementation</th>
+<th>Preserved behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>XISF byte shuffle and unshuffle</td>
+<td>AVX2: 32 items; SSE2/Arm64: 16 items</td>
+<td>Identical bytes, byte planes and incomplete-item tails</td>
+</tr>
+<tr>
+<td>Float32 to double</td>
+<td>Portable 256-/128-bit vector widening</td>
+<td>Exact finite conversion, byte order, NaN/missing policy</td>
+</tr>
+<tr>
+<td>FITS unsigned offsets</td>
+<td>Bulk byte swapping and vector sign-bit flips</td>
+<td>UInt16/32/64 boundaries, exact Int64 BLANK comparisons</td>
+</tr>
+<tr>
+<td>Integer BLANK scans</td>
+<td>Vector equality with scalar handling of matching blocks</td>
+<td>Stored sentinels and physical zero/missing masks</td>
+</tr>
+<tr>
+<td>Preview normalization</td>
+<td>Vector subtraction/division</td>
+<td>Unclamped values and overflow recovery for extreme bounds</td>
+</tr>
+<tr>
+<td>Absolute deviations for median/MAD</td>
+<td>Vector subtraction/absolute value</td>
+<td>Same values; selection and statistical reduction order retained</td>
+</tr>
+</tbody>
+</table>
+<p>XISF transposes specialize 2-, 4-, 8- and 16-byte items. Other item sizes, short
+blocks and tails use scalar code. The AVX2 implementation explicitly rearranges
+128-bit lanes; AVX2 pack/unpack instructions do not join bytes across those lanes.
+The Arm64 implementation uses NEON interleaving. Guarded dispatch avoids invoking
+unsupported instructions. Byte copies, endian reversal, floating-point NaN scans
+and FITS checksums also benefit from existing runtime/library vector operations.</p>
+<p>These choices follow <a href="https://learn.microsoft.com/dotnet/standard/simd">.NET's SIMD and hardware-intrinsic model</a>.
+The <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfByteShuffle.cs">implementation</a>
+keeps CPU-specific transposes separate from the format parser.</p>
+<h2 id="what-the-workflow-benchmark-measures">What the workflow benchmark measures</h2>
+<p><code>simd-workflows</code> uses 4,194,337 deterministic samples, including NaN and signed zero.
+It performs three warmups and nine measured operations, using Release builds with
+tiered compilation disabled. Input construction, garbage collection, normalization
+buffer resets and complete result hashing are outside the measured interval.
+Timings and allocation counts are retained for each iteration. Readers run
+sequentially on an interactive machine with warmed caches; no timing threshold is
+used in tests.</p>
+<ul>
+<li>Float32-to-double and unsigned FITS reads start with materialized image storage,
+then call the production <code>ReadPixels&lt;T&gt;</code> API and allocate owned arrays/masks.</li>
+<li>Normalization starts with a decoded double array and runs the production stage
+used by previews. It is not a whole-preview rendering measurement.</li>
+<li>The shuffled LZ4 read starts with a parsed memory-backed XISF document and calls
+<code>ReadRawData</code>, including block copying, decompression and unshuffling.</li>
+<li>The shuffled LZ4 write serializes an image into a new memory stream, including
+shuffling, compression and final output copying. Checksums are disabled equally
+in before/after measurements to isolate the codec workflow. Digest verification
+remains enabled by normal reader/writer policy and covered by regressions.</li>
+</ul>
+<p>These are in-memory workflow measurements, not cold-disk or application-startup
+measurements. Large gains in unsigned reads include eliminating per-pixel generic
+conversion as well as vectorization. Full-file comparisons remain available in the
+<a href="benchmarks.html">loading benchmark guide</a>.</p>
+<h2 id="recorded-measurements">Recorded measurements</h2>
+<p>Measured on Windows 11, an AMD Ryzen 7 8840HS (16 logical CPUs, 14.8 GB usable
+RAM) and .NET 10.0.14. Normal dispatch used AVX2; the no-AVX run used 128-bit
+vectors. The <a href="benchmark-results/2026-11-01-simd.json">complete workflow evidence</a>
+retains every timing, allocation count, CPU flag and result fingerprint.</p>
+<p>The baseline is source revision <code>14c403c</code> with the benchmark harness/friend-assembly
+attribute added before changing production algorithms. The accelerated revision is
+<code>d416f14</code>; both are identified by assembly versions in the evidence. All seven
+workflows have identical result hashes across the baseline and three current CPU
+modes. The scalar column selects AstroView's scalar fallbacks by disabling managed
+hardware intrinsics, separating algorithm improvements from vector instructions.</p>
+<!-- simd-workflows:start -->
+<table>
+<thead>
+<tr>
+<th>Workflow</th>
+<th style="text-align: right;">Before (ms)</th>
+<th style="text-align: right;">SIMD (ms)</th>
+<th style="text-align: right;">No AVX (ms)</th>
+<th style="text-align: right;">Scalar (ms)</th>
+<th style="text-align: right;">Before / SIMD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Float32 → double + mask</td>
+<td style="text-align: right;">23.715</td>
+<td style="text-align: right;">3.725</td>
+<td style="text-align: right;">3.951</td>
+<td style="text-align: right;">5.366</td>
+<td style="text-align: right;">6.37x</td>
+</tr>
+<tr>
+<td>FITS physical UInt16</td>
+<td style="text-align: right;">41.252</td>
+<td style="text-align: right;">1.087</td>
+<td style="text-align: right;">1.219</td>
+<td style="text-align: right;">3.341</td>
+<td style="text-align: right;">37.93x</td>
+</tr>
+<tr>
+<td>FITS physical UInt32</td>
+<td style="text-align: right;">39.974</td>
+<td style="text-align: right;">2.451</td>
+<td style="text-align: right;">2.800</td>
+<td style="text-align: right;">3.737</td>
+<td style="text-align: right;">16.31x</td>
+</tr>
+<tr>
+<td>FITS physical UInt64</td>
+<td style="text-align: right;">22.232</td>
+<td style="text-align: right;">5.150</td>
+<td style="text-align: right;">5.429</td>
+<td style="text-align: right;">5.229</td>
+<td style="text-align: right;">4.32x</td>
+</tr>
+<tr>
+<td>Normalize decoded doubles</td>
+<td style="text-align: right;">9.874</td>
+<td style="text-align: right;">1.549</td>
+<td style="text-align: right;">2.348</td>
+<td style="text-align: right;">6.106</td>
+<td style="text-align: right;">6.38x</td>
+</tr>
+<tr>
+<td>Read shuffled LZ4 block</td>
+<td style="text-align: right;">16.876</td>
+<td style="text-align: right;">8.727</td>
+<td style="text-align: right;">8.968</td>
+<td style="text-align: right;">19.174</td>
+<td style="text-align: right;">1.93x</td>
+</tr>
+<tr>
+<td>Write shuffled LZ4 image</td>
+<td style="text-align: right;">32.392</td>
+<td style="text-align: right;">17.585</td>
+<td style="text-align: right;">19.618</td>
+<td style="text-align: right;">25.900</td>
+<td style="text-align: right;">1.84x</td>
+</tr>
+</tbody>
+</table>
+<!-- simd-workflows:end -->
+<h2 id="complete-file-loading-confirmation">Complete file-loading confirmation</h2>
+<p>The same 12 independently generated files were remeasured with the existing
+file-load harness (two warmups, seven measured loads). All 96 cases retain the same
+source fingerprints and canonical pixels/masks as the pre-SIMD run. The
+<a href="benchmark-results/2026-11-01-simd-codecs.json">aggregate evidence</a> retains policies,
+matched counts and results by type; the prior measurements remain unchanged in the
+<a href="benchmark-results/2026-11-01-optimized.json">bulk-loading evidence</a>.</p>
+<p>These times sum the medians of the 32 MiB UInt16 and 48 MiB Float32 XISF cases for
+each codec. They include fresh native loading and decoded storage, not just a
+shuffle kernel. Normal digest policies remain in force. This run used the same
+interactive machine; differences in unmodified paths are measurement variation,
+not evidence of a SIMD gain.</p>
+<table>
+<thead>
+<tr>
+<th>Codec</th>
+<th style="text-align: right;">Before native storage (ms)</th>
+<th style="text-align: right;">SIMD native storage (ms)</th>
+<th style="text-align: right;">Python xisf (ms)</th>
+<th style="text-align: right;">Before / SIMD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>uncompressed</td>
+<td style="text-align: right;">13.56</td>
+<td style="text-align: right;">12.09</td>
+<td style="text-align: right;">18.39</td>
+<td style="text-align: right;">1.12x</td>
+</tr>
+<tr>
+<td>zlib+sh</td>
+<td style="text-align: right;">176.40</td>
+<td style="text-align: right;">121.29</td>
+<td style="text-align: right;">264.34</td>
+<td style="text-align: right;">1.45x</td>
+</tr>
+<tr>
+<td>lz4+sh</td>
+<td style="text-align: right;">80.20</td>
+<td style="text-align: right;">35.87</td>
+<td style="text-align: right;">143.99</td>
+<td style="text-align: right;">2.24x</td>
+</tr>
+<tr>
+<td>lz4hc+sh</td>
+<td style="text-align: right;">91.24</td>
+<td style="text-align: right;">39.83</td>
+<td style="text-align: right;">147.48</td>
+<td style="text-align: right;">2.29x</td>
+</tr>
+<tr>
+<td>zstd+sh</td>
+<td style="text-align: right;">100.07</td>
+<td style="text-align: right;">56.03</td>
+<td style="text-align: right;">165.45</td>
+<td style="text-align: right;">1.79x</td>
+</tr>
+</tbody>
+</table>
+<h2 id="reproduce-and-verify">Reproduce and verify</h2>
+<pre><code class="lang-powershell">dotnet build tools/AstroView.Performance -c Release
+$env:DOTNET_TieredCompilation = '0'
+dotnet tools/AstroView.Performance/bin/Release/net10.0/AstroView.Performance.dll `
+  simd-workflows artifacts/simd-workflows.json
+</code></pre>
+<p>The output path must be fresh. An optional final sample-count argument permits
+small correctness runs. To exercise fallback dispatch in a fresh process, set
+<code>DOTNET_EnableAVX=0</code> or <code>DOTNET_EnableHWIntrinsic=0</code> before running it. Remove those
+environment variables to restore normal runtime CPU selection. No setting is
+required in consuming applications.</p>
+<p><a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/SimdTransformTests.cs">Regression tests</a>
+compare shuffling against an independent byte-by-byte oracle, and sample operations
+against scalar calculations. They cover unaligned slices, vector boundaries, every
+partial-item tail, guard bytes, both file byte orders, integer limits, NaN payloads,
+signed zero and normalization overflow recovery. CI runs ordinary dispatch, no-AVX
+dispatch and scalar fallbacks on Windows, Linux and macOS. Timings remain evidence,
+not pass/fail conditions.</p>
+<p>Welford statistics and arbitrary exact scaling retain their scalar evaluation order.
+Branch-heavy histogram bin updates and complete display rendering need separate
+profiling before further SIMD changes. Broader I/O savings such as partial reads and
+streaming remain tracked in the <a href="roadmap.html">roadmap</a>.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/docs/simd-performance.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
