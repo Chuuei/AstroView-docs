@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Class FitsConverter | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class FitsConverter | AstroView documentation ">
+      
+      <meta name="description" content="Converts supported images and metadata between FITS and XISF.">
+      <link rel="icon" href="../../images/astroview.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="AstroView.Core.FitsConverter">
+
+
+
+  <h1 id="AstroView_Core_FitsConverter" data-uid="AstroView.Core.FitsConverter" class="text-break">
+Class FitsConverter  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsConverter.cs"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><span class="xref">AstroView</span>.<a class="xref" href="AstroView.Core.html">Core</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>AstroView.Core.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Converts supported images and metadata between FITS and XISF.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class FitsConverter</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">FitsConverter</span></div>
+    </dd>
+  </dl>
+
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="AstroView_Core_FitsConverter_ConvertFitsToXisf_" data-uid="AstroView.Core.FitsConverter.ConvertFitsToXisf*"></a>
+
+  <h3 id="AstroView_Core_FitsConverter_ConvertFitsToXisf_System_String_System_String_AstroView_Core_XisfWriterOptions_AstroView_Core_FitsConversionOptions_AstroView_Core_FitsReaderOptions_" data-uid="AstroView.Core.FitsConverter.ConvertFitsToXisf(System.String,System.String,AstroView.Core.XisfWriterOptions,AstroView.Core.FitsConversionOptions,AstroView.Core.FitsReaderOptions)">
+  ConvertFitsToXisf(string, string, XisfWriterOptions?, FitsConversionOptions?, FitsReaderOptions?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsConverter.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Loads FITS and writes its supported images and metadata as XISF.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ConversionResult&lt;IReadOnlyList&lt;XisfImageData&gt;&gt; ConvertFitsToXisf(string fitsPath, string xisfPath, XisfWriterOptions? writerOptions = null, FitsConversionOptions? conversionOptions = null, FitsReaderOptions? readerOptions = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>fitsPath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The FITS input or output path.</p>
+</dd>
+    <dt><code>xisfPath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The XISF input or output path.</p>
+</dd>
+    <dt><code>writerOptions</code> <a class="xref" href="AstroView.Core.XisfWriterOptions.html">XisfWriterOptions</a></dt>
+    <dd><p>The output serialization settings, or null for defaults.</p>
+</dd>
+    <dt><code>conversionOptions</code> <a class="xref" href="AstroView.Core.FitsConversionOptions.html">FitsConversionOptions</a></dt>
+    <dd><p>The conversion settings, or null for defaults.</p>
+</dd>
+    <dt><code>readerOptions</code> <a class="xref" href="AstroView.Core.FitsReaderOptions.html">FitsReaderOptions</a></dt>
+    <dd><p>Input limits and validation policy.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="AstroView.Core.ConversionResult-1.html">ConversionResult</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="AstroView.Core.XisfImageData.html">XisfImageData</a>&gt;&gt;</dt>
+    <dd><p>The conversion result and findings after successful writing.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_FitsConverter_ConvertToFits_" data-uid="AstroView.Core.FitsConverter.ConvertToFits*"></a>
+
+  <h3 id="AstroView_Core_FitsConverter_ConvertToFits_AstroView_Core_XisfDocument_AstroView_Core_ConversionLossPolicy_" data-uid="AstroView.Core.FitsConverter.ConvertToFits(AstroView.Core.XisfDocument,AstroView.Core.ConversionLossPolicy)">
+  ConvertToFits(XisfDocument, ConversionLossPolicy)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsConverter.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Converts a complete XISF document, reporting document-level and image-level omissions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ConversionResult&lt;FitsDocument&gt; ConvertToFits(XisfDocument document, ConversionLossPolicy lossPolicy = ConversionLossPolicy.Reject)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>document</code> <a class="xref" href="AstroView.Core.XisfDocument.html">XisfDocument</a></dt>
+    <dd><p>The parsed XISF document.</p>
+</dd>
+    <dt><code>lossPolicy</code> <a class="xref" href="AstroView.Core.ConversionLossPolicy.html">ConversionLossPolicy</a></dt>
+    <dd><p>Whether omissions are explicitly accepted.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="AstroView.Core.ConversionResult-1.html">ConversionResult</a>&lt;<a class="xref" href="AstroView.Core.FitsDocument.html">FitsDocument</a>&gt;</dt>
+    <dd><p>A FITS document with conversion findings.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_FitsConverter_ConvertToFits_" data-uid="AstroView.Core.FitsConverter.ConvertToFits*"></a>
+
+  <h3 id="AstroView_Core_FitsConverter_ConvertToFits_AstroView_Core_XisfDocumentData_AstroView_Core_ConversionLossPolicy_" data-uid="AstroView.Core.FitsConverter.ConvertToFits(AstroView.Core.XisfDocumentData,AstroView.Core.ConversionLossPolicy)">
+  ConvertToFits(XisfDocumentData, ConversionLossPolicy)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsConverter.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Converts an editable document, reporting image and document-level metadata omissions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ConversionResult&lt;FitsDocument&gt; ConvertToFits(XisfDocumentData document, ConversionLossPolicy lossPolicy = ConversionLossPolicy.Reject)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>document</code> <a class="xref" href="AstroView.Core.XisfDocumentData.html">XisfDocumentData</a></dt>
+    <dd><p>The complete editable content.</p>
+</dd>
+    <dt><code>lossPolicy</code> <a class="xref" href="AstroView.Core.ConversionLossPolicy.html">ConversionLossPolicy</a></dt>
+    <dd><p>Whether omissions are explicitly accepted.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="AstroView.Core.ConversionResult-1.html">ConversionResult</a>&lt;<a class="xref" href="AstroView.Core.FitsDocument.html">FitsDocument</a>&gt;</dt>
+    <dd><p>A FITS document with conversion findings.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_FitsConverter_ConvertToFits_" data-uid="AstroView.Core.FitsConverter.ConvertToFits*"></a>
+
+  <h3 id="AstroView_Core_FitsConverter_ConvertToFits_System_Collections_Generic_IEnumerable_AstroView_Core_XisfImageData__AstroView_Core_ConversionLossPolicy_" data-uid="AstroView.Core.FitsConverter.ConvertToFits(System.Collections.Generic.IEnumerable{AstroView.Core.XisfImageData},AstroView.Core.ConversionLossPolicy)">
+  ConvertToFits(IEnumerable&lt;XisfImageData&gt;, ConversionLossPolicy)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsConverter.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Converts editable XISF images to FITS with explicit metadata-loss findings.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ConversionResult&lt;FitsDocument&gt; ConvertToFits(IEnumerable&lt;XisfImageData&gt; images, ConversionLossPolicy lossPolicy = ConversionLossPolicy.Reject)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>images</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="AstroView.Core.XisfImageData.html">XisfImageData</a>&gt;</dt>
+    <dd><p>The output images.</p>
+</dd>
+    <dt><code>lossPolicy</code> <a class="xref" href="AstroView.Core.ConversionLossPolicy.html">ConversionLossPolicy</a></dt>
+    <dd><p>Whether metadata omissions are explicitly accepted.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="AstroView.Core.ConversionResult-1.html">ConversionResult</a>&lt;<a class="xref" href="AstroView.Core.FitsDocument.html">FitsDocument</a>&gt;</dt>
+    <dd><p>A FITS document and findings.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_FitsConverter_ConvertToXisf_" data-uid="AstroView.Core.FitsConverter.ConvertToXisf*"></a>
+
+  <h3 id="AstroView_Core_FitsConverter_ConvertToXisf_AstroView_Core_FitsDocument_AstroView_Core_FitsConversionOptions_" data-uid="AstroView.Core.FitsConverter.ConvertToXisf(AstroView.Core.FitsDocument,AstroView.Core.FitsConversionOptions)">
+  ConvertToXisf(FitsDocument, FitsConversionOptions?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsConverter.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Converts FITS with a report of preserved, transformed and omitted source content.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ConversionResult&lt;IReadOnlyList&lt;XisfImageData&gt;&gt; ConvertToXisf(FitsDocument document, FitsConversionOptions? options = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>document</code> <a class="xref" href="AstroView.Core.FitsDocument.html">FitsDocument</a></dt>
+    <dd><p>The source FITS document.</p>
+</dd>
+    <dt><code>options</code> <a class="xref" href="AstroView.Core.FitsConversionOptions.html">FitsConversionOptions</a></dt>
+    <dd><p>Axis and loss policies, or safe defaults.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="AstroView.Core.ConversionResult-1.html">ConversionResult</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="AstroView.Core.XisfImageData.html">XisfImageData</a>&gt;&gt;</dt>
+    <dd><p>The images and conversion findings.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_FitsConverter_ConvertXisfToFits_" data-uid="AstroView.Core.FitsConverter.ConvertXisfToFits*"></a>
+
+  <h3 id="AstroView_Core_FitsConverter_ConvertXisfToFits_System_String_System_String_AstroView_Core_FitsWriterOptions_AstroView_Core_ConversionLossPolicy_AstroView_Core_XisfReaderOptions_" data-uid="AstroView.Core.FitsConverter.ConvertXisfToFits(System.String,System.String,AstroView.Core.FitsWriterOptions,AstroView.Core.ConversionLossPolicy,AstroView.Core.XisfReaderOptions)">
+  ConvertXisfToFits(string, string, FitsWriterOptions?, ConversionLossPolicy, XisfReaderOptions?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsConverter.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Loads XISF and writes its images as FITS HDUs.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ConversionResult&lt;FitsDocument&gt; ConvertXisfToFits(string xisfPath, string fitsPath, FitsWriterOptions? writerOptions = null, ConversionLossPolicy lossPolicy = ConversionLossPolicy.Reject, XisfReaderOptions? readerOptions = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>xisfPath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The XISF input or output path.</p>
+</dd>
+    <dt><code>fitsPath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The FITS input or output path.</p>
+</dd>
+    <dt><code>writerOptions</code> <a class="xref" href="AstroView.Core.FitsWriterOptions.html">FitsWriterOptions</a></dt>
+    <dd><p>The output serialization settings, or null for defaults.</p>
+</dd>
+    <dt><code>lossPolicy</code> <a class="xref" href="AstroView.Core.ConversionLossPolicy.html">ConversionLossPolicy</a></dt>
+    <dd><p>Whether documented omissions are explicitly accepted.</p>
+</dd>
+    <dt><code>readerOptions</code> <a class="xref" href="AstroView.Core.XisfReaderOptions.html">XisfReaderOptions</a></dt>
+    <dd><p>Input resource policy and limits.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="AstroView.Core.ConversionResult-1.html">ConversionResult</a>&lt;<a class="xref" href="AstroView.Core.FitsDocument.html">FitsDocument</a>&gt;</dt>
+    <dd><p>The conversion result and findings after successful writing.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_FitsConverter_FromXisf_" data-uid="AstroView.Core.FitsConverter.FromXisf*"></a>
+
+  <h3 id="AstroView_Core_FitsConverter_FromXisf_System_Collections_Generic_IEnumerable_AstroView_Core_XisfImageData__AstroView_Core_ConversionLossPolicy_" data-uid="AstroView.Core.FitsConverter.FromXisf(System.Collections.Generic.IEnumerable{AstroView.Core.XisfImageData},AstroView.Core.ConversionLossPolicy)">
+  FromXisf(IEnumerable&lt;XisfImageData&gt;, ConversionLossPolicy)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsConverter.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Converts XISF images to FITS with the first image as the primary HDU.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FitsDocument FromXisf(IEnumerable&lt;XisfImageData&gt; images, ConversionLossPolicy lossPolicy = ConversionLossPolicy.Reject)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>images</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="AstroView.Core.XisfImageData.html">XisfImageData</a>&gt;</dt>
+    <dd><p>The images in output order; at least one image is required.</p>
+</dd>
+    <dt><code>lossPolicy</code> <a class="xref" href="AstroView.Core.ConversionLossPolicy.html">ConversionLossPolicy</a></dt>
+    <dd><p>Whether native metadata omissions are explicitly accepted.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="AstroView.Core.FitsDocument.html">FitsDocument</a></dt>
+    <dd><p>A FITS document containing an HDU per image.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_FitsConverter_FromXisf_" data-uid="AstroView.Core.FitsConverter.FromXisf*"></a>
+
+  <h3 id="AstroView_Core_FitsConverter_FromXisf_System_Collections_Generic_IEnumerable_AstroView_Core_XisfImage__AstroView_Core_ConversionLossPolicy_" data-uid="AstroView.Core.FitsConverter.FromXisf(System.Collections.Generic.IEnumerable{AstroView.Core.XisfImage},AstroView.Core.ConversionLossPolicy)">
+  FromXisf(IEnumerable&lt;XisfImage&gt;, ConversionLossPolicy)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsConverter.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Converts XISF images to FITS with the first image as the primary HDU.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FitsDocument FromXisf(IEnumerable&lt;XisfImage&gt; images, ConversionLossPolicy lossPolicy = ConversionLossPolicy.Reject)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>images</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="AstroView.Core.XisfImage.html">XisfImage</a>&gt;</dt>
+    <dd><p>The images in output order; at least one image is required.</p>
+</dd>
+    <dt><code>lossPolicy</code> <a class="xref" href="AstroView.Core.ConversionLossPolicy.html">ConversionLossPolicy</a></dt>
+    <dd><p>Whether native metadata omissions are explicitly accepted.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="AstroView.Core.FitsDocument.html">FitsDocument</a></dt>
+    <dd><p>A FITS document containing an HDU per image.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_FitsConverter_ToXisf_" data-uid="AstroView.Core.FitsConverter.ToXisf*"></a>
+
+  <h3 id="AstroView_Core_FitsConverter_ToXisf_AstroView_Core_FitsDocument_AstroView_Core_FitsConversionOptions_" data-uid="AstroView.Core.FitsConverter.ToXisf(AstroView.Core.FitsDocument,AstroView.Core.FitsConversionOptions)">
+  ToXisf(FitsDocument, FitsConversionOptions?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsConverter.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Converts FITS images to editable XISF images and retains supported storage metadata.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IReadOnlyList&lt;XisfImageData&gt; ToXisf(FitsDocument document, FitsConversionOptions? options = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>document</code> <a class="xref" href="AstroView.Core.FitsDocument.html">FitsDocument</a></dt>
+    <dd><p>The document to read, validate, sign, or serialize.</p>
+</dd>
+    <dt><code>options</code> <a class="xref" href="AstroView.Core.FitsConversionOptions.html">FitsConversionOptions</a></dt>
+    <dd><p>The operation settings, or null to use defaults.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="AstroView.Core.XisfImageData.html">XisfImageData</a>&gt;</dt>
+    <dd><p>The converted image or images with known metadata.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.notsupportedexception">NotSupportedException</a></dt>
+    <dd><p>Signed 64-bit FITS storage cannot be represented exactly by the floating-point conversion path.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="AstroView_Core_FitsConverter_ToXisf_" data-uid="AstroView.Core.FitsConverter.ToXisf*"></a>
+
+  <h3 id="AstroView_Core_FitsConverter_ToXisf_AstroView_Core_FitsImage_AstroView_Core_FitsConversionOptions_" data-uid="AstroView.Core.FitsConverter.ToXisf(AstroView.Core.FitsImage,AstroView.Core.FitsConversionOptions)">
+  ToXisf(FitsImage, FitsConversionOptions?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsConverter.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Converts FITS images to editable XISF images and retains supported storage metadata.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static XisfImageData ToXisf(FitsImage image, FitsConversionOptions? options = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>image</code> <a class="xref" href="AstroView.Core.FitsImage.html">FitsImage</a></dt>
+    <dd><p>The source image.</p>
+</dd>
+    <dt><code>options</code> <a class="xref" href="AstroView.Core.FitsConversionOptions.html">FitsConversionOptions</a></dt>
+    <dd><p>The operation settings, or null to use defaults.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="AstroView.Core.XisfImageData.html">XisfImageData</a></dt>
+    <dd><p>The converted image or images with known metadata.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.notsupportedexception">NotSupportedException</a></dt>
+    <dd><p>Signed 64-bit FITS storage cannot be represented exactly by the floating-point conversion path.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsConverter.cs" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

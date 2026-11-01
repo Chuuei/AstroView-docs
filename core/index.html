@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>AstroView.Core developer guide | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="AstroView.Core developer guide | AstroView documentation ">
+      
+      
+      <link rel="icon" href="../images/astroview.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Chuuei/AstroView/blob/main/docs/core/index.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="astroviewcore-developer-guide">AstroView.Core developer guide</h1>
+
+<p><code>AstroView.Core</code> is a .NET 10 library for astronomical image files. It contains
+FITS and XISF readers and writers, native document models, typed metadata and
+tables, scientific sample access, display rendering, statistics, conversion,
+validation and supported astrometric transforms. All public APIs use the
+<code>AstroView.Core</code> namespace, including types stored in the <code>Fits</code>, <code>Xisf</code>,
+<code>Imaging</code> and <code>Astronomy</code> source directories.</p>
+<p>The library is independent of Avalonia and the AstroView desktop application.
+Compression and XML cryptography have managed package dependencies, distributed
+with the Core release or restored through NuGet. No XISFLib package is required.</p>
+<h2 id="choose-the-appropriate-operation">Choose the appropriate operation</h2>
+<table>
+<thead>
+<tr>
+<th>Your task</th>
+<th>API family</th>
+<th>Guide</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Inspect an existing XISF/XISH header or image</td>
+<td><code>XisfReader</code>, <code>XisfDocument</code>, <code>XisfImage</code></td>
+<td><a href="xisf.html">XISF</a></td>
+</tr>
+<tr>
+<td>Create or re-encode XISF</td>
+<td><code>XisfImageData</code>, <code>XisfDocumentData</code>, <code>XisfWriter</code></td>
+<td><a href="xisf.html">XISF</a></td>
+</tr>
+<tr>
+<td>Read or preserve FITS HDUs</td>
+<td><code>FitsReader</code>, <code>FitsDocument</code>, <code>FitsHdu</code>, <code>FitsWriter</code></td>
+<td><a href="fits.html">FITS</a></td>
+</tr>
+<tr>
+<td>Work with exact pixels and channel layout</td>
+<td>Typed sample methods and <code>XisfImageExtensions</code></td>
+<td><a href="data-model.html">Data model</a></td>
+</tr>
+<tr>
+<td>Add properties, keywords or a catalog</td>
+<td>Property collections, known keys, table models</td>
+<td><a href="metadata-tables.html">Metadata and tables</a></td>
+</tr>
+<tr>
+<td>Produce a preview or measurements</td>
+<td><code>XisfDisplayRenderer</code>, statistics and histograms</td>
+<td><a href="imaging-analysis.html">Rendering and analysis</a></td>
+</tr>
+<tr>
+<td>Transform image and sky coordinates</td>
+<td><code>CelestialWorldCoordinateSystem</code>, <code>XisfAstrometricSolution</code></td>
+<td><a href="coordinates.html">Coordinates</a></td>
+</tr>
+<tr>
+<td>Assess integrity and conformance</td>
+<td>Validators, digest checks, XML signatures</td>
+<td><a href="validation-signatures.html">Validation</a></td>
+</tr>
+<tr>
+<td>Move between FITS and XISF</td>
+<td><code>FitsConverter</code>, <code>ConversionResult&lt;T&gt;</code></td>
+<td><a href="conversion.html">Conversion</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="integration-principles">Integration principles</h2>
+<ol>
+<li>Decide whether you need <strong>document preservation</strong>, <strong>editable content</strong> or a <strong>cross-format conversion</strong>. They have
+different fidelity contracts.</li>
+<li>Keep file sources available while a parsed XISF document can still read lazy
+blocks. Loading its XML does not materialize every image or ancillary block.</li>
+<li>Use a sample type that preserves the values you need. A <code>double</code> array is
+convenient for analysis but cannot represent every 64-bit integer.</li>
+<li>Configure budgets and external-resource policy before accepting arbitrary
+files. Reuse a deliberate policy across reads rather than raising limits in
+response to each failure.</li>
+<li>Treat preview pixels, scientific samples, file digests, semantic validation
+and signer trust as separate concepts in your application.</li>
+</ol>
+<h2 id="version-and-support-contract">Version and support contract</h2>
+<p>The examples target .NET 10 and the current <code>0.2.0</code> development API. Local builds
+have a <code>-dev</code> suffix; CI and tagged versions follow the
+<a href="../versioning.html">versioning policy</a>. A project targeting an older framework
+cannot reference the current library without being retargeted.</p>
+<p>Windows, Linux and macOS are exercised by CI. The
+<a href="../support-matrix.html">support matrix</a> distinguishes reading, writing,
+preservation and semantic evaluation for individual format features. Use that
+matrix when designing an import contract; the existence of an XML object or FITS
+card is not evidence that every associated convention is evaluated.</p>
+<p>Start with <a href="getting-started.html">installation</a>, or go directly to the
+<a href="api-reference.html">API reference guide</a> and <a href="recipes.html">executable recipes</a>.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/docs/core/index.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Tables and catalogs | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Tables and catalogs | AstroView documentation ">
+      
+      
+      <link rel="icon" href="../images/astroview.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Chuuei/AstroView/blob/main/docs/desktop/tables.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="tables-and-catalogs">Tables and catalogs</h1>
+
+<p>The <strong>Tables</strong> workspace browses supported FITS ASCII/binary and XISF typed
+tables. XISF documents can also create or replace a document-level table through
+a JSON definition.</p>
+<p><img src="../images/desktop-tables.png" alt="Tables workspace displaying the synthetic reference-star catalog"></p>
+<h2 id="browse-a-table">Browse a table</h2>
+<ol>
+<li>Select the document containing your table.</li>
+<li>Open <strong>Tables → Table browser</strong>.</li>
+<li>Choose a table from the dropdown.</li>
+<li>Read its column headings and types, then navigate the rows/columns.</li>
+</ol>
+<p>The browser displays up to 200 rows and 16 data columns per page. Use <strong>Previous 200</strong> / <strong>Next 200</strong> for row pages and
+<strong>← Columns</strong> / <strong>Columns →</strong>
+for column pages. The summary shows the displayed ranges and total size.
+An unresponsive navigation button at the first/last page simply means there is
+no further page in that direction.</p>
+<p>Integer scalar cells retain exact text, including Int64/UInt64 identifiers too
+large to represent exactly as doubles. Array cells are summarized rather than
+expanded into thousands of grid cells. A formatted summary is not a replacement
+for the underlying typed table data.</p>
+<p>If there are no tables, check the selected document and its image/HDU entries.
+An image-only file legitimately has no catalog. The reference scene includes a
+48-row star table you can use to learn the browser.</p>
+<h2 id="create-a-xisf-table">Create a XISF table</h2>
+<ol>
+<li>Open a XISF document or create the reference scene.</li>
+<li>Select <strong>XISF table editor</strong>.</li>
+<li>Click <strong>Load example definition</strong>.</li>
+<li>Modify its identifier, fields or rows, retaining valid JSON.</li>
+<li>Click <strong>Apply table in memory</strong>.</li>
+<li>Return to <strong>Table browser</strong>, select the new table and check its values.</li>
+<li>Export the document to save the change.</li>
+</ol>
+<p>A definition follows this structure:</p>
+<pre><code class="lang-json">{
+  &quot;id&quot;: &quot;UserCatalog&quot;,
+  &quot;caption&quot;: &quot;My reference stars&quot;,
+  &quot;fields&quot;: [
+    { &quot;id&quot;: &quot;Name&quot;, &quot;type&quot;: &quot;String&quot; },
+    { &quot;id&quot;: &quot;Flux&quot;, &quot;type&quot;: &quot;Float64&quot; },
+    { &quot;id&quot;: &quot;Flags&quot;, &quot;type&quot;: &quot;I32Vector&quot; }
+  ],
+  &quot;rows&quot;: [
+    [&quot;Star A&quot;, 1234.5, [1, 0, 1]],
+    [&quot;Star B&quot;, 890.25, [0, 1, 0]]
+  ]
+}
+</code></pre>
+<p><code>id</code> identifies the document-level table. Applying the same identifier replaces
+that table; a different identifier adds another table. <code>caption</code> is a human-readable
+description. Each field has an identifier and type; an optional <code>header</code> supplies
+its heading. Every row must have one cell per field in the same order.</p>
+<p>JSON requires quoted strings, unquoted numeric values, <code>true</code>/<code>false</code> for Boolean
+values and decimal points in numbers. A TimePoint uses an ISO-style timestamp
+string such as <code>&quot;2026-11-01T22:15:00+00:00&quot;</code>.</p>
+<h2 id="types-and-limits">Types and limits</h2>
+<p>The interactive editor supports scalar String, Boolean, TimePoint, signed/unsigned
+integer and real types, plus integer/real vectors and rectangular matrices.
+Use types such as <code>Int64</code>, <code>UInt64</code>, <code>Float32</code>, <code>Float64</code>, <code>I32Vector</code> and
+<code>F64Matrix</code>. A vector cell is a JSON array; a matrix cell is an array of rows
+with equal lengths.</p>
+<p>The editor accepts 1–32 fields, up to 1,000 rows and up to 4,096 elements in an
+array cell. Embedded cell-block storage can impose an additional size limit;
+use a smaller cell if the editor reports that it exceeds its block limit.
+These limits apply to the interactive editor, not to every table the reader can
+browse.</p>
+<h2 id="fits-editing-and-conversion">FITS editing and conversion</h2>
+<p>FITS tables are readable but are not editable through this JSON editor. Preserve
+the native document when retaining their original storage is important.
+Converting FITS tables to XISF can transform or omit table-storage details,
+units, scaling and array representations. Review <strong>Analyze fidelity</strong> rather
+than assuming that a displayed table can be recreated unchanged in either format.</p>
+<p>Advanced XISF types outside the JSON editor remain accessible through the full
+XISF XML editor or the developer API. Use the XML editor only when you understand
+the format's block/type requirements.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/docs/desktop/tables.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

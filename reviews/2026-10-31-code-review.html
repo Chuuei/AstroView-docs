@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Code review — 2026-10-31 | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Code review — 2026-10-31 | AstroView documentation ">
+      
+      
+      <link rel="icon" href="../images/astroview.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Chuuei/AstroView/blob/main/docs/reviews/2026-10-31-code-review.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="code-review--2026-10-31">Code review — 2026-10-31</h1>
+
+<p>Reviewed FITS parsing/writing/tables, XISF resources/codecs/references, image
+statistics/layouts/rendering, astronomy metadata/WCS, tests and packaging. Three
+parallel reviews were followed by independent cross-review of the patches. This
+is a source and regression review, not a formal security audit or proof of
+universal interoperability.</p>
+<h2 id="requested-regression-tests">Requested regression tests</h2>
+<p><code>XisfMalformedInputRegressionTests</code> protects both original malformed-input fixes:</p>
+<ul>
+<li>Non-seekable input with a complete preamble but truncated XML produces
+<code>XisfFormatException</code> with an inner <code>EndOfStreamException</code>. Sync and async entry
+points leave the caller stream open.</li>
+<li>Invalid Base64/hex characters and incomplete groups produce <code>XisfFormatException</code>
+with an inner <code>FormatException</code> at lazy access. Inline/embedded storage and repeat
+access after failure are covered.</li>
+<li>Ordinary storage <code>IOException</code> remains unchanged. Corrupt zlib now also retains
+its codec exception as the cause of a format error, for stream and path access.</li>
+</ul>
+<h2 id="findings-fixed">Findings fixed</h2>
+<p>Priority describes the discovered consequence, not an outstanding blocker.</p>
+<table>
+<thead>
+<tr>
+<th>Priority</th>
+<th>Defect and correction</th>
+<th>Regression tests</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1</td>
+<td>Recursive XISF references could exhaust the process stack. Iterative traversal preserves cycle detection and accepts 20,000-node shallow chains.</td>
+<td><code>XisfReferenceRegressionTests</code></td>
+</tr>
+<tr>
+<td>P1</td>
+<td>Huge shuffle item sizes caused billions of empty iterations on tiny blocks. Return the owned tail immediately when there is no complete item.</td>
+<td><code>XisfResourceRegressionTests</code></td>
+</tr>
+<tr>
+<td>P1</td>
+<td>XISF block limits were checked after allocating concatenated/decoded text or reading an external file. Preflight text nodes and opened-file length; also reject rooted cross-volume header-relative escapes.</td>
+<td><code>XisfResourceRegressionTests</code></td>
+</tr>
+<tr>
+<td>P1</td>
+<td>Repeated FITS descriptors could amplify a small heap into huge decoded arrays. Debit a cumulative per-table element budget before allocating.</td>
+<td><code>FitsTableRegressionTests</code></td>
+</tr>
+<tr>
+<td>P1</td>
+<td>Unsupported WCS projections/axes/distortions silently returned incorrect celestial coordinates. Reject unsupported explicit transforms; respect sparse CD defaults and CD precedence.</td>
+<td><code>WorldCoordinateRegressionTests</code></td>
+</tr>
+<tr>
+<td>P2</td>
+<td>Empty FITS numeric/P/Q arrays divided by zero or read missing descriptors. Return typed empty values and reject invalid repeated descriptors.</td>
+<td><code>FitsTableRegressionTests</code></td>
+</tr>
+<tr>
+<td>P2</td>
+<td>ASCII integers lost precision above 2^53, E vectors lost their float array type, and ASCII null markers failed parsing. Preserve Int64 values and types; recognize null text before conversion.</td>
+<td><code>FitsTableRegressionTests</code></td>
+</tr>
+<tr>
+<td>P2</td>
+<td>FITS long strings split escaped apostrophes and dropped continuation comments. Split logical characters and preserve final comments. Reject unrepresentable ASCII/card content instead of silently replacing/truncating it.</td>
+<td><code>FitsLongStringRegressionTests</code></td>
+</tr>
+<tr>
+<td>P2</td>
+<td>Distributed XISF paths assumed case-insensitive directories and rewrote legal Unix backslash filenames. Centralize platform-aware checks and preserve filenames.</td>
+<td><code>XisfWriterPathRegressionTests</code></td>
+</tr>
+<tr>
+<td>P2</td>
+<td>Finite extremes overflowed median, histogram placement, mean, normalization or variance. Retain ordinary arithmetic with scaled fallbacks; use wide statistics sampling arithmetic.</td>
+<td><code>ImageStatisticsRegressionTests</code>, <code>ParsedNormalizationRegressionTests</code></td>
+</tr>
+<tr>
+<td>P2</td>
+<td>XISF-carried FITS strings leaked quotes and prevented timestamp extraction. Decode once while native FITS strings retain their literal values.</td>
+<td><code>AstronomyMetadataRegressionTests</code></td>
+</tr>
+<tr>
+<td>Performance</td>
+<td>Invalid image requests decoded entire lazy images before failing. Run shared cheap validators before source access.</td>
+<td><code>ImageStatisticsRegressionTests</code></td>
+</tr>
+<tr>
+<td>Performance</td>
+<td>Statistics sorted twice and allocated a second sampled buffer. Exact selection reuses owned samples for MAD; extrema are retained before reordering.</td>
+<td>Independent sorted-reference statistics tests</td>
+</tr>
+</tbody>
+</table>
+<h2 id="measured-performance">Measured performance</h2>
+<pre><code class="lang-sh">dotnet run --project tools/AstroView.Performance -c Release
+</code></pre>
+<p>Windows x64, .NET 10.0.14; one million samples, seed 314159; three warm-ups and
+seven measured iterations. Both implementations must return identical median/MAD.</p>
+<table>
+<thead>
+<tr>
+<th>Distribution</th>
+<th style="text-align: right;">Two sorts / two buffers</th>
+<th style="text-align: right;">Selection / reused buffer</th>
+<th style="text-align: right;">Allocated bytes per operation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Random</td>
+<td style="text-align: right;">111.81 ms</td>
+<td style="text-align: right;">23.58 ms</td>
+<td style="text-align: right;">16,000,184 → 8,000,024</td>
+</tr>
+<tr>
+<td>Sorted</td>
+<td style="text-align: right;">98.90 ms</td>
+<td style="text-align: right;">45.38 ms</td>
+<td style="text-align: right;">16,000,184 → 8,000,024</td>
+</tr>
+<tr>
+<td>Constant</td>
+<td style="text-align: right;">36.26 ms</td>
+<td style="text-align: right;">6.79 ms</td>
+<td style="text-align: right;">16,000,184 → 8,000,024</td>
+</tr>
+</tbody>
+</table>
+<p>Times are medians and isolate the median/MAD stage, <strong>not</strong> complete statistics or
+file-loading throughput. Timings vary by machine/runtime and are not CI assertions.
+Defensive copies, checksums and exact integer conversion paths remain intact.</p>
+<h2 id="readability-and-compatibility">Readability and compatibility</h2>
+<ul>
+<li><code>CelestialWorldCoordinateSystem</code> now has its own file. A small internal helper
+shares FITS string decoding. Validation and distributed-path checks are centralized.</li>
+<li>Comments explain numeric slow paths, buffer ownership and iterative reference
+traversal. The existing exact-selection fallback and SIMD helpers are retained.</li>
+<li>The benchmark links the production selection source without widening public APIs.</li>
+<li>New <code>FitsReaderOptions.MaximumTableElements</code> defaults to 10,000,000 per table.
+Strings count characters, bit fields count bits, repeated heap references count
+each decoded element again. Raise it explicitly for larger trusted tables.</li>
+<li>Unscaled ASCII I cells now return <code>long</code>; scaled cells retain physical <code>double</code>
+values. Callers assuming all ASCII numbers were double must handle both types.</li>
+<li>FITS metadata that cannot fit printable ASCII/80-character cards throws rather
+than losing content. Failed single-file path writes preserve existing output.</li>
+<li>The WCS convenience API supports degree-based RA/DEC TAN in that axis order,
+plus its original linear mode when both CTYPE keywords are absent. Unsupported
+explicit conventions, pole overrides and distortion parameters are rejected.
+This does not change the separate native XISF astrometric evaluator.</li>
+</ul>
+<h2 id="remaining-findings-and-profiling-targets">Remaining findings and profiling targets</h2>
+<ol>
+<li><strong>P2 — optional network body timeout:</strong> XISF applies <code>NetworkTimeout</code> to request
+and stream acquisition, but synchronous body copying does not observe cancellation.
+A server stalling after headers may outlive that timeout. Network access is disabled
+by default. Follow-up: cancellation-aware HTTP body reads plus a local stalling-server
+test. Arbitrary custom streams may require their own cancellation cooperation.</li>
+<li><strong>Unmeasured performance opportunity:</strong> FITS numeric table decoding boxes elements
+and creates intermediate lists/arrays, including scalar cells. Benchmark real
+scalar/vector tables with scaling/nulls before adding specialized typed decoders.</li>
+<li><strong>Unmeasured performance opportunity:</strong> rectangular-array image factories flatten
+then copy, matrix-property decoding boxes elements, and matching-type channel/region
+reads still have per-sample paths. Profile allocation and row-copy costs before
+changing ownership/layout contracts.</li>
+<li><strong>Unmeasured performance opportunity:</strong> Lab rendering looks up working-space
+matrices per pixel. Benchmark an immutable per-render transform and define how
+caller mutation of working-space collections is handled before changing it.</li>
+</ol>
+<p>The network timeout is a known limitation, not a tested guarantee. The review does
+not claim universal maximum performance or absence of further defects.</p>
+<h2 id="validation-and-primary-references">Validation and primary references</h2>
+<p>Validation includes the full Release suite, locked restore, package generation,
+and the local 11-file FITS corpus. Photographs/reports remain outside tracked source.
+CI builds/tests on Windows, Linux and macOS; platform-specific tests explicitly skip
+where their filesystem assumptions do not apply.</p>
+<p><a href="https://fits.gsfc.nasa.gov/standard40/fits_standard40aa-le.pdf">FITS 4.0</a>,
+<a href="https://fits.gsfc.nasa.gov/fits_wcs.html">FITS WCS</a>,
+<a href="https://fits.gsfc.nasa.gov/registry/sip.html">SIP convention</a>.</p>
+<p>Follow-up 2026-11-01: the network body-read timeout finding is resolved by AV-003.
+See <a href="../interoperability.html">Phase 1 interoperability and timeout evidence</a> and
+<a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/XisfNetworkTimeoutTests.cs">the regression tests</a>.
+Custom resolver code/streams still need to cooperate with cancellation.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/docs/reviews/2026-10-31-code-review.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

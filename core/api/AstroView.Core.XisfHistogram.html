@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Class XisfHistogram | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class XisfHistogram | AstroView documentation ">
+      
+      <meta name="description" content="A channel histogram with underflow, overflow, and non-finite counts.">
+      <link rel="icon" href="../../images/astroview.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="AstroView.Core.XisfHistogram">
+
+
+
+  <h1 id="AstroView_Core_XisfHistogram" data-uid="AstroView.Core.XisfHistogram" class="text-break">
+Class XisfHistogram  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><span class="xref">AstroView</span>.<a class="xref" href="AstroView.Core.html">Core</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>AstroView.Core.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>A channel histogram with underflow, overflow, and non-finite counts.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed record XisfHistogram : IEquatable&lt;XisfHistogram&gt;</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">XisfHistogram</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="AstroView.Core.XisfHistogram.html">XisfHistogram</a>&gt;</div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="AstroView_Core_XisfHistogram__ctor_" data-uid="AstroView.Core.XisfHistogram.#ctor*"></a>
+
+  <h3 id="AstroView_Core_XisfHistogram__ctor_System_Int32_System_Double_System_Double_System_Collections_Generic_IReadOnlyList_System_Int64__System_Int64_System_Int64_System_Int64_" data-uid="AstroView.Core.XisfHistogram.#ctor(System.Int32,System.Double,System.Double,System.Collections.Generic.IReadOnlyList{System.Int64},System.Int64,System.Int64,System.Int64)">
+  XisfHistogram(int, double, double, IReadOnlyList&lt;long&gt;, long, long, long)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A channel histogram with underflow, overflow, and non-finite counts.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public XisfHistogram(int Channel, double LowerBound, double UpperBound, IReadOnlyList&lt;long&gt; Bins, long UnderflowCount, long OverflowCount, long NonFiniteCount)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>Channel</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The zero-based channel index.</p>
+</dd>
+    <dt><code>LowerBound</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The lower histogram bound.</p>
+</dd>
+    <dt><code>UpperBound</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The upper histogram bound.</p>
+</dd>
+    <dt><code>Bins</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>&gt;</dt>
+    <dd><p>The count in each equal-width bin.</p>
+</dd>
+    <dt><code>UnderflowCount</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd><p>The count below the lower bound.</p>
+</dd>
+    <dt><code>OverflowCount</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd><p>The count above the upper bound.</p>
+</dd>
+    <dt><code>NonFiniteCount</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd><p>The number of NaN or infinite values.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="AstroView_Core_XisfHistogram_Bins_" data-uid="AstroView.Core.XisfHistogram.Bins*"></a>
+
+  <h3 id="AstroView_Core_XisfHistogram_Bins" data-uid="AstroView.Core.XisfHistogram.Bins">
+  Bins
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The count in each equal-width bin.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;long&gt; Bins { get; init; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfHistogram_Channel_" data-uid="AstroView.Core.XisfHistogram.Channel*"></a>
+
+  <h3 id="AstroView_Core_XisfHistogram_Channel" data-uid="AstroView.Core.XisfHistogram.Channel">
+  Channel
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The zero-based channel index.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Channel { get; init; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfHistogram_LowerBound_" data-uid="AstroView.Core.XisfHistogram.LowerBound*"></a>
+
+  <h3 id="AstroView_Core_XisfHistogram_LowerBound" data-uid="AstroView.Core.XisfHistogram.LowerBound">
+  LowerBound
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The lower histogram bound.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double LowerBound { get; init; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfHistogram_NonFiniteCount_" data-uid="AstroView.Core.XisfHistogram.NonFiniteCount*"></a>
+
+  <h3 id="AstroView_Core_XisfHistogram_NonFiniteCount" data-uid="AstroView.Core.XisfHistogram.NonFiniteCount">
+  NonFiniteCount
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The number of NaN or infinite values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public long NonFiniteCount { get; init; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfHistogram_OverflowCount_" data-uid="AstroView.Core.XisfHistogram.OverflowCount*"></a>
+
+  <h3 id="AstroView_Core_XisfHistogram_OverflowCount" data-uid="AstroView.Core.XisfHistogram.OverflowCount">
+  OverflowCount
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The count above the upper bound.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public long OverflowCount { get; init; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfHistogram_UnderflowCount_" data-uid="AstroView.Core.XisfHistogram.UnderflowCount*"></a>
+
+  <h3 id="AstroView_Core_XisfHistogram_UnderflowCount" data-uid="AstroView.Core.XisfHistogram.UnderflowCount">
+  UnderflowCount
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The count below the lower bound.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public long UnderflowCount { get; init; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfHistogram_UpperBound_" data-uid="AstroView.Core.XisfHistogram.UpperBound*"></a>
+
+  <h3 id="AstroView_Core_XisfHistogram_UpperBound" data-uid="AstroView.Core.XisfHistogram.UpperBound">
+  UpperBound
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The upper histogram bound.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double UpperBound { get; init; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="AstroView_Core_XisfHistogram_Deconstruct_" data-uid="AstroView.Core.XisfHistogram.Deconstruct*"></a>
+
+  <h3 id="AstroView_Core_XisfHistogram_Deconstruct_System_Int32__System_Double__System_Double__System_Collections_Generic_IReadOnlyList_System_Int64___System_Int64__System_Int64__System_Int64__" data-uid="AstroView.Core.XisfHistogram.Deconstruct(System.Int32@,System.Double@,System.Double@,System.Collections.Generic.IReadOnlyList{System.Int64}@,System.Int64@,System.Int64@,System.Int64@)">
+  Deconstruct(out int, out double, out double, out IReadOnlyList&lt;long&gt;, out long, out long, out long)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Deconstruct(out int Channel, out double LowerBound, out double UpperBound, out IReadOnlyList&lt;long&gt; Bins, out long UnderflowCount, out long OverflowCount, out long NonFiniteCount)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>Channel</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>LowerBound</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+    <dt><code>UpperBound</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+    <dt><code>Bins</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>&gt;</dt>
+    <dd></dd>
+    <dt><code>UnderflowCount</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd></dd>
+    <dt><code>OverflowCount</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd></dd>
+    <dt><code>NonFiniteCount</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfHistogram_Equals_" data-uid="AstroView.Core.XisfHistogram.Equals*"></a>
+
+  <h3 id="AstroView_Core_XisfHistogram_Equals_AstroView_Core_XisfHistogram_" data-uid="AstroView.Core.XisfHistogram.Equals(AstroView.Core.XisfHistogram)">
+  Equals(XisfHistogram?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(XisfHistogram? other)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>other</code> <a class="xref" href="AstroView.Core.XisfHistogram.html">XisfHistogram</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfHistogram_Equals_" data-uid="AstroView.Core.XisfHistogram.Equals*"></a>
+
+  <h3 id="AstroView_Core_XisfHistogram_Equals_System_Object_" data-uid="AstroView.Core.XisfHistogram.Equals(System.Object)">
+  Equals(object?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object? obj)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>obj</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfHistogram_GetHashCode_" data-uid="AstroView.Core.XisfHistogram.GetHashCode*"></a>
+
+  <h3 id="AstroView_Core_XisfHistogram_GetHashCode" data-uid="AstroView.Core.XisfHistogram.GetHashCode">
+  GetHashCode()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfHistogram_ToString_" data-uid="AstroView.Core.XisfHistogram.ToString*"></a>
+
+  <h3 id="AstroView_Core_XisfHistogram_ToString" data-uid="AstroView.Core.XisfHistogram.ToString">
+  ToString()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="operators">Operators
+</h2>
+
+
+  <a id="AstroView_Core_XisfHistogram_op_Equality_" data-uid="AstroView.Core.XisfHistogram.op_Equality*"></a>
+
+  <h3 id="AstroView_Core_XisfHistogram_op_Equality_AstroView_Core_XisfHistogram_AstroView_Core_XisfHistogram_" data-uid="AstroView.Core.XisfHistogram.op_Equality(AstroView.Core.XisfHistogram,AstroView.Core.XisfHistogram)">
+  operator ==(XisfHistogram?, XisfHistogram?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(XisfHistogram? left, XisfHistogram? right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="AstroView.Core.XisfHistogram.html">XisfHistogram</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="AstroView.Core.XisfHistogram.html">XisfHistogram</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfHistogram_op_Inequality_" data-uid="AstroView.Core.XisfHistogram.op_Inequality*"></a>
+
+  <h3 id="AstroView_Core_XisfHistogram_op_Inequality_AstroView_Core_XisfHistogram_AstroView_Core_XisfHistogram_" data-uid="AstroView.Core.XisfHistogram.op_Inequality(AstroView.Core.XisfHistogram,AstroView.Core.XisfHistogram)">
+  operator !=(XisfHistogram?, XisfHistogram?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(XisfHistogram? left, XisfHistogram? right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="AstroView.Core.XisfHistogram.html">XisfHistogram</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="AstroView.Core.XisfHistogram.html">XisfHistogram</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

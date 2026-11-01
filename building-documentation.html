@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Building and maintaining documentation | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Building and maintaining documentation | AstroView documentation ">
+      
+      
+      <link rel="icon" href="images/astroview.ico">
+      <link rel="stylesheet" href="public/docfx.min.css">
+      <link rel="stylesheet" href="public/main.css">
+      <meta name="docfx:navrel" content="toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Chuuei/AstroView/blob/main/docs/building-documentation.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="index.html">
+            <img id="logo" class="svg" src="images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="building-and-maintaining-documentation">Building and maintaining documentation</h1>
+
+<p>AstroView has two documentation sets: the <a href="core/index.html">Core developer guide</a>
+and the <a href="desktop/index.html">desktop user manual</a>. Markdown sources remain readable
+in GitHub. A pinned local <a href="https://dotnet.github.io/docfx/">DocFX</a> tool builds a
+searchable HTML edition and generates the complete public Core API reference
+from the compiled assembly and its XML comments.</p>
+<h2 id="build-and-preview">Build and preview</h2>
+<p>Prerequisites: .NET 10 SDK and PowerShell (PowerShell 7 on Linux/macOS). Python
+3.10+ is used for snippet/site verification in CI. The HTML/API generator itself
+does not require Python or Node.js.</p>
+<p>From the repository root:</p>
+<pre><code class="lang-powershell">./eng/Build-Documentation.ps1
+</code></pre>
+<p>On Windows PowerShell with local script execution disabled, invoke the script
+with a process-local execution policy:</p>
+<pre><code class="lang-powershell">powershell -NoProfile -ExecutionPolicy Bypass -File eng/Build-Documentation.ps1
+</code></pre>
+<p>Output is <code>artifacts/documentation/site/index.html</code>. To preview with navigation
+and search over HTTP:</p>
+<pre><code class="lang-powershell">./eng/Build-Documentation.ps1 -Serve
+</code></pre>
+<p>Open <code>http://localhost:8080</code> and stop the local server with Ctrl+C. The server is
+bound to localhost. Serving over HTTP is recommended because browser restrictions
+on local <code>file:</code> URLs can interfere with search and navigation requests.</p>
+<p>CI uploads the complete HTML edition as the <strong>documentation-site</strong> artifact.
+Download/extract it and serve that directory, for example with Python:</p>
+<pre><code class="lang-sh">python -m http.server 8080 --bind 127.0.0.1 --directory path/to/extracted/site
+</code></pre>
+<p>This workflow builds artifacts; it does not enable public hosting or GitHub Pages.</p>
+<h2 id="structure">Structure</h2>
+<table>
+<thead>
+<tr>
+<th>Location</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>docs/core/</code></td>
+<td>Developer concepts, workflows, recipes and API map</td>
+</tr>
+<tr>
+<td><code>docs/desktop/</code></td>
+<td>Installation, workspace procedures and troubleshooting</td>
+</tr>
+<tr>
+<td><code>docs/core/api/</code></td>
+<td>Generated API YAML; ignored by Git and regenerated on build</td>
+</tr>
+<tr>
+<td><code>docs/images/</code></td>
+<td>Branding and screenshots of the synthetic reference scene</td>
+</tr>
+<tr>
+<td><code>docs/template/</code></td>
+<td>Small additions to DocFX's modern responsive/light/dark template</td>
+</tr>
+<tr>
+<td><code>docs/docfx.json</code>, <code>docs/**/toc.yml</code></td>
+<td>Content mappings and navigation</td>
+</tr>
+<tr>
+<td><code>dotnet-tools.json</code></td>
+<td>Pinned DocFX version and runtime roll-forward policy</td>
+</tr>
+<tr>
+<td><code>examples/AstroView.Core.Examples/</code></td>
+<td>Compiled/runnable developer examples</td>
+</tr>
+<tr>
+<td><code>eng/documentation.py</code></td>
+<td>Snippet synchronization and built-site link checks</td>
+</tr>
+</tbody>
+</table>
+<p>The API input is <code>AstroView.Core.dll</code> and its side-by-side XML file in
+<code>artifacts/documentation/core</code>. Generating from the assembly avoids loading the
+desktop application into the API extractor and uses the actual built public API.
+DocFX documents supported public/protected visibility according to its default
+filter and includes explicit interface implementations.</p>
+<h2 id="keep-examples-correct">Keep examples correct</h2>
+<p>Core guide code fences marked <code>&lt;!-- snippet: region-name --&gt;</code> are synchronized
+from named C# regions in the example program. Edit the C# first, then run:</p>
+<pre><code class="lang-sh">python eng/documentation.py sync
+python eng/documentation.py check
+dotnet run --project examples/AstroView.Core.Examples -c Release -- artifacts/documentation/examples
+</code></pre>
+<p>The check command fails when displayed snippets drift from the compiled example.
+Examples create only their own small files and assert meaningful sample,
+checksum, signature, conversion or coordinate results. CI compiles the example
+project with the solution and runs it on Windows, Linux and macOS.</p>
+<h2 id="update-a-public-api">Update a public API</h2>
+<p>Update XML documentation in the Core source with the API change. Include units,
+coordinate conventions, ownership/lifetimes, defaults, precision constraints,
+parameters, return values and useful exceptions. Keep implementation internals
+out of the public contract. Do not edit generated API YAML/HTML.</p>
+<p>Update the relevant conceptual chapter and the support matrix when behavior
+changes. An API catalog entry does not by itself expand evaluated format support.
+Add or adapt a runnable recipe when it provides useful integration coverage.</p>
+<h2 id="update-a-desktop-workflow">Update a desktop workflow</h2>
+<p>Use the exact visible control labels, say which document/image the action uses,
+describe the expected result, and explain how to save the change. Keep developer
+implementation details in <code>docs/desktop.md</code> and the Core guide.</p>
+<p>Screenshots come from <code>WorkspaceTests.DemoExercisesRealControlsAndEveryWorkspaceRenders</code>.
+Run that test and copy <code>workspace-0.png</code> through <code>workspace-7.png</code> into the
+corresponding <code>docs/images/desktop-*.png</code> files when the UI changes. Inspect every
+image before committing it. Use only the synthetic reference scene: local user
+photographs and their test captures must remain excluded from published docs.</p>
+<h2 id="verification">Verification</h2>
+<p>Documentation generation treats warnings as errors. After a build, run:</p>
+<pre><code class="lang-sh">python eng/documentation.py site --directory artifacts/documentation/site
+</code></pre>
+<p>This validates generated local links, fragments, image resources, search data,
+manual entry points and API pages. It does not crawl external websites. The
+documentation CI job runs the same checks, while solution CI runs the executable
+examples on all supported platforms. Review the rendered desktop/mobile pages,
+search and representative API overload pages when changing navigation or styling.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/docs/building-documentation.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

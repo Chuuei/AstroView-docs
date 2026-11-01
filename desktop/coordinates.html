@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Image and sky coordinates | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Image and sky coordinates | AstroView documentation ">
+      
+      
+      <link rel="icon" href="../images/astroview.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Chuuei/AstroView/blob/main/docs/desktop/coordinates.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="image-and-sky-coordinates">Image and sky coordinates</h1>
+
+<p>The <strong>Coordinates</strong> workspace transforms positions using a supported astrometric
+solution stored with the selected image. It also contains a separate projection
+calculator for experimentation.</p>
+<p><img src="../images/desktop-coordinates.png" alt="Coordinates workspace showing native XISF astrometry and forward/inverse controls"></p>
+<h2 id="check-the-solution-first">Check the solution first</h2>
+<p>Read <strong>ASTROMETRIC SOLUTION</strong> before calculating. A supported native XISF
+solution is used when available; otherwise the application can use recognized
+FITS WCS metadata. The reference emission nebula provides a native Gnomonic
+solution for this exercise.</p>
+<p>A file can contain astrometry-related properties that the current implementation
+cannot evaluate. Preserved WCS metadata is still visible in <strong>Inspect</strong>, but
+it is not automatically an available coordinate model. AstroView does not
+plate-solve an unsolved image when you open this workspace.</p>
+<h2 id="pixel-to-sky">Pixel to sky</h2>
+<ol>
+<li>Select the desired image.</li>
+<li>Enter <strong>Image column / row</strong> under <strong>PIXEL → SKY</strong>.</li>
+<li>Click <strong>Calculate sky coordinates</strong>.</li>
+<li>Read right ascension (RA), declination (Dec) and the input image position in
+the <strong>RESULT</strong> area.</li>
+</ol>
+<p>Image positions are <strong>zero-based pixel centres</strong> in this workspace: <code>(0,0)</code> is
+the first pixel centre. You can also click a pixel in the Image workspace to
+select a position, then switch to Coordinates. The application adapts FITS
+reference pixels and native XISF half-integer centres internally.</p>
+<h2 id="sky-to-pixel">Sky to pixel</h2>
+<ol>
+<li>Enter <strong>Right ascension / declination (°)</strong> under <strong>SKY → PIXEL</strong>.</li>
+<li>Click <strong>Calculate image coordinates</strong>.</li>
+<li>Read the zero-based column and row in the result.</li>
+</ol>
+<p>Enter both angles in <strong>degrees</strong>. RA expressed in hours must first be multiplied
+by 15; <code>5.5</code> hours is <code>82.5</code> degrees. Do not type an <code>hh:mm:ss</code> string into a
+numeric degree field. A resulting position outside the image is not necessarily
+an error: that sky location may be outside the recorded field. Positions outside
+the projection's mathematical domain can instead produce an explicit error.</p>
+<p>To practice, use the reference nebula, enter column <code>512</code> and row <code>384</code>, calculate
+sky coordinates, then calculate image coordinates from the resulting RA/Dec.
+You should return close to the original position within numeric precision.</p>
+<h2 id="projection-lab">Projection lab</h2>
+<p>The <strong>PROJECTION LAB</strong> uses a separate synthetic model. It never changes your
+document's astrometry.</p>
+<ol>
+<li>Enter a reference RA/Dec in the sky-coordinate fields.</li>
+<li>Enter the image column/row you want to test.</li>
+<li>Choose one of the seven projection names.</li>
+<li>Click <strong>Evaluate forward + inverse</strong>.</li>
+<li>Read the synthetic sky position and inverse image position in the result.</li>
+</ol>
+<p>Available projections are Gnomonic, Stereographic, ZenithalEqualArea, Orthographic,
+PlateCarree, Mercator and HammerAitoff. The synthetic model uses image reference
+<code>(512.5,384.5)</code> in native XISF coordinates and a <code>0.0003°</code>/pixel scale, with a
+negative horizontal matrix term. The workspace continues to present zero-based
+positions to you.</p>
+<p>Different projections have different valid areas and behavior near poles or
+boundaries. An error in the lab can indicate an invalid projection-domain
+position rather than a problem with your input file.</p>
+<h2 id="current-support-boundary">Current support boundary</h2>
+<p>FITS evaluation includes recognized RA/Dec TAN and supported legacy linear
+metadata; broader FITS projections/distortion conventions remain limited.
+Native XISF evaluation supports its implemented solution layers and seven
+projections. The lab's seven projections do not expand FITS WCS support.
+See <a href="reference.html#current-capability-boundaries">limits</a> if a solution remains
+unavailable, and keep the original metadata when exporting a native copy.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/docs/desktop/coordinates.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

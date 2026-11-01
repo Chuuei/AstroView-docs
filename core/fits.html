@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Working with FITS | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Working with FITS | AstroView documentation ">
+      
+      
+      <link rel="icon" href="../images/astroview.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Chuuei/AstroView/blob/main/docs/core/fits.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="working-with-fits">Working with FITS</h1>
+
+<h2 id="documents-hdus-and-headers">Documents, HDUs and headers</h2>
+<p>FITS files are ordered sequences of header/data units (HDUs). Load a document
+with <code>FitsReader.Load</code> or its async overloads. Preserve the document's HDU order,
+including a primary HDU that may contain no image. <code>document.Images</code> is a
+convenience image sequence, not a replacement for the full HDU collection.</p>
+<p><code>FitsHdu.Content</code> can expose a decoded <code>FitsImage</code>, <code>FitsTable</code> or no interpreted
+content. Unknown extensions can retain raw payloads. <code>Header</code> is an ordered
+collection of <code>FitsHeaderCard</code> records, so repeated cards and comments can be
+represented. Do not replace it with a dictionary if preservation matters.</p>
+<p>Use <code>Set</code> for a single-valued keyword and <code>Add</code> for repeated <code>HISTORY</code> or
+<code>COMMENT</code> records. <code>FitsKnownKeywords</code> and <code>FitsKeywordKey&lt;T&gt;</code> provide typed
+definitions for supported standard and convention-specific keywords.</p>
+<h2 id="create-write-and-verify-an-image">Create, write and verify an image</h2>
+<!-- snippet: create-fits -->
+<pre><code class="lang-csharp">public static void CreateFits(string directory)
+{
+    ushort[] pixels = [0, 100, 200, 65535];
+    var image = FitsImage.FromPhysicalSamples(pixels, [2, 2]);
+    var hdu = FitsHdu.CreateImage(image, primary: true);
+    hdu.Header.Set(&quot;OBJECT&quot;, &quot;M31&quot;);
+    hdu.Header.Add(new FitsHeaderCard(&quot;HISTORY&quot;, null, &quot;Created with AstroView.Core&quot;));
+    string path = Path.Combine(directory, &quot;image.fits&quot;);
+    FitsWriter.Write(path, new FitsDocument([hdu]), new() { WriteChecksums = true });
+    var loaded = FitsReader.Load(path);
+    double[] physical = loaded.Images.First().GetPhysicalSamples();
+    if (!physical.SequenceEqual(pixels.Select(value =&gt; (double)value)))
+        throw new InvalidOperationException(&quot;FITS sample round trip failed.&quot;);
+    if (loaded.Hdus[0].ChecksumValid != true || loaded.Hdus[0].DataChecksumValid != true)
+        throw new InvalidOperationException(&quot;FITS checksums failed.&quot;);
+}
+</code></pre>
+<p><code>FromPhysicalSamples</code> chooses appropriate FITS storage for supported input types,
+including conventional unsigned offsets. <code>GetPhysicalSamples</code> applies stored
+scaling and blank handling. Creating a primary image uses <code>primary: true</code>;
+additional image extensions use <code>false</code> after a valid primary HDU.</p>
+<p><code>FitsWriterOptions.WriteChecksums</code> is false by default. Set it to true when you
+want the writer to generate <code>CHECKSUM</code> and <code>DATASUM</code>. After loading, checksum
+results are nullable: <strong>missing</strong>, <strong>valid</strong> and <strong>invalid</strong> are different states.</p>
+<h2 id="exact-64-bit-values">Exact 64-bit values</h2>
+<p>Physical double access can round large integer samples. For supported unsigned
+offset storage, use the typed conversion path and keep the result in <code>ulong</code>.</p>
+<!-- snippet: exact-integers -->
+<pre><code class="lang-csharp">public static void ExactIntegers()
+{
+    ulong[] pixels = [0, 1, 9007199254740993UL, ulong.MaxValue];
+    var hdu = FitsHdu.CreateImage(FitsImage.FromPhysicalSamples(pixels, [2, 2]), primary: true);
+    using var stream = new MemoryStream();
+    FitsWriter.Write(stream, new FitsDocument([hdu]));
+    stream.Position = 0;
+    var fits = FitsReader.Load(stream);
+    var converted = FitsConverter.ConvertToXisf(fits);
+    ulong[] exact = converted.Value[0].GetSamples&lt;ulong&gt;();
+    if (!exact.SequenceEqual(pixels))
+        throw new InvalidOperationException(&quot;Exact UInt64 conversion failed.&quot;);
+    // GetPhysicalSamples() returns double and cannot retain all these integers.
+}
+</code></pre>
+<p>This demonstrates a specific supported storage convention, not a promise that
+arbitrary Int64 FITS scaling can always be represented exactly in XISF. XISF has
+unsigned integer image formats, and signed/scaled FITS conversions can use a
+floating-point path or fail when exact representation is not available. Treat
+<code>NotSupportedException</code> as an explicit unsupported conversion.</p>
+<h2 id="structural-edits">Structural edits</h2>
+<p>Headers contain structural cards tied to payload geometry and storage, including
+<code>BITPIX</code>, <code>NAXIS*</code>, scaling and table layout cards. Editing such a card does not
+resize or reinterpret the payload safely. Use <code>ReplaceImage</code> to replace an
+image through the native model, or deliberately construct a new HDU.</p>
+<p>Core guards inconsistent structural edits when writing. Application code should
+offer a specific image-replacement operation rather than exposing every header
+card as an unrestricted text field. Use native document output to retain
+uninterpreted extensions; conversion is a separate, potentially lossy operation.</p>
+<h2 id="fits-tables">FITS tables</h2>
+<p>Parsed ASCII and binary tables expose <code>Columns</code> and <code>Rows</code>. Column metadata
+includes format, units, scale, zero point and null conventions. Values can be
+arrays or exact integer types, so avoid stringifying every cell if subsequent
+computation or round-trip fidelity matters.</p>
+<p>The native table model is read-only. Preserve the containing HDU when retaining
+original table storage. Conversion to XISF can transform tables and report loss
+of original storage/extension details; it is not a native FITS table editor.
+See <a href="metadata-tables.html">metadata and tables</a>.</p>
+<h2 id="validation-and-unsupported-conventions">Validation and unsupported conventions</h2>
+<p><code>FitsValidationMode.Tolerant</code> records supported conformance findings and is the
+default. <code>Strict</code> rejects error-level findings. Neither mode enables a missing
+codec or convention. Image decompression for tiled/compressed FITS and broader
+WCS evaluation remain roadmap items.</p>
+<p>Retaining a header containing SIP, TPV or another WCS convention does not make
+that convention evaluable by <code>CelestialWorldCoordinateSystem</code>. Always check
+<code>TryCreate</code> before using a coordinate transform. Consult
+<a href="coordinates.html">coordinates</a>, <a href="resources-performance.html">reader budgets</a> and
+the <a href="../support-matrix.html">support matrix</a> for supported operations and limits.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/docs/core/fits.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

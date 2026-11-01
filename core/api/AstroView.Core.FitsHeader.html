@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Class FitsHeader | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class FitsHeader | AstroView documentation ">
+      
+      <meta name="description" content="An ordered, editable collection of FITS cards preserving repeated keywords.">
+      <link rel="icon" href="../../images/astroview.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="AstroView.Core.FitsHeader">
+
+
+
+  <h1 id="AstroView_Core_FitsHeader" data-uid="AstroView.Core.FitsHeader" class="text-break">
+Class FitsHeader  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsDocument.cs"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><span class="xref">AstroView</span>.<a class="xref" href="AstroView.Core.html">Core</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>AstroView.Core.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>An ordered, editable collection of FITS cards preserving repeated keywords.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class FitsHeader : Collection&lt;FitsHeaderCard&gt;, IList&lt;FitsHeaderCard&gt;, ICollection&lt;FitsHeaderCard&gt;, IList, ICollection, IReadOnlyList&lt;FitsHeaderCard&gt;, IReadOnlyCollection&lt;FitsHeaderCard&gt;, IEnumerable&lt;FitsHeaderCard&gt;, IEnumerable</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1">Collection</a>&lt;<a class="xref" href="AstroView.Core.FitsHeaderCard.html">FitsHeaderCard</a>&gt;</div>
+      <div><span class="xref">FitsHeader</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="AstroView.Core.FitsHeaderCard.html">FitsHeaderCard</a>&gt;</div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1">ICollection</a>&lt;<a class="xref" href="AstroView.Core.FitsHeaderCard.html">FitsHeaderCard</a>&gt;</div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.ilist">IList</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.icollection">ICollection</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="AstroView.Core.FitsHeaderCard.html">FitsHeaderCard</a>&gt;</div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1">IReadOnlyCollection</a>&lt;<a class="xref" href="AstroView.Core.FitsHeaderCard.html">FitsHeaderCard</a>&gt;</div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="AstroView.Core.FitsHeaderCard.html">FitsHeaderCard</a>&gt;</div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.ienumerable">IEnumerable</a></div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.add">Collection&lt;FitsHeaderCard&gt;.Add(FitsHeaderCard)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.clear">Collection&lt;FitsHeaderCard&gt;.Clear()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.copyto">Collection&lt;FitsHeaderCard&gt;.CopyTo(FitsHeaderCard[], int)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.contains">Collection&lt;FitsHeaderCard&gt;.Contains(FitsHeaderCard)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.getenumerator">Collection&lt;FitsHeaderCard&gt;.GetEnumerator()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.indexof">Collection&lt;FitsHeaderCard&gt;.IndexOf(FitsHeaderCard)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.insert">Collection&lt;FitsHeaderCard&gt;.Insert(int, FitsHeaderCard)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.remove">Collection&lt;FitsHeaderCard&gt;.Remove(FitsHeaderCard)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.removeat">Collection&lt;FitsHeaderCard&gt;.RemoveAt(int)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.collection-1.count">Collection&lt;FitsHeaderCard&gt;.Count</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Collection&lt;FitsHeaderCard&gt;.this[int]</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="AstroView_Core_FitsHeader__ctor_" data-uid="AstroView.Core.FitsHeader.#ctor*"></a>
+
+  <h3 id="AstroView_Core_FitsHeader__ctor" data-uid="AstroView.Core.FitsHeader.#ctor">
+  FitsHeader()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsDocument.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Initializes a new instance with the supplied values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FitsHeader()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_FitsHeader__ctor_" data-uid="AstroView.Core.FitsHeader.#ctor*"></a>
+
+  <h3 id="AstroView_Core_FitsHeader__ctor_System_Collections_Generic_IEnumerable_AstroView_Core_FitsHeaderCard__" data-uid="AstroView.Core.FitsHeader.#ctor(System.Collections.Generic.IEnumerable{AstroView.Core.FitsHeaderCard})">
+  FitsHeader(IEnumerable&lt;FitsHeaderCard&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsDocument.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Initializes a new instance with the supplied values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FitsHeader(IEnumerable&lt;FitsHeaderCard&gt; cards)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>cards</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="AstroView.Core.FitsHeaderCard.html">FitsHeaderCard</a>&gt;</dt>
+    <dd><p>The header cards in storage order.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="AstroView_Core_FitsHeader_Add_" data-uid="AstroView.Core.FitsHeader.Add*"></a>
+
+  <h3 id="AstroView_Core_FitsHeader_Add__1_AstroView_Core_FitsKeywordKey___0____0_System_String_" data-uid="AstroView.Core.FitsHeader.Add``1(AstroView.Core.FitsKeywordKey{``0},``0,System.String)">
+  Add&lt;T&gt;(FitsKeywordKey&lt;T&gt;, T, string?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsHeader.Typed.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Appends a typed card, preserving ordered commentary and duplicate keywords.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Add&lt;T&gt;(FitsKeywordKey&lt;T&gt; key, T value, string? comment = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="AstroView.Core.FitsKeywordKey-1.html">FitsKeywordKey</a>&lt;T&gt;</dt>
+    <dd><p>The keyword definition.</p>
+</dd>
+    <dt><code>value</code> <span class="xref">T</span></dt>
+    <dd><p>The CLR value.</p>
+</dd>
+    <dt><code>comment</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The optional comment.</p>
+</dd>
+  </dl>
+
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>The key's CLR value type.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_FitsHeader_ClearItems_" data-uid="AstroView.Core.FitsHeader.ClearItems*"></a>
+
+  <h3 id="AstroView_Core_FitsHeader_ClearItems" data-uid="AstroView.Core.FitsHeader.ClearItems">
+  ClearItems()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsDocument.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void ClearItems()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_FitsHeader_Find_" data-uid="AstroView.Core.FitsHeader.Find*"></a>
+
+  <h3 id="AstroView_Core_FitsHeader_Find_AstroView_Core_FitsKeywordKey_" data-uid="AstroView.Core.FitsHeader.Find(AstroView.Core.FitsKeywordKey)">
+  Find(FitsKeywordKey)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsHeader.Typed.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Returns every matching card, including ordered commentary.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;FitsHeaderCard&gt; Find(FitsKeywordKey key)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="AstroView.Core.FitsKeywordKey.html">FitsKeywordKey</a></dt>
+    <dd><p>The keyword definition.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="AstroView.Core.FitsHeaderCard.html">FitsHeaderCard</a>&gt;</dt>
+    <dd><p>The matching cards in header order.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_FitsHeader_Find_" data-uid="AstroView.Core.FitsHeader.Find*"></a>
+
+  <h3 id="AstroView_Core_FitsHeader_Find_System_String_" data-uid="AstroView.Core.FitsHeader.Find(System.String)">
+  Find(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsDocument.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Returns all keyword matches using case-insensitive comparison.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;FitsHeaderCard&gt; Find(string keyword)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>keyword</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The FITS keyword matched without case sensitivity.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="AstroView.Core.FitsHeaderCard.html">FitsHeaderCard</a>&gt;</dt>
+    <dd><p>All matching cards in header order.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_FitsHeader_FindFirst_" data-uid="AstroView.Core.FitsHeader.FindFirst*"></a>
+
+  <h3 id="AstroView_Core_FitsHeader_FindFirst_System_String_" data-uid="AstroView.Core.FitsHeader.FindFirst(System.String)">
+  FindFirst(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsDocument.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Returns the first keyword match, or null when absent.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FitsHeaderCard? FindFirst(string keyword)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>keyword</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The FITS keyword matched without case sensitivity.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="AstroView.Core.FitsHeaderCard.html">FitsHeaderCard</a></dt>
+    <dd><p>The first matching card, or null if none exists.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_FitsHeader_GetRequiredValue_" data-uid="AstroView.Core.FitsHeader.GetRequiredValue*"></a>
+
+  <h3 id="AstroView_Core_FitsHeader_GetRequiredValue__1_AstroView_Core_FitsKeywordKey___0__" data-uid="AstroView.Core.FitsHeader.GetRequiredValue``1(AstroView.Core.FitsKeywordKey{``0})">
+  GetRequiredValue&lt;T&gt;(FitsKeywordKey&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsHeader.Typed.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads a required typed keyword; absence or incompatible representation throws.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T GetRequiredValue&lt;T&gt;(FitsKeywordKey&lt;T&gt; key)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="AstroView.Core.FitsKeywordKey-1.html">FitsKeywordKey</a>&lt;T&gt;</dt>
+    <dd><p>The keyword definition.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The converted first matching value.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>The key's CLR value type.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_FitsHeader_GetRequiredValue_" data-uid="AstroView.Core.FitsHeader.GetRequiredValue*"></a>
+
+  <h3 id="AstroView_Core_FitsHeader_GetRequiredValue__1_System_String_" data-uid="AstroView.Core.FitsHeader.GetRequiredValue``1(System.String)">
+  GetRequiredValue&lt;T&gt;(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsDocument.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads a required keyword, throwing when absent or when conversion fails.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T GetRequiredValue&lt;T&gt;(string keyword)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>keyword</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The case-insensitive keyword.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The converted value.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>The requested CLR value type.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_FitsHeader_GetValueOrDefault_" data-uid="AstroView.Core.FitsHeader.GetValueOrDefault*"></a>
+
+  <h3 id="AstroView_Core_FitsHeader_GetValueOrDefault__1_AstroView_Core_FitsKeywordKey___0____0_" data-uid="AstroView.Core.FitsHeader.GetValueOrDefault``1(AstroView.Core.FitsKeywordKey{``0},``0)">
+  GetValueOrDefault&lt;T&gt;(FitsKeywordKey&lt;T&gt;, T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsHeader.Typed.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Returns a fallback for absent or null values; incompatible stored values throw.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T GetValueOrDefault&lt;T&gt;(FitsKeywordKey&lt;T&gt; key, T defaultValue = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="AstroView.Core.FitsKeywordKey-1.html">FitsKeywordKey</a>&lt;T&gt;</dt>
+    <dd><p>The keyword definition.</p>
+</dd>
+    <dt><code>defaultValue</code> <span class="xref">T</span></dt>
+    <dd><p>The explicit fallback.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The converted value or fallback.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>The key's CLR value type.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_FitsHeader_GetValueOrDefault_" data-uid="AstroView.Core.FitsHeader.GetValueOrDefault*"></a>
+
+  <h3 id="AstroView_Core_FitsHeader_GetValueOrDefault__1_System_String___0_" data-uid="AstroView.Core.FitsHeader.GetValueOrDefault``1(System.String,``0)">
+  GetValueOrDefault&lt;T&gt;(string, T?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsDocument.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Converts the first keyword value to the requested type, or returns the supplied default.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T? GetValueOrDefault&lt;T&gt;(string keyword, T? defaultValue = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>keyword</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The FITS keyword matched without case sensitivity.</p>
+</dd>
+    <dt><code>defaultValue</code> <span class="xref">T</span></dt>
+    <dd><p>The value returned when the keyword is absent or has a null value.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The converted value or the supplied default.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>The numeric sample or header-value type.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_FitsHeader_InsertItem_" data-uid="AstroView.Core.FitsHeader.InsertItem*"></a>
+
+  <h3 id="AstroView_Core_FitsHeader_InsertItem_System_Int32_AstroView_Core_FitsHeaderCard_" data-uid="AstroView.Core.FitsHeader.InsertItem(System.Int32,AstroView.Core.FitsHeaderCard)">
+  InsertItem(int, FitsHeaderCard)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsDocument.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void InsertItem(int index, FitsHeaderCard item)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>index</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>item</code> <a class="xref" href="AstroView.Core.FitsHeaderCard.html">FitsHeaderCard</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_FitsHeader_Remove_" data-uid="AstroView.Core.FitsHeader.Remove*"></a>
+
+  <h3 id="AstroView_Core_FitsHeader_Remove_AstroView_Core_FitsKeywordKey_" data-uid="AstroView.Core.FitsHeader.Remove(AstroView.Core.FitsKeywordKey)">
+  Remove(FitsKeywordKey)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsHeader.Typed.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Removes all matching cards; image structural-header guards still apply.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Remove(FitsKeywordKey key)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="AstroView.Core.FitsKeywordKey.html">FitsKeywordKey</a></dt>
+    <dd><p>The keyword definition.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>Whether any cards were removed.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_FitsHeader_RemoveItem_" data-uid="AstroView.Core.FitsHeader.RemoveItem*"></a>
+
+  <h3 id="AstroView_Core_FitsHeader_RemoveItem_System_Int32_" data-uid="AstroView.Core.FitsHeader.RemoveItem(System.Int32)">
+  RemoveItem(int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsDocument.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void RemoveItem(int index)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>index</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_FitsHeader_Set_" data-uid="AstroView.Core.FitsHeader.Set*"></a>
+
+  <h3 id="AstroView_Core_FitsHeader_Set_System_String_System_Object_System_String_" data-uid="AstroView.Core.FitsHeader.Set(System.String,System.Object,System.String)">
+  Set(string, object?, string?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsDocument.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Replaces all matching cards with one typed value. Use Add to append commentary.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Set(string keyword, object? value, string? comment = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>keyword</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The keyword to replace.</p>
+</dd>
+    <dt><code>value</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
+    <dd><p>The CLR value; strings do not require FITS quoting.</p>
+</dd>
+    <dt><code>comment</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The optional comment.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_FitsHeader_SetItem_" data-uid="AstroView.Core.FitsHeader.SetItem*"></a>
+
+  <h3 id="AstroView_Core_FitsHeader_SetItem_System_Int32_AstroView_Core_FitsHeaderCard_" data-uid="AstroView.Core.FitsHeader.SetItem(System.Int32,AstroView.Core.FitsHeaderCard)">
+  SetItem(int, FitsHeaderCard)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsDocument.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void SetItem(int index, FitsHeaderCard item)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>index</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>item</code> <a class="xref" href="AstroView.Core.FitsHeaderCard.html">FitsHeaderCard</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_FitsHeader_Set_" data-uid="AstroView.Core.FitsHeader.Set*"></a>
+
+  <h3 id="AstroView_Core_FitsHeader_Set__1_AstroView_Core_FitsKeywordKey___0____0_System_String_" data-uid="AstroView.Core.FitsHeader.Set``1(AstroView.Core.FitsKeywordKey{``0},``0,System.String)">
+  Set&lt;T&gt;(FitsKeywordKey&lt;T&gt;, T, string?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsHeader.Typed.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Stores a typed keyword, using the existing structural-header guards.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Set&lt;T&gt;(FitsKeywordKey&lt;T&gt; key, T value, string? comment = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="AstroView.Core.FitsKeywordKey-1.html">FitsKeywordKey</a>&lt;T&gt;</dt>
+    <dd><p>A keyword definition from FitsKnownKeywords.</p>
+</dd>
+    <dt><code>value</code> <span class="xref">T</span></dt>
+    <dd><p>The CLR value; strings are quoted by the writer.</p>
+</dd>
+    <dt><code>comment</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The optional comment.</p>
+</dd>
+  </dl>
+
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>The key's CLR value type.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_FitsHeader_TryGetValue_" data-uid="AstroView.Core.FitsHeader.TryGetValue*"></a>
+
+  <h3 id="AstroView_Core_FitsHeader_TryGetValue__1_AstroView_Core_FitsKeywordKey___0____0__" data-uid="AstroView.Core.FitsHeader.TryGetValue``1(AstroView.Core.FitsKeywordKey{``0},``0@)">
+  TryGetValue&lt;T&gt;(FitsKeywordKey&lt;T&gt;, out T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsHeader.Typed.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Tries to read a compatible first matching keyword value, distinguishing absence from zero.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryGetValue&lt;T&gt;(FitsKeywordKey&lt;T&gt; key, out T value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="AstroView.Core.FitsKeywordKey-1.html">FitsKeywordKey</a>&lt;T&gt;</dt>
+    <dd><p>The keyword definition.</p>
+</dd>
+    <dt><code>value</code> <span class="xref">T</span></dt>
+    <dd><p>The value when successful.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>Whether a compatible value was read.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>The key's CLR value type.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_FitsHeader_TryGetValue_" data-uid="AstroView.Core.FitsHeader.TryGetValue*"></a>
+
+  <h3 id="AstroView_Core_FitsHeader_TryGetValue__1_System_String___0__" data-uid="AstroView.Core.FitsHeader.TryGetValue``1(System.String,``0@)">
+  TryGetValue&lt;T&gt;(string, out T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsDocument.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Returns false for an absent, null or incompatible keyword value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryGetValue&lt;T&gt;(string keyword, out T value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>keyword</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The case-insensitive keyword.</p>
+</dd>
+    <dt><code>value</code> <span class="xref">T</span></dt>
+    <dd><p>The converted value when successful.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>Whether the conversion succeeded.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>The requested CLR value type.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsDocument.cs" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

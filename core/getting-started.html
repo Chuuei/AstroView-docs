@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Installation and quick start | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Installation and quick start | AstroView documentation ">
+      
+      
+      <link rel="icon" href="../images/astroview.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Chuuei/AstroView/blob/main/docs/core/getting-started.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="installation-and-quick-start">Installation and quick start</h1>
+
+<h2 id="requirements">Requirements</h2>
+<p>Use a .NET 10 SDK to build an application against AstroView.Core. The library
+itself needs .NET 10 at runtime. It has no graphical subsystem requirement.
+Nullable reference types and implicit usings are enabled in the sample project.</p>
+<p>Choose one of the following consumption methods. Use the actual version from
+your release or locally built package rather than assuming that a version has
+already been published to nuget.org.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Setup</th>
+<th>Dependency handling</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Project reference</td>
+<td>Reference <code>src/AstroView.Core/AstroView.Core.csproj</code> from another project</td>
+<td>Normal NuGet restore of Core's dependencies</td>
+</tr>
+<tr>
+<td>Local NuGet source</td>
+<td>Extract the Core release; add its <code>nuget</code> directory as a package source</td>
+<td>NuGet restores the compression and cryptography packages</td>
+</tr>
+<tr>
+<td>Direct DLL reference</td>
+<td>Extract the complete Core ZIP; import <code>AstroView.Core.props</code></td>
+<td>The import references and copies the supplied DLLs</td>
+</tr>
+</tbody>
+</table>
+<p>For a local package source:</p>
+<pre><code class="lang-sh">dotnet new console --framework net10.0 --name MyAstroTool
+dotnet nuget add source /absolute/path/to/extracted/nuget --name AstroViewLocal
+dotnet add MyAstroTool package AstroView.Core --version 0.2.0
+</code></pre>
+<p>Replace <code>0.2.0</code> with the package's version, including its prerelease suffix if
+present. Keep nuget.org enabled so package dependencies can restore.</p>
+<p>For the direct DLL method, add this after your target framework property group:</p>
+<pre><code class="lang-xml">&lt;Import Project=&quot;path/to/extracted/AstroView.Core.props&quot; /&gt;
+</code></pre>
+<p>Retain the archive's directory structure. The reference file selects the proper
+cryptography implementation for the target, including cross-publishing. Avoid
+mixing these direct references with different versions of the same NuGet
+dependencies. See the Core archive README and <a href="../releases.html">release guide</a>.</p>
+<h2 id="create-an-image">Create an image</h2>
+<p>The recipe below uses <code>using AstroView.Core;</code>. Its <code>directory</code> argument is a
+writable output directory created by the caller. Dimensions are width then
+height; one channel means a monochrome image. <code>FromSamples</code> copies the input.</p>
+<!-- snippet: create-xisf -->
+<pre><code class="lang-csharp">public static void CreateXisf(string directory)
+{
+    ushort[] pixels = [0, 100, 200, 65535];
+    var image = XisfImageData.FromSamples(pixels, [2, 2], 1);
+    image.Id = &quot;Luminance&quot;;
+    image.Properties.Set(XisfKnownProperties.Observation.Object.Name, &quot;M31&quot;);
+    image.FitsKeywords.Add(XisfFitsKeyword.FromValue(&quot;EXPTIME&quot;, 180.0, &quot;Seconds&quot;));
+    XisfWriter.Write(Path.Combine(directory, &quot;image.xisf&quot;), [image], new()
+    {
+        Compression = XisfCompression.Zstd,
+        Shuffle = true,
+        Checksum = XisfChecksum.Sha256
+    });
+}
+</code></pre>
+<p>This creates a 2 × 2 UInt16 XISF image with Zstandard compression, byte shuffle,
+a SHA-256 block digest, an object name and an exposure keyword.</p>
+<h2 id="read-it-back">Read it back</h2>
+<!-- snippet: read-xisf -->
+<pre><code class="lang-csharp">public static void ReadXisf(string directory)
+{
+    var document = XisfReader.Load(Path.Combine(directory, &quot;image.xisf&quot;));
+    var image = document.Images[0];
+    ushort[] pixels = image.GetSamples&lt;ushort&gt;();
+    Console.WriteLine($&quot;{image.Dimensions[0]} × {image.Dimensions[1]}, {image.ChannelCount} channel(s)&quot;);
+    if (!pixels.SequenceEqual(new ushort[] { 0, 100, 200, 65535 }))
+        throw new InvalidOperationException(&quot;XISF sample round trip failed.&quot;);
+}
+</code></pre>
+<p><code>Load</code> parses the document. <code>GetSamples&lt;ushort&gt;()</code> forces the selected image's
+data to decode and verifies any declared block checksum. The returned array is
+owned by your application. Mutating it does not update the parsed image.</p>
+<h2 id="run-all-examples">Run all examples</h2>
+<p>From the repository root:</p>
+<pre><code class="lang-sh">dotnet run --project examples/AstroView.Core.Examples -c Release -- artifacts/my-examples
+</code></pre>
+<p>The executable creates its own small FITS/XISF files and checks the results. It
+does not require downloaded astronomical photographs. Subsequent runs reuse the
+chosen output directory, so choose a dedicated example directory.</p>
+<p>Next, read <a href="data-model.html">documents, pixels and ownership</a> before integrating
+large files or editable documents into a long-lived application.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/docs/core/getting-started.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Viewing images | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Viewing images | AstroView documentation ">
+      
+      
+      <link rel="icon" href="../images/astroview.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Chuuei/AstroView/blob/main/docs/desktop/viewing.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="viewing-images">Viewing images</h1>
+
+<p>The <strong>Image</strong> workspace presents a display rendering of the selected scientific
+image. The dimensions/sample summary above it describes the underlying data,
+not an 8-bit conversion of that data.</p>
+<p><img src="../images/desktop-image.png" alt="Image workspace with display settings and a synthetic nebula"></p>
+<h2 id="navigate-the-image">Navigate the image</h2>
+<table>
+<thead>
+<tr>
+<th>Control</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Fit</strong> / Ctrl+0</td>
+<td>Fits the preview in the available viewport</td>
+</tr>
+<tr>
+<td><strong>1:1</strong> / Ctrl+1</td>
+<td>Sets actual-size viewing</td>
+</tr>
+<tr>
+<td>Mouse wheel</td>
+<td>Zooms the view</td>
+</tr>
+<tr>
+<td>Left drag</td>
+<td>Pans the image</td>
+</tr>
+<tr>
+<td>Double-click</td>
+<td>Fits the image again</td>
+</tr>
+<tr>
+<td>Click</td>
+<td>Selects a pixel and updates the position readout</td>
+</tr>
+<tr>
+<td><strong>Selection crosshair</strong></td>
+<td>Shows/hides the selection marker</td>
+</tr>
+</tbody>
+</table>
+<p>Pixel positions shown by the workspace are zero-based image positions. Source
+orientation is accounted for when mapping a displayed selection. Panning and
+zooming do not crop, resize or rotate the stored scientific image.</p>
+<h2 id="choose-a-display-mode">Choose a display mode</h2>
+<p>In the right-hand <strong>DISPLAY</strong> panel, choose a mode and click <strong>Apply display</strong>.
+Scroll the panel if lower controls are outside the window.</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Use it when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Auto stretch</strong></td>
+<td>You want faint astronomical structure to be visible without manually scaling source samples</td>
+</tr>
+<tr>
+<td><strong>Linear</strong></td>
+<td>You want a preview based on linear normalization, for example to inspect an integer gradient</td>
+</tr>
+<tr>
+<td><strong>Stored display function</strong></td>
+<td>The file contains display settings you want AstroView to use</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Target background</strong> controls the automatic stretch's background target.
+The application starts at <code>0.22</code>. <strong>Shadows clipping (σ)</strong> adjusts the shadow
+clipping parameter; the initial value is <code>-2.8</code>. These are display controls,
+not changes to black-level calibration in the original data.</p>
+<p>With <strong>Link colour channels</strong> selected, the stretch links channels rather than
+independently stretching each channel. Try linked channels first for an RGB
+image; independent channel stretches can change apparent color balance. Compare
+the result visually and use <strong>Analyze</strong> for the actual sample measurements.</p>
+<p>A file may lack a meaningful stored display function. Do not interpret that as
+missing pixel data; try Auto stretch or Linear. Different display modes can
+make the same scientific samples appear quite different.</p>
+<h2 id="observation-summary">Observation summary</h2>
+<p>The <strong>OBSERVATION</strong> panel summarizes recognized object, telescope, exposure and
+filter metadata. Missing fields are left out; the app does not infer a missing
+exposure or telescope from the image appearance. Use <strong>Inspect</strong> for individual
+metadata values and scope.</p>
+<h2 id="fits-color-axis-interpretation">FITS color-axis interpretation</h2>
+<p>A third FITS axis is preserved as a scientific axis by default. If your file is
+known to store RGB/RGBA planes in that axis:</p>
+<ol>
+<li>Select the FITS image.</li>
+<li>Scroll to <strong>FITS AXES</strong>.</li>
+<li>Select <strong>Interpret 3rd axis as RGB/RGBA</strong>.</li>
+<li>Click <strong>Apply axis interpretation</strong>.</li>
+</ol>
+<p>Use this only when the third axis really represents color. A cube with three
+spectral planes is not automatically an RGB photograph. This choice also informs
+subsequent format conversion; review it before exporting.</p>
+<h2 id="export-the-visible-rendering">Export the visible rendering</h2>
+<p>Click <strong>Export preview as PNG…</strong> and choose a new filename. The PNG represents
+the rendered preview, including the chosen display transformation and supported
+orientation/color interpretation. It does not retain scientific sample precision,
+the whole FITS/XISF document or its catalog metadata. Use
+<a href="export.html">Export</a> for a scientific document copy.</p>
+<h2 id="when-there-is-no-preview">When there is no preview</h2>
+<p>Complex-valued images and general scientific cubes remain available to inspection,
+but do not have a general magnitude/phase or cube-plane bitmap renderer in the
+current implementation. Use <strong>Analyze → Exact stored samples</strong> and <strong>Inspect</strong>.
+A table HDU or empty primary HDU can also legitimately have no preview. See
+<a href="troubleshooting.html">troubleshooting</a> before changing reader limits.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/docs/desktop/viewing.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>First steps with the reference scene | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="First steps with the reference scene | AstroView documentation ">
+      
+      
+      <link rel="icon" href="../images/astroview.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Chuuei/AstroView/blob/main/docs/desktop/quick-start.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="first-steps-with-the-reference-scene">First steps with the reference scene</h1>
+
+<p>This walkthrough needs no files or internet connection. It introduces viewing,
+measurement, metadata and output before you work on your own observations.</p>
+<h2 id="1-explore-the-four-reference-images">1. Explore the four reference images</h2>
+<p>On a normal empty launch, AstroView creates its reference scene. If you opened
+files at launch instead, click <strong>Reference scene</strong> to add a reference document.
+Select <strong>Reference scene.xisf</strong> in <strong>DOCUMENTS</strong>, then <strong>Emission nebula</strong> under <strong>IMAGES &amp; HDUs</strong>.</p>
+<p>The scene includes:</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Emission nebula</td>
+<td>Float32 RGB preview, observation metadata, native astrometry and a star catalog</td>
+</tr>
+<tr>
+<td>UInt16 gradient</td>
+<td>Integer samples and histogram bounds</td>
+</tr>
+<tr>
+<td>Scientific cube</td>
+<td>Additional scientific axes without a general cube-plane preview</td>
+</tr>
+<tr>
+<td>Complex wave</td>
+<td>Complex-valued samples available in the sample inspector</td>
+</tr>
+</tbody>
+</table>
+<p>The nebula is generated demonstration data. It is not a real exposure or an
+independent test of another application's format implementation.</p>
+<h2 id="2-change-the-view">2. Change the view</h2>
+<ol>
+<li>Select the <strong>Image</strong> workspace.</li>
+<li>Click <strong>Fit</strong>, then use the mouse wheel to zoom in.</li>
+<li>Drag the image to pan, and double-click to fit it again.</li>
+<li>Change the display mode from <strong>Auto stretch</strong> to <strong>Linear</strong>.</li>
+<li>Click <strong>Apply display</strong>, compare the preview, then restore <strong>Auto stretch</strong>.</li>
+</ol>
+<p>A darker linear preview is expected for many faint images. The scientific
+samples remain unchanged throughout this exercise. See <a href="viewing.html">viewing</a>
+for linked channels, shadow clipping and PNG output.</p>
+<h2 id="3-run-an-analysis">3. Run an analysis</h2>
+<ol>
+<li>Select <strong>Analyze</strong> with the emission nebula still selected.</li>
+<li>Choose channel <code>0</code>, bounds <code>0</code> to <code>1</code>, and <code>256</code> bins.</li>
+<li>Leave the statistics sample limit at <code>250000</code> and click <strong>Run analysis</strong>.</li>
+<li>Read the histogram totals and the three channel-statistics rows.</li>
+</ol>
+<p>The histogram counts every sample in its chosen channel. Statistics can be
+sampled, so the finite counts in the statistics table need not equal the histogram
+count. To try integer bounds, select <strong>UInt16 gradient</strong>, set histogram bounds
+to <code>0</code> and <code>65535</code>, then run analysis again.</p>
+<h2 id="4-add-a-note">4. Add a note</h2>
+<ol>
+<li>Return to <strong>Emission nebula</strong> and choose <strong>Inspect → Fields</strong>.</li>
+<li>In the metadata editor, select <strong>Image property</strong>.</li>
+<li>Enter key <code>AstroView:Note</code>, type <strong>String</strong>, and value <code>First inspection</code>.</li>
+<li>Click <strong>Apply metadata edit</strong>.</li>
+<li>Search for <code>AstroView:Note</code> in the fields list and confirm its value/scope.</li>
+</ol>
+<p>The note is in the open document's memory. It has not been written to disk.</p>
+<h2 id="5-browse-the-catalog-and-coordinates">5. Browse the catalog and coordinates</h2>
+<p>Open <strong>Tables</strong> and select the reference-star catalog. Notice that large integer
+identifiers retain exact text. Then open <strong>Coordinates</strong>, enter image column
+<code>512</code> and row <code>384</code>, and click <strong>Calculate sky coordinates</strong>. Click <strong>Calculate image coordinates</strong> to transform the
+resulting RA/Dec back.</p>
+<p>AstroView uses zero-based image positions and degrees for sky angles in this
+workspace. See <a href="coordinates.html">coordinates</a> before entering RA in another unit.</p>
+<h2 id="6-validate-and-save-a-copy">6. Validate and save a copy</h2>
+<ol>
+<li>Open <strong>Integrity</strong> and click <strong>Validate document</strong>.</li>
+<li>Review the diagnostic list, including payload-decoding information.</li>
+<li>Open <strong>Export</strong> and select <strong>Keep native document</strong>.</li>
+<li>Click <strong>Export document…</strong> and save as <code>reference-reviewed.xisf</code> in a new location.</li>
+<li>Reopen that file and find your <code>AstroView:Note</code> in <strong>Inspect</strong>.</li>
+</ol>
+<p>This confirms that the in-memory note was saved. To share a picture rather than
+a scientific document, use <strong>Image → Export preview as PNG…</strong> instead.</p>
+<p>You can now <a href="workspace.html">open your own documents</a> and follow the same
+inspect → validate → export workflow.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/docs/desktop/quick-start.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

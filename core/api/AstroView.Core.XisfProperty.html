@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Class XisfProperty | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class XisfProperty | AstroView documentation ">
+      
+      <meta name="description" content="A parsed typed property, display hints, and its original XML element.">
+      <link rel="icon" href="../../images/astroview.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="AstroView.Core.XisfProperty">
+
+
+
+  <h1 id="AstroView_Core_XisfProperty" data-uid="AstroView.Core.XisfProperty" class="text-break">
+Class XisfProperty  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfDocument.cs"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><span class="xref">AstroView</span>.<a class="xref" href="AstroView.Core.html">Core</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>AstroView.Core.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>A parsed typed property, display hints, and its original XML element.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed record XisfProperty : IEquatable&lt;XisfProperty&gt;</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">XisfProperty</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="AstroView.Core.XisfProperty.html">XisfProperty</a>&gt;</div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="AstroView_Core_XisfProperty__ctor_" data-uid="AstroView.Core.XisfProperty.#ctor*"></a>
+
+  <h3 id="AstroView_Core_XisfProperty__ctor_System_String_System_String_System_Object_System_String_System_Xml_Linq_XElement_System_String_" data-uid="AstroView.Core.XisfProperty.#ctor(System.String,System.String,System.Object,System.String,System.Xml.Linq.XElement,System.String)">
+  XisfProperty(string, string, object?, string?, XElement, string?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfDocument.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A parsed typed property, display hints, and its original XML element.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public XisfProperty(string Id, string Type, object? Value, string? Format, XElement Xml, string? Comment = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>Id</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The case-sensitive identifier.</p>
+</dd>
+    <dt><code>Type</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The declared scalar or collection type.</p>
+</dd>
+    <dt><code>Value</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
+    <dd><p>The typed value; null represents an absent value.</p>
+</dd>
+    <dt><code>Format</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The optional display or storage format.</p>
+</dd>
+    <dt><code>Xml</code> <span class="xref">XElement</span></dt>
+    <dd><p>The original XML element.</p>
+</dd>
+    <dt><code>Comment</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The optional explanatory comment.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="AstroView_Core_XisfProperty_Comment_" data-uid="AstroView.Core.XisfProperty.Comment*"></a>
+
+  <h3 id="AstroView_Core_XisfProperty_Comment" data-uid="AstroView.Core.XisfProperty.Comment">
+  Comment
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfDocument.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The optional explanatory comment.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string? Comment { get; init; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfProperty_Format_" data-uid="AstroView.Core.XisfProperty.Format*"></a>
+
+  <h3 id="AstroView_Core_XisfProperty_Format" data-uid="AstroView.Core.XisfProperty.Format">
+  Format
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfDocument.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The optional display or storage format.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string? Format { get; init; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfProperty_Id_" data-uid="AstroView.Core.XisfProperty.Id*"></a>
+
+  <h3 id="AstroView_Core_XisfProperty_Id" data-uid="AstroView.Core.XisfProperty.Id">
+  Id
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfDocument.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The case-sensitive identifier.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Id { get; init; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfProperty_IsAvailable_" data-uid="AstroView.Core.XisfProperty.IsAvailable*"></a>
+
+  <h3 id="AstroView_Core_XisfProperty_IsAvailable" data-uid="AstroView.Core.XisfProperty.IsAvailable">
+  IsAvailable
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfDocument.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether the value could be decoded with the available type and codec support.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsAvailable { get; init; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfProperty_Type_" data-uid="AstroView.Core.XisfProperty.Type*"></a>
+
+  <h3 id="AstroView_Core_XisfProperty_Type" data-uid="AstroView.Core.XisfProperty.Type">
+  Type
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfDocument.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The declared scalar or collection type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Type { get; init; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfProperty_UnavailableReason_" data-uid="AstroView.Core.XisfProperty.UnavailableReason*"></a>
+
+  <h3 id="AstroView_Core_XisfProperty_UnavailableReason" data-uid="AstroView.Core.XisfProperty.UnavailableReason">
+  UnavailableReason
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfDocument.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The reason a value is unavailable; original XML remains preserved.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string? UnavailableReason { get; init; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfProperty_Value_" data-uid="AstroView.Core.XisfProperty.Value*"></a>
+
+  <h3 id="AstroView_Core_XisfProperty_Value" data-uid="AstroView.Core.XisfProperty.Value">
+  Value
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfDocument.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The decoded value; arrays are returned as owned copies.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public object? Value { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfProperty_Xml_" data-uid="AstroView.Core.XisfProperty.Xml*"></a>
+
+  <h3 id="AstroView_Core_XisfProperty_Xml" data-uid="AstroView.Core.XisfProperty.Xml">
+  Xml
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfDocument.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A detached copy of the original representation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public XElement Xml { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">XElement</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="AstroView_Core_XisfProperty_Deconstruct_" data-uid="AstroView.Core.XisfProperty.Deconstruct*"></a>
+
+  <h3 id="AstroView_Core_XisfProperty_Deconstruct_System_String__System_String__System_Object__System_String__System_Xml_Linq_XElement__System_String__" data-uid="AstroView.Core.XisfProperty.Deconstruct(System.String@,System.String@,System.Object@,System.String@,System.Xml.Linq.XElement@,System.String@)">
+  Deconstruct(out string, out string, out object?, out string?, out XElement, out string?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfDocument.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Deconstruct(out string Id, out string Type, out object? Value, out string? Format, out XElement Xml, out string? Comment)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>Id</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>Type</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>Value</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
+    <dd></dd>
+    <dt><code>Format</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>Xml</code> <span class="xref">XElement</span></dt>
+    <dd></dd>
+    <dt><code>Comment</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfProperty_Equals_" data-uid="AstroView.Core.XisfProperty.Equals*"></a>
+
+  <h3 id="AstroView_Core_XisfProperty_Equals_AstroView_Core_XisfProperty_" data-uid="AstroView.Core.XisfProperty.Equals(AstroView.Core.XisfProperty)">
+  Equals(XisfProperty?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfDocument.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(XisfProperty? other)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>other</code> <a class="xref" href="AstroView.Core.XisfProperty.html">XisfProperty</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfProperty_Equals_" data-uid="AstroView.Core.XisfProperty.Equals*"></a>
+
+  <h3 id="AstroView_Core_XisfProperty_Equals_System_Object_" data-uid="AstroView.Core.XisfProperty.Equals(System.Object)">
+  Equals(object?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfDocument.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object? obj)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>obj</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfProperty_GetHashCode_" data-uid="AstroView.Core.XisfProperty.GetHashCode*"></a>
+
+  <h3 id="AstroView_Core_XisfProperty_GetHashCode" data-uid="AstroView.Core.XisfProperty.GetHashCode">
+  GetHashCode()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfDocument.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfProperty_ToString_" data-uid="AstroView.Core.XisfProperty.ToString*"></a>
+
+  <h3 id="AstroView_Core_XisfProperty_ToString" data-uid="AstroView.Core.XisfProperty.ToString">
+  ToString()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfDocument.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="operators">Operators
+</h2>
+
+
+  <a id="AstroView_Core_XisfProperty_op_Equality_" data-uid="AstroView.Core.XisfProperty.op_Equality*"></a>
+
+  <h3 id="AstroView_Core_XisfProperty_op_Equality_AstroView_Core_XisfProperty_AstroView_Core_XisfProperty_" data-uid="AstroView.Core.XisfProperty.op_Equality(AstroView.Core.XisfProperty,AstroView.Core.XisfProperty)">
+  operator ==(XisfProperty?, XisfProperty?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfDocument.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(XisfProperty? left, XisfProperty? right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="AstroView.Core.XisfProperty.html">XisfProperty</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="AstroView.Core.XisfProperty.html">XisfProperty</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfProperty_op_Inequality_" data-uid="AstroView.Core.XisfProperty.op_Inequality*"></a>
+
+  <h3 id="AstroView_Core_XisfProperty_op_Inequality_AstroView_Core_XisfProperty_AstroView_Core_XisfProperty_" data-uid="AstroView.Core.XisfProperty.op_Inequality(AstroView.Core.XisfProperty,AstroView.Core.XisfProperty)">
+  operator !=(XisfProperty?, XisfProperty?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfDocument.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(XisfProperty? left, XisfProperty? right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="AstroView.Core.XisfProperty.html">XisfProperty</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="AstroView.Core.XisfProperty.html">XisfProperty</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfDocument.cs" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

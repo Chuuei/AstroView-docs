@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Resource policy and performance | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Resource policy and performance | AstroView documentation ">
+      
+      
+      <link rel="icon" href="../images/astroview.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Chuuei/AstroView/blob/main/docs/core/resources-performance.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="resource-policy-and-performance">Resource policy and performance</h1>
+
+<h2 id="understand-the-memory-model-first">Understand the memory model first</h2>
+<p>Current readers and operations are not a general streaming or memory-mapped
+processing API. FITS loads retain materialized HDU payloads. XISF path loads can
+defer blocks, but a pixel read/decompression materializes a complete block.
+Region extraction and sampled statistics do not make that block decode partial.</p>
+<p>For a 10,000 × 10,000 single-channel image, the pixel buffer alone is roughly
+200 MB as UInt16, 400 MB as Float32 or 800 MB as double. RGB multiplies scientific
+sample storage by three; a BGRA preview adds roughly 400 MB. Compressed input,
+temporary codec buffers, typed copies, metadata and application state add more.
+Use these estimates for planning rather than interpreting them as peak-memory
+guarantees.</p>
+<h2 id="xisf-defaults">XISF defaults</h2>
+<table>
+<thead>
+<tr>
+<th>Budget or policy</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Buffered input</td>
+<td>1 GiB</td>
+</tr>
+<tr>
+<td>XML header bytes / XML characters</td>
+<td>64 MiB / 64 × 1024² characters</td>
+</tr>
+<tr>
+<td>XML depth / elements</td>
+<td>128 / 1,000,000</td>
+</tr>
+<tr>
+<td>Images / dimensions per image</td>
+<td>10,000 / 16</td>
+</tr>
+<tr>
+<td>Pixels per image</td>
+<td>2,000,000,000</td>
+</tr>
+<tr>
+<td>Property count / table cell count</td>
+<td>100,000 / 10,000,000</td>
+</tr>
+<tr>
+<td>Decoded data block</td>
+<td>1 GiB</td>
+</tr>
+<tr>
+<td>Decompression ratio</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>Network timeout</td>
+<td>30 seconds</td>
+</tr>
+<tr>
+<td>Network resources</td>
+<td>Disabled</td>
+</tr>
+<tr>
+<td>General external filesystem paths</td>
+<td>Disabled</td>
+</tr>
+<tr>
+<td>Header-relative data blocks</td>
+<td>Enabled</td>
+</tr>
+<tr>
+<td>Header-directory traversal</td>
+<td>Disabled</td>
+</tr>
+</tbody>
+</table>
+<p>Budgets protect different stages. Raising <code>MaximumDataBlockSize</code> does not raise
+every other limit or ensure sufficient memory. Some highly compressible but valid
+data can exceed the ratio limit; change a limit only with an understood workload.</p>
+<p><code>ExternalResourceResolver</code> lets an application provide resource streams under
+its own policy. Treat URI authorization, credentials, allowed hosts/paths,
+timeouts and response-size enforcement as application responsibilities as well
+as honoring Core's access flags. A custom resolver is not permission to ignore
+the reader's resource policy. Resolver streams have the ownership contract
+documented on that API.</p>
+<h2 id="fits-defaults">FITS defaults</h2>
+<table>
+<thead>
+<tr>
+<th>Budget</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HDUs</td>
+<td>1,024</td>
+</tr>
+<tr>
+<td>Data bytes per HDU</td>
+<td><code>int.MaxValue</code></td>
+</tr>
+<tr>
+<td>Retained raw HDU payload total</td>
+<td><code>int.MaxValue</code> bytes</td>
+</tr>
+<tr>
+<td>Header cards / padded header bytes per HDU</td>
+<td>100,000 / 8 MiB</td>
+</tr>
+<tr>
+<td>Axes</td>
+<td>32</td>
+</tr>
+<tr>
+<td>Decoded table cells / scalar elements</td>
+<td>10,000,000 / 10,000,000 per table</td>
+</tr>
+<tr>
+<td>Buffered input</td>
+<td>1 GiB</td>
+</tr>
+<tr>
+<td>Validation mode</td>
+<td>Tolerant</td>
+</tr>
+</tbody>
+</table>
+<p>Table element budgets account for array elements, characters and bits, including
+repeated heap references. A small number of table cells can still expand into a
+large number of values. The total decoded byte setting describes retained raw
+HDU payloads; it is not a process-wide cap on every allocation.</p>
+<h2 id="async-and-cancellation">Async and cancellation</h2>
+<!-- snippet: async-io -->
+<pre><code class="lang-csharp">public static async Task AsyncIo(string directory)
+{
+    using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+    var document = await XisfReader.LoadAsync(Path.Combine(directory, &quot;image.xisf&quot;),
+        cancellationToken: cancellation.Token);
+    await XisfWriter.WriteAsync(Path.Combine(directory, &quot;async-copy.xisf&quot;), document,
+        cancellationToken: cancellation.Token);
+    // Await completion before changing editable objects or releasing source files.
+}
+</code></pre>
+<p>The API includes worker-thread wrappers around synchronous parsing/codec work.
+Async does not imply incremental decoding, constant memory or cancellation
+inside every compression operation. Some work completes its current block before
+observing cancellation. Await completion before editing input objects or disposing
+streams your application supplied.</p>
+<p>Path writes stage single-file output and check cancellation around publication.
+Caller streams can contain partial data after errors/cancellation. Distributed
+XISF involves multiple paths and needs application-level cleanup/publication
+coordination.</p>
+<h2 id="practical-integration-choices">Practical integration choices</h2>
+<ul>
+<li>Keep native documents and defer typed sample copies until needed.</li>
+<li>Request a matching integer type for exact work instead of normalizing every
+image to double immediately.</li>
+<li>Avoid repeatedly asking for the same full decoded block, typed copy and
+preview during a single operation. Cache owned results at your application
+layer when that tradeoff is appropriate, then release them when documents close.</li>
+<li>Bound concurrent decodes by available memory, not just processor count.</li>
+<li>Separate background work from UI updates and provide progress at meaningful
+operation boundaries rather than inventing per-pixel progress.</li>
+<li>Benchmark with your real sample types, channel counts, codecs and file layouts.
+A synthetic compression ratio or one codec benchmark does not predict all
+astronomical workloads.</li>
+</ul>
+<p>See <a href="../testing.html">testing</a> for local corpus tests and the repository's performance
+tool. Broader streaming, shared typed access and compressed FITS are recorded in
+the <a href="../roadmap.html">roadmap</a>.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/docs/core/resources-performance.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

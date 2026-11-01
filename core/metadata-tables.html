@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Metadata and tables | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Metadata and tables | AstroView documentation ">
+      
+      
+      <link rel="icon" href="../images/astroview.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Chuuei/AstroView/blob/main/docs/core/metadata-tables.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="metadata-and-tables">Metadata and tables</h1>
+
+<h2 id="property-scopes">Property scopes</h2>
+<p>XISF distinguishes document properties, image properties and creation metadata.
+<code>XisfDocumentData.Properties</code> contains global values; <code>Images[i].Properties</code>
+contains values for that image; <code>Metadata</code> contains XISF creation metadata.
+Creation identifiers must start with <code>XISF:</code>. Put application-defined data in
+your own property namespace instead of inventing creation keys.</p>
+<p>Property identifiers are case-sensitive. Known property definitions in
+<code>XisfKnownProperties</code> and <code>XisfAdditionalProperties</code> expose typed keys and
+provenance through <code>MetadataDefinitionSource</code>. Standardized identifiers and
+PixInsight/PCL conventions have distinct meanings and provenance; do not treat
+every catalog entry as part of the XISF standard.</p>
+<p><code>XisfPropertyCollection</code> accepts supported CLR values, explicitly typed
+<code>XisfPropertyData</code>, or preserved parsed properties. Use a typed key where one is
+available. Explicit type information is useful for vector/matrix values and
+when an exact serialized type is part of an interchange contract.</p>
+<h2 id="create-a-document-property-and-table">Create a document property and table</h2>
+<!-- snippet: metadata-tables -->
+<pre><code class="lang-csharp">public static void MetadataAndTables(string directory)
+{
+    var loaded = XisfReader.Load(Path.Combine(directory, &quot;image.xisf&quot;));
+    var editable = loaded.ToEditable();
+    editable.Properties[&quot;Example:Session&quot;] = &quot;Night 1&quot;;
+    editable.Images[0].Properties.Set(XisfKnownProperties.Observation.Object.Name, &quot;M31&quot;);
+    var table = new XisfTableData { Id = &quot;Stars&quot;, Caption = &quot;Reference measurements&quot; };
+    table.Fields.Add(new XisfTableFieldData(&quot;Name&quot;, &quot;String&quot;));
+    table.Fields.Add(new XisfTableFieldData(&quot;Flux&quot;, &quot;Float64&quot;));
+    table.Rows.Add(new object?[] { &quot;Star A&quot;, 1234.5 });
+    editable.Tables.Add(table);
+    string output = Path.Combine(directory, &quot;catalog.xisf&quot;);
+    XisfWriter.Write(output, editable);
+    if (XisfReader.Load(output).Tables.Count != 1)
+        throw new InvalidOperationException(&quot;Table round trip failed.&quot;);
+}
+</code></pre>
+<p>The example creates a document-level table. <code>XisfImageData.Tables</code> can instead
+attach tables to a particular image. Each row must match the field count, and
+cell CLR values must match their declared types. Numeric vectors and rectangular
+matrices are distinct from scalar cells. Use the API reference for field,
+row and cell models rather than relying on displayed table text.</p>
+<h2 id="parsed-availability-and-opaque-content">Parsed availability and opaque content</h2>
+<p>Parsed <code>XisfProperty</code> and table-cell values can be unavailable while their XML
+remains preserved. Check <code>IsAvailable</code> and <code>UnavailableReason</code> before computing
+with the value. An absent property, an unavailable value and a value of zero
+are different states. Do not replace an unavailable value with zero or an empty
+string merely to simplify a UI.</p>
+<p>Array-valued parsed properties return owned copies. Changing an array returned
+by <code>Value</code> does not edit the original document. Use an editable collection or an
+explicit XML edit and retain its returned document.</p>
+<p><code>ToEditable()</code> materializes images but can still retain source-aware opaque
+objects. Keep source blocks available through saving if opaque metadata is
+present. Choose the native parsed writer when preserving unfamiliar content is
+more important than changing the serialization strategy.</p>
+<h2 id="fits-keywords">FITS keywords</h2>
+<p>FITS headers are ordered cards with case-insensitive keyword lookup. FITS cards
+stored inside XISF use <code>XisfFitsKeyword</code>, including text quoting conventions.
+<code>XisfFitsKeyword.FromValue</code> quotes and escapes strings correctly and handles
+commentary cards. Prefer it to building quoted text manually, particularly for
+object names containing apostrophes or slash characters.</p>
+<p>FITS keywords inside an XISF image are a metadata representation. They do not
+become native FITS HDUs until an explicit conversion. Conversely, an XISF property
+is not automatically representable as a FITS card. Conversion findings identify
+known omissions and transformations.</p>
+<h2 id="other-metadata-objects">Other metadata objects</h2>
+<table>
+<thead>
+<tr>
+<th>Object</th>
+<th>Core behavior</th>
+<th>Application implication</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Observation metadata</td>
+<td><code>AstronomyMetadata</code> reads recognized fields into <code>AstronomyImageMetadata</code></td>
+<td>Missing fields remain optional; units and interpretation matter</td>
+</tr>
+<tr>
+<td>Thumbnail</td>
+<td>Separate image object that can decode lazily</td>
+<td>Validate/decode it separately when verifying all payloads</td>
+</tr>
+<tr>
+<td>ICC profile</td>
+<td>Inspect/preserve profile bytes</td>
+<td>Core does not provide a complete ICC color-management engine</td>
+</tr>
+<tr>
+<td>CFA pattern</td>
+<td>Inspect/preserve mosaic metadata</td>
+<td>No debayering is implied</td>
+</tr>
+<tr>
+<td>Display function</td>
+<td>Stored display transformation</td>
+<td>Choosing it affects preview output, not source samples</td>
+</tr>
+<tr>
+<td>Native astrometry</td>
+<td>Parsed/evaluated where supported</td>
+<td>Validate availability and coordinate conventions before use</td>
+</tr>
+<tr>
+<td>Extension XML</td>
+<td>Preservable application-defined content</td>
+<td>Keep namespaces and referenced blocks intact</td>
+</tr>
+</tbody>
+</table>
+<p>For exact file-format coverage and remaining property/table corner cases, see
+the <a href="../support-matrix.html">support matrix</a> and
+<a href="../interoperability.html">interoperability evidence</a>.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/docs/core/metadata-tables.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

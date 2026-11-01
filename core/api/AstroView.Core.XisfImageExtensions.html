@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Class XisfImageExtensions | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class XisfImageExtensions | AstroView documentation ">
+      
+      <meta name="description" content="Provides rectangular reads, channel extraction, sampled statistics, and full histograms.">
+      <link rel="icon" href="../../images/astroview.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="AstroView.Core.XisfImageExtensions">
+
+
+
+  <h1 id="AstroView_Core_XisfImageExtensions" data-uid="AstroView.Core.XisfImageExtensions" class="text-break">
+Class XisfImageExtensions  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><span class="xref">AstroView</span>.<a class="xref" href="AstroView.Core.html">Core</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>AstroView.Core.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Provides rectangular reads, channel extraction, sampled statistics, and full histograms.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class XisfImageExtensions</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">XisfImageExtensions</span></div>
+    </dd>
+  </dl>
+
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="AstroView_Core_XisfImageExtensions_CalculateHistogram_" data-uid="AstroView.Core.XisfImageExtensions.CalculateHistogram*"></a>
+
+  <h3 id="AstroView_Core_XisfImageExtensions_CalculateHistogram_AstroView_Core_XisfImage_System_Int32_System_Int32_System_Nullable_System_Double__System_Nullable_System_Double__" data-uid="AstroView.Core.XisfImageExtensions.CalculateHistogram(AstroView.Core.XisfImage,System.Int32,System.Int32,System.Nullable{System.Double},System.Nullable{System.Double})">
+  CalculateHistogram(XisfImage, int, int, double?, double?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Counts every sample in one channel, including out-of-range and non-finite values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static XisfHistogram CalculateHistogram(this XisfImage image, int channel, int binCount = 256, double? lowerBound = null, double? upperBound = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>image</code> <a class="xref" href="AstroView.Core.XisfImage.html">XisfImage</a></dt>
+    <dd><p>The source image.</p>
+</dd>
+    <dt><code>channel</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The zero-based channel index.</p>
+</dd>
+    <dt><code>binCount</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The positive number of histogram bins.</p>
+</dd>
+    <dt><code>lowerBound</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>?</dt>
+    <dd><p>The lower normalization or histogram bound.</p>
+</dd>
+    <dt><code>upperBound</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>?</dt>
+    <dd><p>The upper normalization or histogram bound.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="AstroView.Core.XisfHistogram.html">XisfHistogram</a></dt>
+    <dd><p>The selected channel histogram with out-of-range and non-finite counts.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfImageExtensions_CalculateHistogram_" data-uid="AstroView.Core.XisfImageExtensions.CalculateHistogram*"></a>
+
+  <h3 id="AstroView_Core_XisfImageExtensions_CalculateHistogram_AstroView_Core_XisfImageData_System_Int32_System_Int32_System_Nullable_System_Double__System_Nullable_System_Double__" data-uid="AstroView.Core.XisfImageExtensions.CalculateHistogram(AstroView.Core.XisfImageData,System.Int32,System.Int32,System.Nullable{System.Double},System.Nullable{System.Double})">
+  CalculateHistogram(XisfImageData, int, int, double?, double?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Counts every sample in one channel, including out-of-range and non-finite values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static XisfHistogram CalculateHistogram(this XisfImageData image, int channel, int binCount = 256, double? lowerBound = null, double? upperBound = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>image</code> <a class="xref" href="AstroView.Core.XisfImageData.html">XisfImageData</a></dt>
+    <dd><p>The source image.</p>
+</dd>
+    <dt><code>channel</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The zero-based channel index.</p>
+</dd>
+    <dt><code>binCount</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The positive number of histogram bins.</p>
+</dd>
+    <dt><code>lowerBound</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>?</dt>
+    <dd><p>The lower normalization or histogram bound.</p>
+</dd>
+    <dt><code>upperBound</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>?</dt>
+    <dd><p>The upper normalization or histogram bound.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="AstroView.Core.XisfHistogram.html">XisfHistogram</a></dt>
+    <dd><p>The selected channel histogram with out-of-range and non-finite counts.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfImageExtensions_CalculateStatistics_" data-uid="AstroView.Core.XisfImageExtensions.CalculateStatistics*"></a>
+
+  <h3 id="AstroView_Core_XisfImageExtensions_CalculateStatistics_AstroView_Core_XisfImage_AstroView_Core_XisfStatisticsOptions_" data-uid="AstroView.Core.XisfImageExtensions.CalculateStatistics(AstroView.Core.XisfImage,AstroView.Core.XisfStatisticsOptions)">
+  CalculateStatistics(XisfImage, XisfStatisticsOptions?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Estimates per-channel statistics using bounded sampling and optional normalization.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IReadOnlyList&lt;XisfChannelStatistics&gt; CalculateStatistics(this XisfImage image, XisfStatisticsOptions? options = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>image</code> <a class="xref" href="AstroView.Core.XisfImage.html">XisfImage</a></dt>
+    <dd><p>The source image.</p>
+</dd>
+    <dt><code>options</code> <a class="xref" href="AstroView.Core.XisfStatisticsOptions.html">XisfStatisticsOptions</a></dt>
+    <dd><p>The operation settings, or null to use defaults.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="AstroView.Core.XisfChannelStatistics.html">XisfChannelStatistics</a>&gt;</dt>
+    <dd><p>Sampled statistics for each channel.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfImageExtensions_CalculateStatistics_" data-uid="AstroView.Core.XisfImageExtensions.CalculateStatistics*"></a>
+
+  <h3 id="AstroView_Core_XisfImageExtensions_CalculateStatistics_AstroView_Core_XisfImageData_AstroView_Core_XisfStatisticsOptions_" data-uid="AstroView.Core.XisfImageExtensions.CalculateStatistics(AstroView.Core.XisfImageData,AstroView.Core.XisfStatisticsOptions)">
+  CalculateStatistics(XisfImageData, XisfStatisticsOptions?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Estimates per-channel statistics using bounded sampling and optional normalization.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IReadOnlyList&lt;XisfChannelStatistics&gt; CalculateStatistics(this XisfImageData image, XisfStatisticsOptions? options = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>image</code> <a class="xref" href="AstroView.Core.XisfImageData.html">XisfImageData</a></dt>
+    <dd><p>The source image.</p>
+</dd>
+    <dt><code>options</code> <a class="xref" href="AstroView.Core.XisfStatisticsOptions.html">XisfStatisticsOptions</a></dt>
+    <dd><p>The operation settings, or null to use defaults.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="AstroView.Core.XisfChannelStatistics.html">XisfChannelStatistics</a>&gt;</dt>
+    <dd><p>Sampled statistics for each channel.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfImageExtensions_GetComplexSamples_" data-uid="AstroView.Core.XisfImageExtensions.GetComplexSamples*"></a>
+
+  <h3 id="AstroView_Core_XisfImageExtensions_GetComplexSamples_AstroView_Core_XisfImageData_AstroView_Core_XisfPixelLayout_" data-uid="AstroView.Core.XisfImageExtensions.GetComplexSamples(AstroView.Core.XisfImageData,AstroView.Core.XisfPixelLayout)">
+  GetComplexSamples(XisfImageData, XisfPixelLayout)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads editable complex samples in the requested channel order.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex[] GetComplexSamples(this XisfImageData image, XisfPixelLayout layout = XisfPixelLayout.Planar)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>image</code> <a class="xref" href="AstroView.Core.XisfImageData.html">XisfImageData</a></dt>
+    <dd><p>The editable complex image.</p>
+</dd>
+    <dt><code>layout</code> <a class="xref" href="AstroView.Core.XisfPixelLayout.html">XisfPixelLayout</a></dt>
+    <dd><p>Output order, defaulting to planar.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.numerics.complex">Complex</a>[]</dt>
+    <dd><p>Complex values with double-precision components.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfImageExtensions_GetInterleavedSamples_" data-uid="AstroView.Core.XisfImageExtensions.GetInterleavedSamples*"></a>
+
+  <h3 id="AstroView_Core_XisfImageExtensions_GetInterleavedSamples__1_AstroView_Core_XisfImage_" data-uid="AstroView.Core.XisfImageExtensions.GetInterleavedSamples``1(AstroView.Core.XisfImage)">
+  GetInterleavedSamples&lt;T&gt;(XisfImage)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads parsed samples explicitly in interleaved channel order.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T[] GetInterleavedSamples&lt;T&gt;(this XisfImage image) where T : INumberBase&lt;T&gt;</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>image</code> <a class="xref" href="AstroView.Core.XisfImage.html">XisfImage</a></dt>
+    <dd><p>The image.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>T[]</dt>
+    <dd><p>A new sample array.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>The real numeric type.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfImageExtensions_GetInterleavedSamples_" data-uid="AstroView.Core.XisfImageExtensions.GetInterleavedSamples*"></a>
+
+  <h3 id="AstroView_Core_XisfImageExtensions_GetInterleavedSamples__1_AstroView_Core_XisfImageData_" data-uid="AstroView.Core.XisfImageExtensions.GetInterleavedSamples``1(AstroView.Core.XisfImageData)">
+  GetInterleavedSamples&lt;T&gt;(XisfImageData)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads editable samples explicitly in interleaved channel order.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T[] GetInterleavedSamples&lt;T&gt;(this XisfImageData image) where T : INumberBase&lt;T&gt;</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>image</code> <a class="xref" href="AstroView.Core.XisfImageData.html">XisfImageData</a></dt>
+    <dd><p>The image.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>T[]</dt>
+    <dd><p>A new sample array.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>The real numeric type.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfImageExtensions_GetNormalizedSamples_" data-uid="AstroView.Core.XisfImageExtensions.GetNormalizedSamples*"></a>
+
+  <h3 id="AstroView_Core_XisfImageExtensions_GetNormalizedSamples_AstroView_Core_XisfImageData_AstroView_Core_XisfPixelLayout_" data-uid="AstroView.Core.XisfImageExtensions.GetNormalizedSamples(AstroView.Core.XisfImageData,AstroView.Core.XisfPixelLayout)">
+  GetNormalizedSamples(XisfImageData, XisfPixelLayout)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Returns owned-image samples normalized through declared bounds, without clamping.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double[] GetNormalizedSamples(this XisfImageData image, XisfPixelLayout layout = XisfPixelLayout.Planar)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>image</code> <a class="xref" href="AstroView.Core.XisfImageData.html">XisfImageData</a></dt>
+    <dd><p>The editable image.</p>
+</dd>
+    <dt><code>layout</code> <a class="xref" href="AstroView.Core.XisfPixelLayout.html">XisfPixelLayout</a></dt>
+    <dd><p>Output channel order.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>[]</dt>
+    <dd><p>Normalized double values.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfImageExtensions_GetPlanarSamples_" data-uid="AstroView.Core.XisfImageExtensions.GetPlanarSamples*"></a>
+
+  <h3 id="AstroView_Core_XisfImageExtensions_GetPlanarSamples__1_AstroView_Core_XisfImage_" data-uid="AstroView.Core.XisfImageExtensions.GetPlanarSamples``1(AstroView.Core.XisfImage)">
+  GetPlanarSamples&lt;T&gt;(XisfImage)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads parsed samples explicitly in planar channel order.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T[] GetPlanarSamples&lt;T&gt;(this XisfImage image) where T : INumberBase&lt;T&gt;</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>image</code> <a class="xref" href="AstroView.Core.XisfImage.html">XisfImage</a></dt>
+    <dd><p>The image.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>T[]</dt>
+    <dd><p>A new sample array.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>The real numeric type.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfImageExtensions_GetPlanarSamples_" data-uid="AstroView.Core.XisfImageExtensions.GetPlanarSamples*"></a>
+
+  <h3 id="AstroView_Core_XisfImageExtensions_GetPlanarSamples__1_AstroView_Core_XisfImageData_" data-uid="AstroView.Core.XisfImageExtensions.GetPlanarSamples``1(AstroView.Core.XisfImageData)">
+  GetPlanarSamples&lt;T&gt;(XisfImageData)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads editable samples explicitly in planar channel order.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T[] GetPlanarSamples&lt;T&gt;(this XisfImageData image) where T : INumberBase&lt;T&gt;</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>image</code> <a class="xref" href="AstroView.Core.XisfImageData.html">XisfImageData</a></dt>
+    <dd><p>The image.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>T[]</dt>
+    <dd><p>A new sample array.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>The real numeric type.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfImageExtensions_GetSamples_" data-uid="AstroView.Core.XisfImageExtensions.GetSamples*"></a>
+
+  <h3 id="AstroView_Core_XisfImageExtensions_GetSamples__1_AstroView_Core_XisfImageData_AstroView_Core_XisfPixelLayout_" data-uid="AstroView.Core.XisfImageExtensions.GetSamples``1(AstroView.Core.XisfImageData,AstroView.Core.XisfPixelLayout)">
+  GetSamples&lt;T&gt;(XisfImageData, XisfPixelLayout)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads owned editable samples with checked conversions, defaulting to planar order.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T[] GetSamples&lt;T&gt;(this XisfImageData image, XisfPixelLayout layout = XisfPixelLayout.Planar) where T : INumberBase&lt;T&gt;</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>image</code> <a class="xref" href="AstroView.Core.XisfImageData.html">XisfImageData</a></dt>
+    <dd><p>The editable image.</p>
+</dd>
+    <dt><code>layout</code> <a class="xref" href="AstroView.Core.XisfPixelLayout.html">XisfPixelLayout</a></dt>
+    <dd><p>Output channel order.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>T[]</dt>
+    <dd><p>A new sample array.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>The requested real numeric type.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfImageExtensions_ReadChannel_" data-uid="AstroView.Core.XisfImageExtensions.ReadChannel*"></a>
+
+  <h3 id="AstroView_Core_XisfImageExtensions_ReadChannel__1_AstroView_Core_XisfImage_System_Int32_" data-uid="AstroView.Core.XisfImageExtensions.ReadChannel``1(AstroView.Core.XisfImage,System.Int32)">
+  ReadChannel&lt;T&gt;(XisfImage, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Extracts one zero-based channel from a two-dimensional real image.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T[] ReadChannel&lt;T&gt;(this XisfImage image, int channel) where T : INumberBase&lt;T&gt;</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>image</code> <a class="xref" href="AstroView.Core.XisfImage.html">XisfImage</a></dt>
+    <dd><p>The source image.</p>
+</dd>
+    <dt><code>channel</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The zero-based channel index.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>T[]</dt>
+    <dd><p>A new array containing the selected channel in pixel order.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>The numeric sample or header-value type.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfImageExtensions_ReadChannel_" data-uid="AstroView.Core.XisfImageExtensions.ReadChannel*"></a>
+
+  <h3 id="AstroView_Core_XisfImageExtensions_ReadChannel__1_AstroView_Core_XisfImageData_System_Int32_" data-uid="AstroView.Core.XisfImageExtensions.ReadChannel``1(AstroView.Core.XisfImageData,System.Int32)">
+  ReadChannel&lt;T&gt;(XisfImageData, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Extracts one zero-based channel from a two-dimensional real image.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T[] ReadChannel&lt;T&gt;(this XisfImageData image, int channel) where T : INumberBase&lt;T&gt;</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>image</code> <a class="xref" href="AstroView.Core.XisfImageData.html">XisfImageData</a></dt>
+    <dd><p>The source image.</p>
+</dd>
+    <dt><code>channel</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The zero-based channel index.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>T[]</dt>
+    <dd><p>A new array containing the selected channel in pixel order.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>The numeric sample or header-value type.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfImageExtensions_ReadRegion_" data-uid="AstroView.Core.XisfImageExtensions.ReadRegion*"></a>
+
+  <h3 id="AstroView_Core_XisfImageExtensions_ReadRegion__1_AstroView_Core_XisfImage_System_Int32_System_Int32_System_Int32_System_Int32_AstroView_Core_XisfPixelLayout_" data-uid="AstroView.Core.XisfImageExtensions.ReadRegion``1(AstroView.Core.XisfImage,System.Int32,System.Int32,System.Int32,System.Int32,AstroView.Core.XisfPixelLayout)">
+  ReadRegion&lt;T&gt;(XisfImage, int, int, int, int, XisfPixelLayout)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Extracts a zero-based rectangle from a two-dimensional real image; loaded images still decode the full raw block.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T[] ReadRegion&lt;T&gt;(this XisfImage image, int x, int y, int width, int height, XisfPixelLayout layout = XisfPixelLayout.Planar) where T : INumberBase&lt;T&gt;</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>image</code> <a class="xref" href="AstroView.Core.XisfImage.html">XisfImage</a></dt>
+    <dd><p>The source image.</p>
+</dd>
+    <dt><code>x</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The zero-based horizontal pixel coordinate.</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The zero-based vertical pixel coordinate.</p>
+</dd>
+    <dt><code>width</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The positive region width in pixels.</p>
+</dd>
+    <dt><code>height</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The positive region height in pixels.</p>
+</dd>
+    <dt><code>layout</code> <a class="xref" href="AstroView.Core.XisfPixelLayout.html">XisfPixelLayout</a></dt>
+    <dd><p>The channel order of the returned samples.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>T[]</dt>
+    <dd><p>A new array of region samples in the requested layout.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>The numeric sample or header-value type.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfImageExtensions_ReadRegion_" data-uid="AstroView.Core.XisfImageExtensions.ReadRegion*"></a>
+
+  <h3 id="AstroView_Core_XisfImageExtensions_ReadRegion__1_AstroView_Core_XisfImageData_System_Int32_System_Int32_System_Int32_System_Int32_AstroView_Core_XisfPixelLayout_" data-uid="AstroView.Core.XisfImageExtensions.ReadRegion``1(AstroView.Core.XisfImageData,System.Int32,System.Int32,System.Int32,System.Int32,AstroView.Core.XisfPixelLayout)">
+  ReadRegion&lt;T&gt;(XisfImageData, int, int, int, int, XisfPixelLayout)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Extracts a zero-based rectangle from a two-dimensional real image; loaded images still decode the full raw block.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T[] ReadRegion&lt;T&gt;(this XisfImageData image, int x, int y, int width, int height, XisfPixelLayout layout = XisfPixelLayout.Planar) where T : INumberBase&lt;T&gt;</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>image</code> <a class="xref" href="AstroView.Core.XisfImageData.html">XisfImageData</a></dt>
+    <dd><p>The source image.</p>
+</dd>
+    <dt><code>x</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The zero-based horizontal pixel coordinate.</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The zero-based vertical pixel coordinate.</p>
+</dd>
+    <dt><code>width</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The positive region width in pixels.</p>
+</dd>
+    <dt><code>height</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The positive region height in pixels.</p>
+</dd>
+    <dt><code>layout</code> <a class="xref" href="AstroView.Core.XisfPixelLayout.html">XisfPixelLayout</a></dt>
+    <dd><p>The channel order of the returned samples.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>T[]</dt>
+    <dd><p>A new array of region samples in the requested layout.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>The numeric sample or header-value type.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

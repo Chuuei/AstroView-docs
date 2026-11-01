@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>AstroView documentation | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="AstroView documentation | AstroView documentation ">
+      
+      
+      <link rel="icon" href="images/astroview.ico">
+      <link rel="stylesheet" href="public/docfx.min.css">
+      <link rel="stylesheet" href="public/main.css">
+      <meta name="docfx:navrel" content="toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Chuuei/AstroView/blob/main/docs/index.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="index.html">
+            <img id="logo" class="svg" src="images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="astroview-documentation">AstroView documentation</h1>
+
+<p>AstroView reads, inspects, validates and writes astronomical FITS and XISF images.
+Choose the documentation for the work you want to do.</p>
+<table>
+<thead>
+<tr>
+<th>Documentation</th>
+<th>Audience</th>
+<th>Start here</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Core developer guide</strong></td>
+<td>Developers integrating astronomical files into .NET applications</td>
+<td><a href="core/getting-started.html">Install and write your first files</a></td>
+</tr>
+<tr>
+<td><strong>Core API reference</strong></td>
+<td>Developers looking up types, overloads, parameters and return values</td>
+<td><a href="core/api-reference.html">API guide and type map</a></td>
+</tr>
+<tr>
+<td><strong>Desktop user manual</strong></td>
+<td>People viewing, inspecting and converting images with AstroView</td>
+<td><a href="desktop/quick-start.html">First steps</a></td>
+</tr>
+<tr>
+<td><strong>Project documentation</strong></td>
+<td>Contributors maintaining the implementation and release process</td>
+<td><a href="building-documentation.html">Build documentation</a>, <a href="testing.html">testing</a>, <a href="releases.html">releases</a></td>
+</tr>
+</tbody>
+</table>
+<p>The guides describe the current <code>0.2.0</code> development line. Features still on the
+roadmap are identified explicitly. Being able to preserve metadata does not
+always mean that AstroView can evaluate or edit its scientific meaning: consult
+the <a href="support-matrix.html">support matrix</a> for the detailed contract.</p>
+<h2 id="developer-route">Developer route</h2>
+<p>Start with <a href="core/getting-started.html">installation</a>, then learn the
+<a href="core/data-model.html">document and pixel models</a>. Choose the
+<a href="core/xisf.html">XISF</a> or <a href="core/fits.html">FITS</a> guide for your input format.
+<a href="core/conversion.html">Conversion</a>, <a href="core/validation-signatures.html">integrity</a> and
+<a href="core/resources-performance.html">performance</a> explain decisions that affect real
+applications. The examples are compiled and executed during documentation CI.</p>
+<h2 id="desktop-route">Desktop route</h2>
+<p><a href="desktop/installation.html">Install AstroView</a> and follow the
+<a href="desktop/quick-start.html">reference-scene walkthrough</a>. Then use the chapters for
+<a href="desktop/viewing.html">image viewing</a>, <a href="desktop/metadata.html">metadata</a>,
+<a href="desktop/analysis.html">analysis</a>, <a href="desktop/tables.html">tables</a>,
+<a href="desktop/coordinates.html">coordinates</a>, <a href="desktop/integrity.html">integrity</a> and
+<a href="desktop/export.html">export</a>.</p>
+<h2 id="read-and-search">Read and search</h2>
+<p>These guides are Markdown files and can be read directly in the repository.
+The generated HTML edition adds search, navigation and the complete Core API
+reference. Run <code>eng/Build-Documentation.ps1 -Serve</code> from PowerShell, then open
+<code>http://localhost:8080</code>. See <a href="building-documentation.html">building documentation</a>
+for prerequisites, downloadable CI output and maintenance instructions.</p>
+<p>For release downloads, use the repository's
+<a href="https://github.com/Chuuei/AstroView/releases">GitHub Releases</a>. The desktop
+application and Core library are supplied separately; there may be no published
+release yet while the project is in development.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/docs/index.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Workspace and documents | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Workspace and documents | AstroView documentation ">
+      
+      
+      <link rel="icon" href="../images/astroview.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Chuuei/AstroView/blob/main/docs/desktop/workspace.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="workspace-and-documents">Workspace and documents</h1>
+
+<h2 id="window-layout">Window layout</h2>
+<p>The top bar contains <strong>Reference scene</strong> and <strong>Open images…</strong>. The left sidebar
+has two lists: <strong>DOCUMENTS</strong> selects a file/session; <strong>IMAGES &amp; HDUs</strong> selects an
+item inside that document. The title and summary above the workspaces describe
+the current selection.</p>
+<p>The eight workspaces are <strong>Image</strong>, <strong>Inspect</strong>, <strong>Analyze</strong>, <strong>Tables</strong>, <strong>Coordinates</strong>, <strong>Integrity</strong>, <strong>Export</strong> and
+<strong>Feature lab</strong>. Switching workspace
+does not save or convert the selected document. Some workspaces expose the whole
+document, while others operate on the selected image.</p>
+<p>The status bar shows the current operation and cancellation availability.
+Errors appear in a banner near the top; <strong>Dismiss</strong> hides the message after you
+have read it. Dismissing an error does not complete the failed operation.</p>
+<h2 id="open-files">Open files</h2>
+<p>Use <strong>Open images…</strong> or Ctrl+O (Command+O on macOS). You can select several files
+in one picker operation. FITS extensions commonly use <code>.fits</code>, <code>.fit</code> or <code>.fts</code>;
+XISF uses <code>.xisf</code>; distributed headers use <code>.xish</code>. Drag supported files onto the
+window or pass paths on the command line as an alternative.</p>
+<p>AstroView examines file content when detecting its format. Renaming an unrelated
+file to <code>.xisf</code> does not make it readable. Raster pictures such as JPEG and PNG
+are not the astronomical document formats opened by this workspace.</p>
+<p>When a batch contains an unreadable file, read the error banner/activity history
+and check which documents actually opened. Do not assume every selected file
+succeeded merely because one image appears.</p>
+<h2 id="select-an-image-or-extension">Select an image or extension</h2>
+<ol>
+<li>Choose the document in <strong>DOCUMENTS</strong>.</li>
+<li>Select the desired entry in <strong>IMAGES &amp; HDUs</strong>.</li>
+<li>Check the dimensions, sample type and channel count above the tabs.</li>
+<li>Choose a workspace suitable for that entry.</li>
+</ol>
+<p>A FITS primary HDU can be empty; a later extension may hold the image. A table
+or unknown extension can have useful metadata without an image preview. Use <strong>Inspect</strong> and <strong>Tables</strong> rather than
+treating every blank viewport as a failed
+file load.</p>
+<p>An XISF document can contain several images. Selecting one does not remove the
+others. <strong>Export document…</strong> exports the document; use <strong>Isolate selected image as a new document</strong> first when you want
+only one image.</p>
+<h2 id="keep-distributed-files-together">Keep distributed files together</h2>
+<p>A <code>.xish</code> file is a header that can reference a sibling <code>.xisb</code> block file.
+Open the header, keep the referenced file beside it, and retain both files while
+working. A document can open its header successfully and fail later when pixels
+or an ancillary block are accessed if a block file is missing.</p>
+<p>Default policy permits header-relative sibling blocks. Network access, general
+external filesystem paths and traversal outside the header directory are off.
+Change a policy only if required for a file you intend to access; the
+<a href="feature-lab.html#reader-policy">reader settings chapter</a> explains how changes apply.</p>
+<h2 id="changes-closing-and-cancellation">Changes, closing and cancellation</h2>
+<p>Metadata, XML and table edits are applied in memory. Export a copy before closing
+a document or exiting if you want to keep those edits. The application does not
+provide a persistent project/session or automatic saving of the workspace.</p>
+<p>Select a document and click <strong>Close</strong> to remove it and release retained previews
+and data. Large documents can use considerable memory, particularly after
+analysis or preview rendering. Closing documents you no longer need is useful
+even when their source files are compressed.</p>
+<p>Long operations temporarily disable conflicting controls. Use <strong>Cancel</strong> or
+Escape when cancellation is offered. Some codecs finish their current block
+before returning. Output publication can temporarily disable cancellation while
+committing a file. After a canceled open, the app restores the earlier selection
+where possible; inspect the document list before continuing.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/docs/desktop/workspace.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

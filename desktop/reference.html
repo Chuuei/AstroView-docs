@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Shortcuts, glossary and limits | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Shortcuts, glossary and limits | AstroView documentation ">
+      
+      
+      <link rel="icon" href="../images/astroview.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Chuuei/AstroView/blob/main/docs/desktop/reference.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="shortcuts-glossary-and-limits">Shortcuts, glossary and limits</h1>
+
+<h2 id="keyboard-and-mouse-reference">Keyboard and mouse reference</h2>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Input</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Open documents</td>
+<td>Ctrl+O; Command+O on macOS</td>
+</tr>
+<tr>
+<td>Export document</td>
+<td>Ctrl+E</td>
+</tr>
+<tr>
+<td>Fit preview</td>
+<td>Ctrl+0 or Fit</td>
+</tr>
+<tr>
+<td>Actual-size preview</td>
+<td>Ctrl+1 or 1:1</td>
+</tr>
+<tr>
+<td>Cancel a cancellable operation</td>
+<td>Escape or Cancel</td>
+</tr>
+<tr>
+<td>Zoom</td>
+<td>Mouse wheel</td>
+</tr>
+<tr>
+<td>Pan</td>
+<td>Left drag</td>
+</tr>
+<tr>
+<td>Fit again</td>
+<td>Double-click</td>
+</tr>
+<tr>
+<td>Select an image pixel</td>
+<td>Click</td>
+</tr>
+</tbody>
+</table>
+<p>The macOS Command shortcut is explicitly provided for opening files. The other
+listed keyboard gestures use Ctrl as shown; their corresponding buttons remain
+available on every platform.</p>
+<h2 id="common-units-and-conventions">Common units and conventions</h2>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Convention</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Image column/row in the UI</td>
+<td>Zero-based pixel centres</td>
+</tr>
+<tr>
+<td>RA and Dec in Coordinates</td>
+<td>Degrees, not RA hours</td>
+</tr>
+<tr>
+<td>Channel</td>
+<td>Zero-based index</td>
+</tr>
+<tr>
+<td>Stored-sample start</td>
+<td>Zero-based linear sample index</td>
+</tr>
+<tr>
+<td>Metadata/JSON numeric text</td>
+<td>Decimal point, invariant formatting</td>
+</tr>
+<tr>
+<td>TimePoint example</td>
+<td>ISO timestamp with an offset</td>
+</tr>
+<tr>
+<td>Reader budgets shown in MiB</td>
+<td>1 MiB = 1,048,576 bytes</td>
+</tr>
+<tr>
+<td>Display shadow clipping</td>
+<td>Sigma parameter for the display stretch</td>
+</tr>
+</tbody>
+</table>
+<p>Numeric spin controls can follow the operating system's decimal separator.
+That does not change the invariant syntax required by metadata text and JSON.</p>
+<h2 id="interactive-limits">Interactive limits</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Limit/default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Window</td>
+<td>Minimum 1100 × 720; scroll internal panels for controls below the visible area</td>
+</tr>
+<tr>
+<td>Statistics</td>
+<td>Initial limit 250,000 samples/channel; controls allow up to 10,000,000</td>
+</tr>
+<tr>
+<td>Histogram</td>
+<td>256 bins initially; 8–4,096 bins</td>
+</tr>
+<tr>
+<td>Stored-sample text</td>
+<td>1–256 samples per read</td>
+</tr>
+<tr>
+<td>Region text</td>
+<td>At most 4,096 total samples including all channels</td>
+</tr>
+<tr>
+<td>Table browser</td>
+<td>200 rows and 16 data columns per page</td>
+</tr>
+<tr>
+<td>JSON table editor</td>
+<td>1–32 fields, up to 1,000 rows, 4,096 elements/array cell; embedded-block size also applies</td>
+</tr>
+<tr>
+<td>Image generator</td>
+<td>1–2,048 pixels/axis and 1–4 channels</td>
+</tr>
+</tbody>
+</table>
+<p>These are interactive application limits, not an exhaustive statement of Core's
+format limits. File readers also enforce independent byte, XML, dimension,
+decompression and table budgets.</p>
+<h2 id="glossary">Glossary</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning in AstroView</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FITS</td>
+<td>Astronomical file format organized into ordered header/data units</td>
+</tr>
+<tr>
+<td>HDU</td>
+<td>Header/data unit; can hold an image, table or another extension</td>
+</tr>
+<tr>
+<td>XISF</td>
+<td>Extensible image serialization format with image and metadata objects</td>
+</tr>
+<tr>
+<td>XISH / XISB</td>
+<td>Distributed XML header / referenced binary block file</td>
+</tr>
+<tr>
+<td>Scientific sample</td>
+<td>Numeric source value used for measurement and scientific output</td>
+</tr>
+<tr>
+<td>Preview</td>
+<td>8-bit-per-component display rendering of the scientific samples</td>
+</tr>
+<tr>
+<td>Stretch</td>
+<td>Display transformation that makes a range of sample values visible</td>
+</tr>
+<tr>
+<td>Planar / interleaved</td>
+<td>Channels stored in separate planes / alternating within pixels</td>
+</tr>
+<tr>
+<td>Byte order</td>
+<td>Little-endian or big-endian byte representation of numeric components</td>
+</tr>
+<tr>
+<td>Checksum/digest</td>
+<td>Stored value used to detect a mismatch in covered content</td>
+</tr>
+<tr>
+<td>XML signature</td>
+<td>Signed XML integrity information, distinct from identity trust</td>
+</tr>
+<tr>
+<td>WCS / astrometry</td>
+<td>Metadata/model relating image positions to sky positions</td>
+</tr>
+<tr>
+<td>MAD</td>
+<td>Median absolute deviation, a measure of sampled dispersion</td>
+</tr>
+<tr>
+<td>CFA</td>
+<td>Color-filter-array mosaic description; not a debayering operation</td>
+</tr>
+<tr>
+<td>Native preservation</td>
+<td>Writing the native document model while retaining supported content</td>
+</tr>
+<tr>
+<td>Re-encoding</td>
+<td>Serializing editable content with new storage settings</td>
+</tr>
+<tr>
+<td>Conversion finding</td>
+<td>A report of preserved, transformed or omitted content</td>
+</tr>
+</tbody>
+</table>
+<h2 id="current-capability-boundaries">Current capability boundaries</h2>
+<p>AstroView exposes the capabilities implemented by Core. Current limitations
+include general complex magnitude/phase previews, scientific cube-plane viewing,
+native FITS table editing, compressed/tiled FITS image decoding, broader FITS
+WCS/distortion evaluation, debayering, full ICC processing and general streaming
+or memory-mapped image processing.</p>
+<p>The seven projections in the synthetic/native-XISF calculator do not imply seven
+implemented FITS WCS projection families. Inspectable CFA/ICC metadata does not
+imply that those processing operations are available. A feature listed as planned
+in Feature lab cannot be enabled through a different export setting.</p>
+<p>Use the <a href="../support-matrix.html">support matrix</a> for read/write/edit/preserve/evaluate
+details and the <a href="../roadmap.html">roadmap</a> for planned work. The
+<a href="../core/index.html">Core developer guide</a> explains API integration separately from
+this user manual.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/docs/desktop/reference.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

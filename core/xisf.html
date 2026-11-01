@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Working with XISF | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Working with XISF | AstroView documentation ">
+      
+      
+      <link rel="icon" href="../images/astroview.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Chuuei/AstroView/blob/main/docs/core/xisf.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="working-with-xisf">Working with XISF</h1>
+
+<h2 id="open-a-document-and-inspect-its-contents">Open a document and inspect its contents</h2>
+<p>Use <code>XisfReader.Load(path, options)</code> or <code>LoadAsync</code> for monolithic XISF files and
+distributed XISH headers. Stream overloads accept an optional base directory
+for resolving permitted relative blocks. Do not depend on a filename extension
+to establish the content's type in an application that accepts arbitrary input.</p>
+<p>A document can contain multiple images, document properties, creation metadata,
+document-level tables and application-defined extensions. Each image can also
+have properties, FITS keywords, tables, a thumbnail, an ICC profile, a CFA pattern,
+display functions and a working space. Inspect <code>UnavailableObjects</code> and property
+availability when an ancillary object is retained but cannot be interpreted.</p>
+<p>Header parsing and data decoding are separate operations. Selecting an image's
+typed samples can fail later because a block is missing, its checksum is wrong,
+its codec is unsupported or a resource budget would be exceeded.</p>
+<h2 id="choose-preservation-or-re-encoding">Choose preservation or re-encoding</h2>
+<table>
+<thead>
+<tr>
+<th>Goal</th>
+<th>Approach</th>
+<th>Consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Copy a parsed document with its native content</td>
+<td><code>XisfWriter.Write(path, document)</code></td>
+<td>Preserves supported XML/opaque content and relocates its blocks as required</td>
+</tr>
+<tr>
+<td>Edit metadata while retaining source-aware content</td>
+<td><code>document.EditXml(...)</code>, then the parsed-document writer</td>
+<td>Original block references must remain meaningful until writing completes</td>
+</tr>
+<tr>
+<td>Change compression, storage placement or editable metadata</td>
+<td><code>document.ToEditable()</code>, then editable writer plus options</td>
+<td>Materializes images; original signatures are not retained</td>
+</tr>
+<tr>
+<td>Create an image/document from scratch</td>
+<td><code>FromSamples</code>, <code>FromRaw</code>, <code>XisfDocumentData</code></td>
+<td>You are responsible for consistent dimensions, channels and metadata</td>
+</tr>
+</tbody>
+</table>
+<p>Document preservation does not mean byte-for-byte equality with the original
+file. Block offsets, header serialization and creation/storage details may differ.
+Preservation and interoperability are documented separately in the
+<a href="../support-matrix.html">support matrix</a>.</p>
+<h2 id="metadata-only-preservation-example">Metadata-only preservation example</h2>
+<p>Use <code>using System.Xml.Linq;</code> in addition to <code>using AstroView.Core;</code>.
+This example edits a new document-level property and writes a new file.</p>
+<!-- snippet: preserve-edit -->
+<pre><code class="lang-csharp">public static void PreserveAndEdit(string directory)
+{
+    var original = XisfReader.Load(Path.Combine(directory, &quot;image.xisf&quot;));
+    var edited = original.EditXml(xml =&gt;
+    {
+        XNamespace ns = xml.Root!.Name.Namespace;
+        xml.Root.Add(new XElement(ns + &quot;Property&quot;,
+            new XAttribute(&quot;id&quot;, &quot;Example:Note&quot;),
+            new XAttribute(&quot;type&quot;, &quot;String&quot;), &quot;Reviewed&quot;));
+    });
+    // The parsed-document overload preserves XML and opaque data blocks.
+    string output = Path.Combine(directory, &quot;preserved-copy.xisf&quot;);
+    XisfWriter.Write(output, edited);
+    if (!XisfReader.Load(output).Images[0].GetSamples&lt;ushort&gt;()
+        .SequenceEqual(original.Images[0].GetSamples&lt;ushort&gt;()))
+        throw new InvalidOperationException(&quot;Preservation changed samples.&quot;);
+}
+</code></pre>
+<p>Do not create duplicate property identifiers when applying the same edit to an
+already edited document. Locate and replace the existing element when that is
+the intended behavior. Changes to signed XML require a new signature.</p>
+<h2 id="writer-settings">Writer settings</h2>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Default</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Compression</code></td>
+<td><code>None</code></td>
+<td><code>None</code>, <code>Zlib</code>, <code>Lz4</code>, <code>Lz4Hc</code>, <code>Zstd</code></td>
+</tr>
+<tr>
+<td><code>Shuffle</code></td>
+<td><code>false</code></td>
+<td>Rearranges sample bytes before compression; decoding restores sample order</td>
+</tr>
+<tr>
+<td><code>Checksum</code></td>
+<td><code>Sha256</code></td>
+<td>Also supports None, SHA-1, SHA-512 and platform-supported SHA-3 variants</td>
+</tr>
+<tr>
+<td><code>DataBlockStorage</code></td>
+<td><code>Attachment</code></td>
+<td>Attachment, Embedded or Inline text-block placement</td>
+</tr>
+<tr>
+<td><code>MaximumInlineBlockSize</code></td>
+<td>65,535 bytes</td>
+<td>Larger text-encoded blocks fall back to attachment storage</td>
+</tr>
+<tr>
+<td><code>HexEncoding</code></td>
+<td><code>false</code></td>
+<td>Text blocks normally use Base64; enables hexadecimal instead</td>
+</tr>
+<tr>
+<td><code>CompressionSubblockSize</code></td>
+<td>0</td>
+<td>Zero disables splitting into independent compression subblocks</td>
+</tr>
+<tr>
+<td><code>BlockAlignmentSize</code></td>
+<td>1</td>
+<td>Alignment for attached blocks; 1 disables padding</td>
+</tr>
+<tr>
+<td><code>StringsAsDataBlocks</code></td>
+<td><code>false</code></td>
+<td>Nonempty String properties may be written as UTF-8 blocks</td>
+</tr>
+<tr>
+<td><code>CreatorApplication</code></td>
+<td>Core name/version</td>
+<td>Application attribution in creation metadata</td>
+</tr>
+<tr>
+<td><code>CreationTime</code></td>
+<td>Current UTC time</td>
+<td>Set explicitly for reproducible creation metadata</td>
+</tr>
+</tbody>
+</table>
+<p>These settings apply to writer overloads that serialize editable data or image
+sequences. The parsed-document overload has no re-encoding options parameter.
+Inline image samples use embedded Data elements where required by the format.</p>
+<p>SHA-3 availability depends on the platform cryptography implementation. Use a
+widely supported algorithm such as SHA-256 for a portable default and handle an
+explicit unsupported-algorithm failure rather than silently substituting a digest.</p>
+<h2 id="distributed-output">Distributed output</h2>
+<!-- snippet: distributed -->
+<pre><code class="lang-csharp">public static void Distributed(string directory)
+{
+    var editable = XisfReader.Load(Path.Combine(directory, &quot;image.xisf&quot;)).ToEditable();
+    string header = Path.Combine(directory, &quot;distributed.xish&quot;);
+    string blocks = Path.Combine(directory, &quot;distributed.xisb&quot;);
+    XisfWriter.WriteDistributed(header, blocks, editable, new()
+    {
+        Compression = XisfCompression.Lz4,
+        Shuffle = true,
+        Checksum = XisfChecksum.Sha256
+    });
+    if (XisfReader.Load(header).Images[0].GetSamples&lt;ushort&gt;()[3] != ushort.MaxValue)
+        throw new InvalidOperationException(&quot;Distributed XISF round trip failed.&quot;);
+    // Keep the header and its referenced block file together.
+}
+</code></pre>
+<p>Distribute the header and every file it references together. The example uses
+relative sibling placement, which the default reader permits. A stream load
+needs an appropriate base directory to resolve those same paths.</p>
+<p>A distributed write publishes two paths and is not an atomic transaction.
+Applications should use a new output name, manage partial output cleanup and
+coordinate any final move themselves. Single-file path writers stage their
+output before replacing a destination; caller-owned streams can contain partial
+data after errors. See <a href="validation-signatures.html">validation and signatures</a>
+before claiming that a newly written document is fully verified.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/docs/core/xisf.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

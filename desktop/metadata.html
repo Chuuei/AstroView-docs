@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Inspecting and editing metadata | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Inspecting and editing metadata | AstroView documentation ">
+      
+      
+      <link rel="icon" href="../images/astroview.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Chuuei/AstroView/blob/main/docs/desktop/metadata.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="inspecting-and-editing-metadata">Inspecting and editing metadata</h1>
+
+<p>Use <strong>Inspect</strong> to find file properties, FITS cards and ancillary metadata.
+The workspace has <strong>Fields</strong>, <strong>Source header</strong> and <strong>XISF XML editor</strong> subtabs.</p>
+<p><img src="../images/desktop-inspect.png" alt="Inspect workspace with metadata fields, scopes and the scalar editor"></p>
+<h2 id="find-a-value">Find a value</h2>
+<ol>
+<li>Select the document and image/HDU in the sidebar.</li>
+<li>Open <strong>Inspect → Fields</strong>.</li>
+<li>Enter a keyword, property ID, value or scope in the search box.</li>
+<li>Read <strong>Field</strong>, <strong>Type</strong>, <strong>Value</strong> and <strong>Scope</strong> together.</li>
+</ol>
+<p>For example, search for <code>Exposure</code>, <code>OBJECT</code>, <code>Telescope</code> or <code>checksum</code> depending
+on the source format. A similarly named document property and image property can
+refer to different objects. Selecting another image can change the visible fields.</p>
+<p>Some values are formatted summaries of arrays or binary objects. To inspect
+the structural representation, open <strong>Source header</strong>. For XISF it displays XML;
+for FITS it displays the selected header's cards. This view is read-only.</p>
+<h2 id="edit-a-scalar-property">Edit a scalar property</h2>
+<ol>
+<li>Select a row to populate the editor, or enter a new property ID.</li>
+<li>Choose <strong>Image property</strong>, <strong>Document property</strong>, <strong>Creation property</strong> or <strong>FITS keyword</strong>, as appropriate.</li>
+<li>Choose the scalar type and enter the value.</li>
+<li>Optionally enter a comment.</li>
+<li>Click <strong>Apply metadata edit</strong> and check the resulting field and scope.</li>
+<li>Export a copy to save it.</li>
+</ol>
+<p>For an application note, use an identifier such as <code>AstroView:Note</code> and type <strong>String</strong>. Creation metadata is reserved
+for <code>XISF:</code> identifiers; use your own
+namespace for application-specific properties. Identifiers in XISF are
+case-sensitive, so <code>AstroView:Note</code> and <code>AstroView:note</code> are different properties.</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Example input</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>String</td>
+<td><code>Reviewed before stacking</code></td>
+<td>Enter plain text, without extra XML quoting</td>
+</tr>
+<tr>
+<td>Boolean</td>
+<td><code>true</code></td>
+<td>Use true/false</td>
+</tr>
+<tr>
+<td>Int64</td>
+<td><code>-42</code></td>
+<td>Signed 64-bit integer</td>
+</tr>
+<tr>
+<td>UInt64</td>
+<td><code>18446744073709551615</code></td>
+<td>Exact unsigned integer text</td>
+</tr>
+<tr>
+<td>Float64</td>
+<td><code>180.5</code></td>
+<td>Use a decimal point in this free-text editor</td>
+</tr>
+<tr>
+<td>TimePoint</td>
+<td><code>2026-11-01T22:15:00+00:00</code></td>
+<td>Include an explicit offset for an unambiguous instant</td>
+</tr>
+</tbody>
+</table>
+<p>The free-text metadata editor uses invariant numeric formatting even if numeric
+spin controls elsewhere display a decimal comma. Numeric text such as <code>180,5</code>
+can be misinterpreted; use <code>180.5</code>. XISF vectors, matrices and other advanced
+types use the XML editor or the separate table editor.</p>
+<h2 id="edit-fits-keywords">Edit FITS keywords</h2>
+<p>For a FITS file, the editor writes a keyword in the selected HDU header (or the
+primary header when appropriate). For an XISF image, choose <strong>FITS keyword</strong> to
+edit its embedded FITS-keyword metadata. Enter String values as ordinary text;
+the application performs the required FITS quoting.</p>
+<p>Avoid editing structural cards such as <code>BITPIX</code> or <code>NAXIS</code> to try to change an
+image's dimensions. A header edit does not resize its pixel payload. Core guards
+inconsistent structure when writing. The scalar editor is also not a specialized
+editor for repeated HISTORY/COMMENT card sequences; inspect those in the source
+header and preserve them through a native copy.</p>
+<h2 id="advanced-xisf-xml-editing">Advanced XISF XML editing</h2>
+<ol>
+<li>Open <strong>XISF XML editor</strong>.</li>
+<li>Click <strong>Load current XML</strong> to start from the currently selected document.</li>
+<li>Make a small, intentional change, retaining the XML namespace and structure.</li>
+<li>Click <strong>Apply XML in memory</strong>.</li>
+<li>Review fields and run <strong>Integrity → Validate document</strong>.</li>
+<li>Export a new copy and reopen it to check the result.</li>
+</ol>
+<p>Keep original block references valid. Deleting/changing an attachment location,
+sample format, geometry or compression attribute without changing the associated
+data can make the document unreadable. Arbitrary source pixels are not edited
+by typing a different number into a header attribute.</p>
+<p>Applying edited XML reparses supported structure; it does not write to the
+original file. Editing a signed document can invalidate its signature. After
+intentional content changes, export and sign the resulting copy again if a new
+signature is required. See <a href="integrity.html">integrity</a>.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/docs/desktop/metadata.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

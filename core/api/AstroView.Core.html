@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Namespace AstroView.Core | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Namespace AstroView.Core | AstroView documentation ">
+      
+      
+      <link rel="icon" href="../../images/astroview.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="AstroView.Core">
+
+  <h1 id="AstroView_Core" data-uid="AstroView.Core" class="text-break">Namespace AstroView.Core</h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="markdown level0 remarks"></div>
+
+    <h3 id="classes">
+Classes
+</h3>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.AstronomyImageMetadata.html">AstronomyImageMetadata</a></dt>
+      <dd><p>Common observation and instrument metadata extracted from XISF properties or FITS keywords.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.AstronomyMetadata.html">AstronomyMetadata</a></dt>
+      <dd><p>Extracts common observation and instrument metadata without changing the source.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.CelestialWorldCoordinateSystem.html">CelestialWorldCoordinateSystem</a></dt>
+      <dd><p>Transforms between pixel and celestial coordinates using supported FITS WCS keywords.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.ConversionFinding.html">ConversionFinding</a></dt>
+      <dd><p>A feature-level conversion finding.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.ConversionLossException.html">ConversionLossException</a></dt>
+      <dd><p>Reports conversion losses that the caller has not explicitly allowed.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.ConversionResult-1.html">ConversionResult&lt;T&gt;</a></dt>
+      <dd><p>A converted value with explicit preservation and loss findings.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.FitsConversionOptions.html">FitsConversionOptions</a></dt>
+      <dd><p>Controls axis interpretation and preservation of structural keywords.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.FitsConverter.html">FitsConverter</a></dt>
+      <dd><p>Converts supported images and metadata between FITS and XISF.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.FitsDocument.html">FitsDocument</a></dt>
+      <dd><p>An ordered sequence of HDUs beginning with a primary HDU, and conformance diagnostics.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.FitsFormatException.html">FitsFormatException</a></dt>
+      <dd><p>Reports malformed or unsupported FITS input and resource-limit violations.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.FitsHdu.html">FitsHdu</a></dt>
+      <dd><p>A FITS header/data unit with raw payload, decoded content, and checksum results.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.FitsHeader.html">FitsHeader</a></dt>
+      <dd><p>An ordered, editable collection of FITS cards preserving repeated keywords.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.FitsHeaderCard.html">FitsHeaderCard</a></dt>
+      <dd><p>A FITS keyword, typed value, and optional comment.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.FitsImage.html">FitsImage</a></dt>
+      <dd><p>A FITS image with big-endian storage samples and physical-value scaling metadata.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.FitsKeywordKey.html">FitsKeywordKey</a></dt>
+      <dd><p>An immutable FITS keyword definition with its type, units and evidence.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.FitsKeywordKey-1.html">FitsKeywordKey&lt;T&gt;</a></dt>
+      <dd><p>A typed FITS keyword; scalar numbers can be read from compatible numeric storage.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.FitsKnownKeywords.html">FitsKnownKeywords</a></dt>
+      <dd><p>Typed FITS keyword catalogs for standard definitions, published conventions and observed example metadata.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.FitsKnownKeywords.Astrophotography.html">FitsKnownKeywords.Astrophotography</a></dt>
+      <dd><p>Typed FITS definitions in the Astrophotography catalog; consult each key's source and units.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.FitsKnownKeywords.Common.html">FitsKnownKeywords.Common</a></dt>
+      <dd><p>Typed FITS definitions in the Common catalog; consult each key's source and units.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.FitsKnownKeywords.Examples.html">FitsKnownKeywords.Examples</a></dt>
+      <dd><p>Typed FITS definitions in the Examples catalog; consult each key's source and units.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.FitsKnownKeywords.Standard.html">FitsKnownKeywords.Standard</a></dt>
+      <dd><p>Typed FITS definitions in the Standard catalog; consult each key's source and units.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.FitsKnownKeywords.Wcs.html">FitsKnownKeywords.Wcs</a></dt>
+      <dd><p>Image WCS keyword families, including alternate coordinate systems; units are specified by CUNIT.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.FitsReader.html">FitsReader</a></dt>
+      <dd><p>Reads FITS HDUs, validates headers and payloads, and decodes supported images and tables.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.FitsReaderOptions.html">FitsReaderOptions</a></dt>
+      <dd><p>Controls FITS validation and limits for input, headers, and decoded data.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.FitsTable.html">FitsTable</a></dt>
+      <dd><p>A decoded FITS table with ordered columns and rows.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.FitsTableColumn.html">FitsTableColumn</a></dt>
+      <dd><p>A FITS table column with format, unit, scaling, and null sentinel.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.FitsValidationDiagnostic.html">FitsValidationDiagnostic</a></dt>
+      <dd><p>A FITS conformance finding associated with an HDU and optional card.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.FitsWriter.html">FitsWriter</a></dt>
+      <dd><p>Serializes FITS documents with optional HDU checksums.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.FitsWriterOptions.html">FitsWriterOptions</a></dt>
+      <dd><p>Controls optional FITS checksum generation.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfAdditionalProperties.html">XisfAdditionalProperties</a></dt>
+      <dd><p>Typed application metadata observed in example files, plus library FITS storage hints; these are separate from reserved XISF properties.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfAdditionalProperties.FitsStorage.html">XisfAdditionalProperties.FitsStorage</a></dt>
+      <dd><p>Typed metadata in the FitsStorage group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfAdditionalProperties.Instrument.html">XisfAdditionalProperties.Instrument</a></dt>
+      <dd><p>Typed metadata in the Instrument group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfAdditionalProperties.Observer.html">XisfAdditionalProperties.Observer</a></dt>
+      <dd><p>Typed metadata in the Observer group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfAdditionalProperties.Pcl.html">XisfAdditionalProperties.Pcl</a></dt>
+      <dd><p>Typed metadata in the Pcl group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfAdditionalProperties.Pcl.AstrometricSolution.html">XisfAdditionalProperties.Pcl.AstrometricSolution</a></dt>
+      <dd><p>Typed metadata in the AstrometricSolution group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfAdditionalProperties.Pcl.AstrometricSolution.SplineWorldTransformation.html">XisfAdditionalProperties.Pcl.AstrometricSolution.SplineWorldTransformation</a></dt>
+      <dd><p>Typed metadata in the SplineWorldTransformation group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfAdditionalProperties.Pcl.AstrometricSolution.SplineWorldTransformation.ControlPoints.html">XisfAdditionalProperties.Pcl.AstrometricSolution.SplineWorldTransformation.ControlPoints</a></dt>
+      <dd><p>Typed metadata in the ControlPoints group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfAdditionalProperties.Pcl.AstrometricSolution.SplineWorldTransformation.PointGridInterpolation.html">XisfAdditionalProperties.Pcl.AstrometricSolution.SplineWorldTransformation.PointGridInterpolation</a></dt>
+      <dd><p>Typed metadata in the PointGridInterpolation group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfAdditionalProperties.Pcl.AstrometricSolution.SplineWorldTransformation.PointGridInterpolation.ImageToNative.html">XisfAdditionalProperties.Pcl.AstrometricSolution.SplineWorldTransformation.PointGridInterpolation.ImageToNative</a></dt>
+      <dd><p>Typed metadata in the ImageToNative group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfAdditionalProperties.Pcl.AstrometricSolution.SplineWorldTransformation.PointGridInterpolation.NativeToImage.html">XisfAdditionalProperties.Pcl.AstrometricSolution.SplineWorldTransformation.PointGridInterpolation.NativeToImage</a></dt>
+      <dd><p>Typed metadata in the NativeToImage group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfAdditionalProperties.Pcl.AstrometricSolution.SplineWorldTransformation.PointSurfaceSpline.html">XisfAdditionalProperties.Pcl.AstrometricSolution.SplineWorldTransformation.PointSurfaceSpline</a></dt>
+      <dd><p>Typed metadata in the PointSurfaceSpline group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfAdditionalProperties.Pcl.AstrometricSolution.SplineWorldTransformation.PointSurfaceSpline.ImageToNative.html">XisfAdditionalProperties.Pcl.AstrometricSolution.SplineWorldTransformation.PointSurfaceSpline.ImageToNative</a></dt>
+      <dd><p>Typed metadata in the ImageToNative group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfAdditionalProperties.Pcl.AstrometricSolution.SplineWorldTransformation.PointSurfaceSpline.ImageToNative.SurfaceSplineX.html">XisfAdditionalProperties.Pcl.AstrometricSolution.SplineWorldTransformation.PointSurfaceSpline.ImageToNative.SurfaceSplineX</a></dt>
+      <dd><p>Typed metadata in the SurfaceSplineX group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfAdditionalProperties.Pcl.AstrometricSolution.SplineWorldTransformation.PointSurfaceSpline.ImageToNative.SurfaceSplineY.html">XisfAdditionalProperties.Pcl.AstrometricSolution.SplineWorldTransformation.PointSurfaceSpline.ImageToNative.SurfaceSplineY</a></dt>
+      <dd><p>Typed metadata in the SurfaceSplineY group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfAdditionalProperties.Pcl.AstrometricSolution.SplineWorldTransformation.PointSurfaceSpline.NativeToImage.html">XisfAdditionalProperties.Pcl.AstrometricSolution.SplineWorldTransformation.PointSurfaceSpline.NativeToImage</a></dt>
+      <dd><p>Typed metadata in the NativeToImage group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfAdditionalProperties.Pcl.AstrometricSolution.SplineWorldTransformation.PointSurfaceSpline.NativeToImage.SurfaceSplineX.html">XisfAdditionalProperties.Pcl.AstrometricSolution.SplineWorldTransformation.PointSurfaceSpline.NativeToImage.SurfaceSplineX</a></dt>
+      <dd><p>Typed metadata in the SurfaceSplineX group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfAdditionalProperties.Pcl.AstrometricSolution.SplineWorldTransformation.PointSurfaceSpline.NativeToImage.SurfaceSplineY.html">XisfAdditionalProperties.Pcl.AstrometricSolution.SplineWorldTransformation.PointSurfaceSpline.NativeToImage.SurfaceSplineY</a></dt>
+      <dd><p>Typed metadata in the SurfaceSplineY group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfAdditionalProperties.Pcl.AstrometricSolution.SplineWorldTransformation.Projective.html">XisfAdditionalProperties.Pcl.AstrometricSolution.SplineWorldTransformation.Projective</a></dt>
+      <dd><p>Typed metadata in the Projective group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfAdditionalProperties.Pcl.Noise.html">XisfAdditionalProperties.Pcl.Noise</a></dt>
+      <dd><p>Typed metadata in the Noise group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfAdditionalProperties.Pcl.Signal.html">XisfAdditionalProperties.Pcl.Signal</a></dt>
+      <dd><p>Typed metadata in the Signal group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfAdditionalProperties.Pcl.Signature.html">XisfAdditionalProperties.Pcl.Signature</a></dt>
+      <dd><p>Typed metadata in the Signature group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfAdditionalProperties.PixInsight.html">XisfAdditionalProperties.PixInsight</a></dt>
+      <dd><p>Typed metadata in the PixInsight group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfAstrometricSolution.html">XisfAstrometricSolution</a></dt>
+      <dd><p>Evaluates Revision 1 astrometric solutions without consulting FITS keywords or solver settings.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfBgra32Image.html">XisfBgra32Image</a></dt>
+      <dd><p>A rendered display image with caller-owned, top-down, straight-alpha BGRA pixels.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfCanonicalXml11Transform.html">XisfCanonicalXml11Transform</a></dt>
+      <dd><p>Canonical XML 1.1 transform for complete XISF roots and detached SignedInfo trees.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfCanonicalXml11WithCommentsTransform.html">XisfCanonicalXml11WithCommentsTransform</a></dt>
+      <dd><p>Canonical XML 1.1 with comments for complete XISF roots and detached SignedInfo trees.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfChannelStatistics.html">XisfChannelStatistics</a></dt>
+      <dd><p>Sampled per-channel counts, extrema, location, and dispersion estimates.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfChecksumException.html">XisfChecksumException</a></dt>
+      <dd><p>Reports a data block whose bytes do not match its declared checksum.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfColorFilterArray.html">XisfColorFilterArray</a></dt>
+      <dd><p>A repeating color-filter mosaic and its tile dimensions.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfColorSpace.html">XisfColorSpace</a></dt>
+      <dd><p>Implements the normative D50 color transformations in XISF Annex B.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfDiagnostic.html">XisfDiagnostic</a></dt>
+      <dd><p>An XISF conformance finding and its associated XML element.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfDisplayFunction.html">XisfDisplayFunction</a></dt>
+      <dd><p>Per-channel display parameters that do not modify stored samples.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfDisplayFunctions.html">XisfDisplayFunctions</a></dt>
+      <dd><p>Implements XISF display functions and the recommended adaptive algorithm.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfDisplayRenderer.html">XisfDisplayRenderer</a></dt>
+      <dd><p>Renders scientific samples directly into portable, straight-alpha BGRA display pixels.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfDocument.html">XisfDocument</a></dt>
+      <dd><p>A parsed XISF header with metadata, tables, and lazily decoded images.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfDocumentData.html">XisfDocumentData</a></dt>
+      <dd><p>An editable XISF document. Content is independent of serialization options.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfFitsKeyword.html">XisfFitsKeyword</a></dt>
+      <dd><p>A FITS keyword preserved in an XISF image header.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfFormatException.html">XisfFormatException</a></dt>
+      <dd><p>Reports malformed or unsupported XISF input and resource-limit violations.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfHistogram.html">XisfHistogram</a></dt>
+      <dd><p>A channel histogram with underflow, overflow, and non-finite counts.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfImage.html">XisfImage</a></dt>
+      <dd><p>A parsed image whose samples are decoded on demand from its source.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfImageData.html">XisfImageData</a></dt>
+      <dd><p>An owned pixel buffer with editable metadata for serialization.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfImageExtensions.html">XisfImageExtensions</a></dt>
+      <dd><p>Provides rectangular reads, channel extraction, sampled statistics, and full histograms.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.html">XisfKnownProperties</a></dt>
+      <dd><p>Typed predefined property keys from XISF 1.0 revision 1 (September 2026), grouped by specification namespace.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.AstrometricSolution.html">XisfKnownProperties.AstrometricSolution</a></dt>
+      <dd><p>Predefined properties in the AstrometricSolution group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.AstrometricSolution.ControlPoints.html">XisfKnownProperties.AstrometricSolution.ControlPoints</a></dt>
+      <dd><p>Predefined properties in the ControlPoints group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.AstrometricSolution.DistortionModel.html">XisfKnownProperties.AstrometricSolution.DistortionModel</a></dt>
+      <dd><p>Predefined properties in the DistortionModel group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.AstrometricSolution.DistortionModel.ImageToProjection.html">XisfKnownProperties.AstrometricSolution.DistortionModel.ImageToProjection</a></dt>
+      <dd><p>Predefined properties in the ImageToProjection group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.AstrometricSolution.DistortionModel.ImageToProjection.Fallback.html">XisfKnownProperties.AstrometricSolution.DistortionModel.ImageToProjection.Fallback</a></dt>
+      <dd><p>Predefined properties in the Fallback group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.AstrometricSolution.DistortionModel.ImageToProjection.Fallback.X.html">XisfKnownProperties.AstrometricSolution.DistortionModel.ImageToProjection.Fallback.X</a></dt>
+      <dd><p>Predefined properties in the X group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.AstrometricSolution.DistortionModel.ImageToProjection.Fallback.Y.html">XisfKnownProperties.AstrometricSolution.DistortionModel.ImageToProjection.Fallback.Y</a></dt>
+      <dd><p>Predefined properties in the Y group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.AstrometricSolution.DistortionModel.ImageToProjection.Global.html">XisfKnownProperties.AstrometricSolution.DistortionModel.ImageToProjection.Global</a></dt>
+      <dd><p>Predefined properties in the Global group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.AstrometricSolution.DistortionModel.ImageToProjection.Global.X.html">XisfKnownProperties.AstrometricSolution.DistortionModel.ImageToProjection.Global.X</a></dt>
+      <dd><p>Predefined properties in the X group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.AstrometricSolution.DistortionModel.ImageToProjection.Global.Y.html">XisfKnownProperties.AstrometricSolution.DistortionModel.ImageToProjection.Global.Y</a></dt>
+      <dd><p>Predefined properties in the Y group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.AstrometricSolution.DistortionModel.ImageToProjection.Local.html">XisfKnownProperties.AstrometricSolution.DistortionModel.ImageToProjection.Local</a></dt>
+      <dd><p>Predefined properties in the Local group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.AstrometricSolution.DistortionModel.ImageToProjection.Local.X.html">XisfKnownProperties.AstrometricSolution.DistortionModel.ImageToProjection.Local.X</a></dt>
+      <dd><p>Predefined properties in the X group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.AstrometricSolution.DistortionModel.ImageToProjection.Local.Y.html">XisfKnownProperties.AstrometricSolution.DistortionModel.ImageToProjection.Local.Y</a></dt>
+      <dd><p>Predefined properties in the Y group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.AstrometricSolution.DistortionModel.ProjectionToImage.html">XisfKnownProperties.AstrometricSolution.DistortionModel.ProjectionToImage</a></dt>
+      <dd><p>Predefined properties in the ProjectionToImage group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.AstrometricSolution.DistortionModel.ProjectionToImage.Fallback.html">XisfKnownProperties.AstrometricSolution.DistortionModel.ProjectionToImage.Fallback</a></dt>
+      <dd><p>Predefined properties in the Fallback group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.AstrometricSolution.DistortionModel.ProjectionToImage.Fallback.X.html">XisfKnownProperties.AstrometricSolution.DistortionModel.ProjectionToImage.Fallback.X</a></dt>
+      <dd><p>Predefined properties in the X group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.AstrometricSolution.DistortionModel.ProjectionToImage.Fallback.Y.html">XisfKnownProperties.AstrometricSolution.DistortionModel.ProjectionToImage.Fallback.Y</a></dt>
+      <dd><p>Predefined properties in the Y group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.AstrometricSolution.DistortionModel.ProjectionToImage.Global.html">XisfKnownProperties.AstrometricSolution.DistortionModel.ProjectionToImage.Global</a></dt>
+      <dd><p>Predefined properties in the Global group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.AstrometricSolution.DistortionModel.ProjectionToImage.Global.X.html">XisfKnownProperties.AstrometricSolution.DistortionModel.ProjectionToImage.Global.X</a></dt>
+      <dd><p>Predefined properties in the X group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.AstrometricSolution.DistortionModel.ProjectionToImage.Global.Y.html">XisfKnownProperties.AstrometricSolution.DistortionModel.ProjectionToImage.Global.Y</a></dt>
+      <dd><p>Predefined properties in the Y group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.AstrometricSolution.DistortionModel.ProjectionToImage.Local.html">XisfKnownProperties.AstrometricSolution.DistortionModel.ProjectionToImage.Local</a></dt>
+      <dd><p>Predefined properties in the Local group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.AstrometricSolution.DistortionModel.ProjectionToImage.Local.X.html">XisfKnownProperties.AstrometricSolution.DistortionModel.ProjectionToImage.Local.X</a></dt>
+      <dd><p>Predefined properties in the X group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.AstrometricSolution.DistortionModel.ProjectionToImage.Local.Y.html">XisfKnownProperties.AstrometricSolution.DistortionModel.ProjectionToImage.Local.Y</a></dt>
+      <dd><p>Predefined properties in the Y group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.AstrometricSolution.ProjectiveTransformation.html">XisfKnownProperties.AstrometricSolution.ProjectiveTransformation</a></dt>
+      <dd><p>Predefined properties in the ProjectiveTransformation group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.Instrument.html">XisfKnownProperties.Instrument</a></dt>
+      <dd><p>Predefined properties in the Instrument group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.Instrument.Camera.html">XisfKnownProperties.Instrument.Camera</a></dt>
+      <dd><p>Predefined properties in the Camera group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.Instrument.Filter.html">XisfKnownProperties.Instrument.Filter</a></dt>
+      <dd><p>Predefined properties in the Filter group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.Instrument.Focuser.html">XisfKnownProperties.Instrument.Focuser</a></dt>
+      <dd><p>Predefined properties in the Focuser group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.Instrument.Sensor.html">XisfKnownProperties.Instrument.Sensor</a></dt>
+      <dd><p>Predefined properties in the Sensor group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.Instrument.Telescope.html">XisfKnownProperties.Instrument.Telescope</a></dt>
+      <dd><p>Predefined properties in the Telescope group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.Observation.html">XisfKnownProperties.Observation</a></dt>
+      <dd><p>Predefined properties in the Observation group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.Observation.Center.html">XisfKnownProperties.Observation.Center</a></dt>
+      <dd><p>Predefined properties in the Center group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.Observation.Location.html">XisfKnownProperties.Observation.Location</a></dt>
+      <dd><p>Predefined properties in the Location group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.Observation.Meteorology.html">XisfKnownProperties.Observation.Meteorology</a></dt>
+      <dd><p>Predefined properties in the Meteorology group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.Observation.Object.html">XisfKnownProperties.Observation.Object</a></dt>
+      <dd><p>Predefined properties in the Object group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.Observation.Time.html">XisfKnownProperties.Observation.Time</a></dt>
+      <dd><p>Predefined properties in the Time group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.Organization.html">XisfKnownProperties.Organization</a></dt>
+      <dd><p>Predefined properties in the Organization group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.Processing.html">XisfKnownProperties.Processing</a></dt>
+      <dd><p>Predefined properties in the Processing group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfKnownProperties.Xisf.html">XisfKnownProperties.Xisf</a></dt>
+      <dd><p>Predefined properties in the Xisf group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfProperty.html">XisfProperty</a></dt>
+      <dd><p>A parsed typed property, display hints, and its original XML element.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfPropertyCollection.html">XisfPropertyCollection</a></dt>
+      <dd><p>Editable properties with typed construction and explicit missing-value access.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfPropertyData.html">XisfPropertyData</a></dt>
+      <dd><p>An explicitly typed property and display hints for serialization.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfPropertyExtensions.html">XisfPropertyExtensions</a></dt>
+      <dd><p>Explicit typed access to parsed properties, including availability checks.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfPropertyFormatter.html">XisfPropertyFormatter</a></dt>
+      <dd><p>Generates property and table-cell display text according to XISF format tokens.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfPropertyKey.html">XisfPropertyKey</a></dt>
+      <dd><p>An immutable typed XISF property definition, with its authority or evidence.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfPropertyKey-1.html">XisfPropertyKey&lt;T&gt;</a></dt>
+      <dd><p>A predefined property definition carrying its CLR value type and specified array shape.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfReader.html">XisfReader</a></dt>
+      <dd><p>Reads monolithic XISF files and distributed XML headers.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfReaderOptions.html">XisfReaderOptions</a></dt>
+      <dd><p>Controls external-resource access and resource limits for XISF input.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfResolution.html">XisfResolution</a></dt>
+      <dd><p>Horizontal and vertical resolution expressed in a named unit.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfRgbWorkingSpace.html">XisfRgbWorkingSpace</a></dt>
+      <dd><p>RGB gamma, chromaticity coordinates, and luminance coefficients.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfStatisticsOptions.html">XisfStatisticsOptions</a></dt>
+      <dd><p>Controls sample normalization and sampling density for statistics.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfStretchOptions.html">XisfStretchOptions</a></dt>
+      <dd><p>Controls display stretching in image adapters.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfTable.html">XisfTable</a></dt>
+      <dd><p>A parsed table with field definitions and typed rows.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfTableCell.html">XisfTableCell</a></dt>
+      <dd><p>A parsed cell value and its original XML element.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfTableData.html">XisfTableData</a></dt>
+      <dd><p>An editable table whose rows must match its field count.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfTableField.html">XisfTableField</a></dt>
+      <dd><p>The identifier, scalar or collection type, and display hints for a parsed table column.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfTableFieldData.html">XisfTableFieldData</a></dt>
+      <dd><p>The definition of a column in an editable table.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfTableRow.html">XisfTableRow</a></dt>
+      <dd><p>An ordered collection of parsed table cells.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfUnavailableObject.html">XisfUnavailableObject</a></dt>
+      <dd><p>A core object retained in XML when its representation is unsupported.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfUnsupportedFeatureException.html">XisfUnsupportedFeatureException</a></dt>
+      <dd><p>Identifies an unsupported feature while allowing the rest of an XISF unit to remain accessible.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfWriter.html">XisfWriter</a></dt>
+      <dd><p>Serializes XISF images and documents, including distributed output and XML signatures.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfWriterOptions.html">XisfWriterOptions</a></dt>
+      <dd><p>Controls attachment compression, checksums, and creation metadata.</p>
+</dd>
+    </dl>
+    <h3 id="structs">
+Structs
+</h3>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfComplex128.html">XisfComplex128</a></dt>
+      <dd><p>A complex value with two binary128 components.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfComplex32.html">XisfComplex32</a></dt>
+      <dd><p>A complex value with two single-precision components.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfFloat128.html">XisfFloat128</a></dt>
+      <dd><p>An IEEE 754 binary128 value that preserves all 128 bits without converting through double.</p>
+</dd>
+    </dl>
+    <h3 id="enums">
+Enums
+</h3>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.ConversionEffect.html">ConversionEffect</a></dt>
+      <dd><p>The effect of a conversion on a source feature.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.ConversionLossPolicy.html">ConversionLossPolicy</a></dt>
+      <dd><p>Whether a conversion may omit content or change its representation.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.FitsAxisInterpretation.html">FitsAxisInterpretation</a></dt>
+      <dd><p>How a third FITS axis is interpreted during image conversion.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.FitsHduType.html">FitsHduType</a></dt>
+      <dd><p>The kind of FITS header/data unit.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.FitsValidationMode.html">FitsValidationMode</a></dt>
+      <dd><p>Controls whether FITS conformance errors are recorded or rejected.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.FitsValidationSeverity.html">FitsValidationSeverity</a></dt>
+      <dd><p>The importance of a FITS conformance finding.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.MetadataDefinitionSource.html">MetadataDefinitionSource</a></dt>
+      <dd><p>The authority or evidence behind a metadata definition.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfChecksum.html">XisfChecksum</a></dt>
+      <dd><p>The digest algorithm applied to serialized data blocks.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfCompression.html">XisfCompression</a></dt>
+      <dd><p>The compression codec applied to serialized data blocks.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfDataBlockStorage.html">XisfDataBlockStorage</a></dt>
+      <dd><p>The placement of serialized binary blocks in a newly written header.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfDiagnosticSeverity.html">XisfDiagnosticSeverity</a></dt>
+      <dd><p>The importance of an XISF conformance finding.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfPixelLayout.html">XisfPixelLayout</a></dt>
+      <dd><p>The order of channel samples within an image buffer.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="AstroView.Core.XisfSampleFormat.html">XisfSampleFormat</a></dt>
+      <dd><p>The numeric representation of each stored image sample.</p>
+</dd>
+    </dl>
+
+
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

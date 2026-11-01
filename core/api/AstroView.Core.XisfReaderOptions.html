@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Class XisfReaderOptions | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class XisfReaderOptions | AstroView documentation ">
+      
+      <meta name="description" content="Controls external-resource access and resource limits for XISF input.">
+      <link rel="icon" href="../../images/astroview.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="AstroView.Core.XisfReaderOptions">
+
+
+
+  <h1 id="AstroView_Core_XisfReaderOptions" data-uid="AstroView.Core.XisfReaderOptions" class="text-break">
+Class XisfReaderOptions  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfReaderOptions.cs"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><span class="xref">AstroView</span>.<a class="xref" href="AstroView.Core.html">Core</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>AstroView.Core.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Controls external-resource access and resource limits for XISF input.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class XisfReaderOptions</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">XisfReaderOptions</span></div>
+    </dd>
+  </dl>
+
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="AstroView_Core_XisfReaderOptions__ctor_" data-uid="AstroView.Core.XisfReaderOptions.#ctor*"></a>
+
+  <h3 id="AstroView_Core_XisfReaderOptions__ctor" data-uid="AstroView.Core.XisfReaderOptions.#ctor">
+  XisfReaderOptions()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfReaderOptions.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public XisfReaderOptions()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="AstroView_Core_XisfReaderOptions_AllowExternalFilePaths_" data-uid="AstroView.Core.XisfReaderOptions.AllowExternalFilePaths*"></a>
+
+  <h3 id="AstroView_Core_XisfReaderOptions_AllowExternalFilePaths" data-uid="AstroView.Core.XisfReaderOptions.AllowExternalFilePaths">
+  AllowExternalFilePaths
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfReaderOptions.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether general filesystem data-block paths may be read; disabled by default.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool AllowExternalFilePaths { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfReaderOptions_AllowHeaderDirectoryTraversal_" data-uid="AstroView.Core.XisfReaderOptions.AllowHeaderDirectoryTraversal*"></a>
+
+  <h3 id="AstroView_Core_XisfReaderOptions_AllowHeaderDirectoryTraversal" data-uid="AstroView.Core.XisfReaderOptions.AllowHeaderDirectoryTraversal">
+  AllowHeaderDirectoryTraversal
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfReaderOptions.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether header-relative paths may escape the header directory; disabled by default.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool AllowHeaderDirectoryTraversal { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfReaderOptions_AllowHeaderRelativeDataBlocks_" data-uid="AstroView.Core.XisfReaderOptions.AllowHeaderRelativeDataBlocks*"></a>
+
+  <h3 id="AstroView_Core_XisfReaderOptions_AllowHeaderRelativeDataBlocks" data-uid="AstroView.Core.XisfReaderOptions.AllowHeaderRelativeDataBlocks">
+  AllowHeaderRelativeDataBlocks
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfReaderOptions.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether header-directory-relative blocks may be read; enabled by default.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool AllowHeaderRelativeDataBlocks { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfReaderOptions_AllowNetworkResources_" data-uid="AstroView.Core.XisfReaderOptions.AllowNetworkResources*"></a>
+
+  <h3 id="AstroView_Core_XisfReaderOptions_AllowNetworkResources" data-uid="AstroView.Core.XisfReaderOptions.AllowNetworkResources">
+  AllowNetworkResources
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfReaderOptions.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether URL data blocks may be fetched; disabled by default.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool AllowNetworkResources { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfReaderOptions_ExternalResourceResolver_" data-uid="AstroView.Core.XisfReaderOptions.ExternalResourceResolver*"></a>
+
+  <h3 id="AstroView_Core_XisfReaderOptions_ExternalResourceResolver" data-uid="AstroView.Core.XisfReaderOptions.ExternalResourceResolver">
+  ExternalResourceResolver
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfReaderOptions.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Optional retrieval for URL resources. The reader owns and disposes the returned stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Func&lt;Uri, CancellationToken, Stream&gt;? ExternalResourceResolver { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;<span class="xref">Uri</span>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.stream">Stream</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+  <h4 class="section" id="AstroView_Core_XisfReaderOptions_ExternalResourceResolver_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The resolver and the returned stream's asynchronous reads must cooperate with the supplied
+cancellation token to enforce NetworkTimeout. Arbitrary blocking custom code cannot be forcibly interrupted.</p>
+</div>
+
+
+
+
+  <a id="AstroView_Core_XisfReaderOptions_MaximumBufferedInputBytes_" data-uid="AstroView.Core.XisfReaderOptions.MaximumBufferedInputBytes*"></a>
+
+  <h3 id="AstroView_Core_XisfReaderOptions_MaximumBufferedInputBytes" data-uid="AstroView.Core.XisfReaderOptions.MaximumBufferedInputBytes">
+  MaximumBufferedInputBytes
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfReaderOptions.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The maximum input bytes buffered when the source must be retained in memory.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public long MaximumBufferedInputBytes { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfReaderOptions_MaximumDataBlockSize_" data-uid="AstroView.Core.XisfReaderOptions.MaximumDataBlockSize*"></a>
+
+  <h3 id="AstroView_Core_XisfReaderOptions_MaximumDataBlockSize" data-uid="AstroView.Core.XisfReaderOptions.MaximumDataBlockSize">
+  MaximumDataBlockSize
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfReaderOptions.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The maximum serialized or decompressed block size in bytes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int MaximumDataBlockSize { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfReaderOptions_MaximumDecompressionRatio_" data-uid="AstroView.Core.XisfReaderOptions.MaximumDecompressionRatio*"></a>
+
+  <h3 id="AstroView_Core_XisfReaderOptions_MaximumDecompressionRatio" data-uid="AstroView.Core.XisfReaderOptions.MaximumDecompressionRatio">
+  MaximumDecompressionRatio
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfReaderOptions.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The maximum declared uncompressed-to-compressed size ratio.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double MaximumDecompressionRatio { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfReaderOptions_MaximumImageCount_" data-uid="AstroView.Core.XisfReaderOptions.MaximumImageCount*"></a>
+
+  <h3 id="AstroView_Core_XisfReaderOptions_MaximumImageCount" data-uid="AstroView.Core.XisfReaderOptions.MaximumImageCount">
+  MaximumImageCount
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfReaderOptions.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The maximum number of Image elements in the header.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int MaximumImageCount { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfReaderOptions_MaximumImageDimensions_" data-uid="AstroView.Core.XisfReaderOptions.MaximumImageDimensions*"></a>
+
+  <h3 id="AstroView_Core_XisfReaderOptions_MaximumImageDimensions" data-uid="AstroView.Core.XisfReaderOptions.MaximumImageDimensions">
+  MaximumImageDimensions
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfReaderOptions.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The maximum image axis count, excluding channels.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int MaximumImageDimensions { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfReaderOptions_MaximumPixelsPerImage_" data-uid="AstroView.Core.XisfReaderOptions.MaximumPixelsPerImage*"></a>
+
+  <h3 id="AstroView_Core_XisfReaderOptions_MaximumPixelsPerImage" data-uid="AstroView.Core.XisfReaderOptions.MaximumPixelsPerImage">
+  MaximumPixelsPerImage
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfReaderOptions.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The maximum pixels per image, excluding channels.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public long MaximumPixelsPerImage { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfReaderOptions_MaximumPropertyCount_" data-uid="AstroView.Core.XisfReaderOptions.MaximumPropertyCount*"></a>
+
+  <h3 id="AstroView_Core_XisfReaderOptions_MaximumPropertyCount" data-uid="AstroView.Core.XisfReaderOptions.MaximumPropertyCount">
+  MaximumPropertyCount
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfReaderOptions.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The maximum number of Property elements in the header.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int MaximumPropertyCount { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfReaderOptions_MaximumTableCellCount_" data-uid="AstroView.Core.XisfReaderOptions.MaximumTableCellCount*"></a>
+
+  <h3 id="AstroView_Core_XisfReaderOptions_MaximumTableCellCount" data-uid="AstroView.Core.XisfReaderOptions.MaximumTableCellCount">
+  MaximumTableCellCount
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfReaderOptions.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The maximum number of Cell elements in the header.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int MaximumTableCellCount { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfReaderOptions_MaximumXmlCharacters_" data-uid="AstroView.Core.XisfReaderOptions.MaximumXmlCharacters*"></a>
+
+  <h3 id="AstroView_Core_XisfReaderOptions_MaximumXmlCharacters" data-uid="AstroView.Core.XisfReaderOptions.MaximumXmlCharacters">
+  MaximumXmlCharacters
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfReaderOptions.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The maximum characters accepted by the XML parser.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public long MaximumXmlCharacters { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfReaderOptions_MaximumXmlDepth_" data-uid="AstroView.Core.XisfReaderOptions.MaximumXmlDepth*"></a>
+
+  <h3 id="AstroView_Core_XisfReaderOptions_MaximumXmlDepth" data-uid="AstroView.Core.XisfReaderOptions.MaximumXmlDepth">
+  MaximumXmlDepth
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfReaderOptions.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The maximum XML nesting depth accepted after parsing.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int MaximumXmlDepth { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfReaderOptions_MaximumXmlElements_" data-uid="AstroView.Core.XisfReaderOptions.MaximumXmlElements*"></a>
+
+  <h3 id="AstroView_Core_XisfReaderOptions_MaximumXmlElements" data-uid="AstroView.Core.XisfReaderOptions.MaximumXmlElements">
+  MaximumXmlElements
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfReaderOptions.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The maximum XML element count in the header.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int MaximumXmlElements { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfReaderOptions_MaximumXmlHeaderSize_" data-uid="AstroView.Core.XisfReaderOptions.MaximumXmlHeaderSize*"></a>
+
+  <h3 id="AstroView_Core_XisfReaderOptions_MaximumXmlHeaderSize" data-uid="AstroView.Core.XisfReaderOptions.MaximumXmlHeaderSize">
+  MaximumXmlHeaderSize
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfReaderOptions.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The maximum encoded XML header size in bytes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int MaximumXmlHeaderSize { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfReaderOptions_NetworkTimeout_" data-uid="AstroView.Core.XisfReaderOptions.NetworkTimeout*"></a>
+
+  <h3 id="AstroView_Core_XisfReaderOptions_NetworkTimeout" data-uid="AstroView.Core.XisfReaderOptions.NetworkTimeout">
+  NetworkTimeout
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfReaderOptions.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The timeout for acquiring and reading an external URL resource, including its response body.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TimeSpan NetworkTimeout { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">TimeSpan</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+  <h4 class="section" id="AstroView_Core_XisfReaderOptions_NetworkTimeout_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>HTTP body reads observe cancellation. Custom resolvers and streams must cooperate with cancellation.</p>
+</div>
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfReaderOptions.cs" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

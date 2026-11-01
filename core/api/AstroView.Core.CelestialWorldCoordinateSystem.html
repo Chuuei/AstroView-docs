@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Class CelestialWorldCoordinateSystem | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class CelestialWorldCoordinateSystem | AstroView documentation ">
+      
+      <meta name="description" content="Transforms between pixel and celestial coordinates using supported FITS WCS keywords.">
+      <link rel="icon" href="../../images/astroview.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="AstroView.Core.CelestialWorldCoordinateSystem">
+
+
+
+  <h1 id="AstroView_Core_CelestialWorldCoordinateSystem" data-uid="AstroView.Core.CelestialWorldCoordinateSystem" class="text-break">
+Class CelestialWorldCoordinateSystem  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/CelestialWorldCoordinateSystem.cs"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><span class="xref">AstroView</span>.<a class="xref" href="AstroView.Core.html">Core</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>AstroView.Core.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Transforms between pixel and celestial coordinates using supported FITS WCS keywords.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class CelestialWorldCoordinateSystem</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">CelestialWorldCoordinateSystem</span></div>
+    </dd>
+  </dl>
+
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="AstroView_Core_CelestialWorldCoordinateSystem_Cd11_" data-uid="AstroView.Core.CelestialWorldCoordinateSystem.Cd11*"></a>
+
+  <h3 id="AstroView_Core_CelestialWorldCoordinateSystem_Cd11" data-uid="AstroView.Core.CelestialWorldCoordinateSystem.Cd11">
+  Cd11
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/CelestialWorldCoordinateSystem.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The row 1, column 1 CD coefficient in degrees per pixel.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Cd11 { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_CelestialWorldCoordinateSystem_Cd12_" data-uid="AstroView.Core.CelestialWorldCoordinateSystem.Cd12*"></a>
+
+  <h3 id="AstroView_Core_CelestialWorldCoordinateSystem_Cd12" data-uid="AstroView.Core.CelestialWorldCoordinateSystem.Cd12">
+  Cd12
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/CelestialWorldCoordinateSystem.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The row 1, column 2 CD coefficient in degrees per pixel.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Cd12 { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_CelestialWorldCoordinateSystem_Cd21_" data-uid="AstroView.Core.CelestialWorldCoordinateSystem.Cd21*"></a>
+
+  <h3 id="AstroView_Core_CelestialWorldCoordinateSystem_Cd21" data-uid="AstroView.Core.CelestialWorldCoordinateSystem.Cd21">
+  Cd21
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/CelestialWorldCoordinateSystem.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The row 2, column 1 CD coefficient in degrees per pixel.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Cd21 { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_CelestialWorldCoordinateSystem_Cd22_" data-uid="AstroView.Core.CelestialWorldCoordinateSystem.Cd22*"></a>
+
+  <h3 id="AstroView_Core_CelestialWorldCoordinateSystem_Cd22" data-uid="AstroView.Core.CelestialWorldCoordinateSystem.Cd22">
+  Cd22
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/CelestialWorldCoordinateSystem.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The row 2, column 2 CD coefficient in degrees per pixel.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Cd22 { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_CelestialWorldCoordinateSystem_IsTangentPlane_" data-uid="AstroView.Core.CelestialWorldCoordinateSystem.IsTangentPlane*"></a>
+
+  <h3 id="AstroView_Core_CelestialWorldCoordinateSystem_IsTangentPlane" data-uid="AstroView.Core.CelestialWorldCoordinateSystem.IsTangentPlane">
+  IsTangentPlane
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/CelestialWorldCoordinateSystem.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether the WCS uses the supported TAN projection.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsTangentPlane { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_CelestialWorldCoordinateSystem_PixelScaleArcseconds_" data-uid="AstroView.Core.CelestialWorldCoordinateSystem.PixelScaleArcseconds*"></a>
+
+  <h3 id="AstroView_Core_CelestialWorldCoordinateSystem_PixelScaleArcseconds" data-uid="AstroView.Core.CelestialWorldCoordinateSystem.PixelScaleArcseconds">
+  PixelScaleArcseconds
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/CelestialWorldCoordinateSystem.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The area-equivalent pixel scale in arcseconds per pixel.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double PixelScaleArcseconds { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_CelestialWorldCoordinateSystem_ReferenceDeclination_" data-uid="AstroView.Core.CelestialWorldCoordinateSystem.ReferenceDeclination*"></a>
+
+  <h3 id="AstroView_Core_CelestialWorldCoordinateSystem_ReferenceDeclination" data-uid="AstroView.Core.CelestialWorldCoordinateSystem.ReferenceDeclination">
+  ReferenceDeclination
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/CelestialWorldCoordinateSystem.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declination at the reference pixel, in degrees.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double ReferenceDeclination { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_CelestialWorldCoordinateSystem_ReferencePixelX_" data-uid="AstroView.Core.CelestialWorldCoordinateSystem.ReferencePixelX*"></a>
+
+  <h3 id="AstroView_Core_CelestialWorldCoordinateSystem_ReferencePixelX" data-uid="AstroView.Core.CelestialWorldCoordinateSystem.ReferencePixelX">
+  ReferencePixelX
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/CelestialWorldCoordinateSystem.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The FITS reference pixel on the first axis, using FITS one-based coordinates.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double ReferencePixelX { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_CelestialWorldCoordinateSystem_ReferencePixelY_" data-uid="AstroView.Core.CelestialWorldCoordinateSystem.ReferencePixelY*"></a>
+
+  <h3 id="AstroView_Core_CelestialWorldCoordinateSystem_ReferencePixelY" data-uid="AstroView.Core.CelestialWorldCoordinateSystem.ReferencePixelY">
+  ReferencePixelY
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/CelestialWorldCoordinateSystem.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The FITS reference pixel on the second axis, using FITS one-based coordinates.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double ReferencePixelY { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_CelestialWorldCoordinateSystem_ReferenceRightAscension_" data-uid="AstroView.Core.CelestialWorldCoordinateSystem.ReferenceRightAscension*"></a>
+
+  <h3 id="AstroView_Core_CelestialWorldCoordinateSystem_ReferenceRightAscension" data-uid="AstroView.Core.CelestialWorldCoordinateSystem.ReferenceRightAscension">
+  ReferenceRightAscension
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/CelestialWorldCoordinateSystem.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Right ascension at the reference pixel, in degrees.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double ReferenceRightAscension { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_CelestialWorldCoordinateSystem_RotationDegrees_" data-uid="AstroView.Core.CelestialWorldCoordinateSystem.RotationDegrees*"></a>
+
+  <h3 id="AstroView_Core_CelestialWorldCoordinateSystem_RotationDegrees" data-uid="AstroView.Core.CelestialWorldCoordinateSystem.RotationDegrees">
+  RotationDegrees
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/CelestialWorldCoordinateSystem.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Rotation inferred from the first CD matrix column, in degrees.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double RotationDegrees { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="AstroView_Core_CelestialWorldCoordinateSystem_PixelToSky_" data-uid="AstroView.Core.CelestialWorldCoordinateSystem.PixelToSky*"></a>
+
+  <h3 id="AstroView_Core_CelestialWorldCoordinateSystem_PixelToSky_System_Double_System_Double_" data-uid="AstroView.Core.CelestialWorldCoordinateSystem.PixelToSky(System.Double,System.Double)">
+  PixelToSky(double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/CelestialWorldCoordinateSystem.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Transforms a zero-based pixel position to right ascension and declination in degrees.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public (double RightAscension, double Declination) PixelToSky(double x, double y)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The zero-based horizontal pixel coordinate.</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The zero-based vertical pixel coordinate.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>(<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-system.double,system.double-.rightascension">RightAscension</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-system.double,system.double-.declination">Declination</a>)</dt>
+    <dd><p>Right ascension and declination in degrees.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_CelestialWorldCoordinateSystem_SkyToPixel_" data-uid="AstroView.Core.CelestialWorldCoordinateSystem.SkyToPixel*"></a>
+
+  <h3 id="AstroView_Core_CelestialWorldCoordinateSystem_SkyToPixel_System_Double_System_Double_" data-uid="AstroView.Core.CelestialWorldCoordinateSystem.SkyToPixel(System.Double,System.Double)">
+  SkyToPixel(double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/CelestialWorldCoordinateSystem.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Transforms right ascension and declination in degrees to a zero-based pixel position.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public (double X, double Y) SkyToPixel(double rightAscension, double declination)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>rightAscension</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>Right ascension in degrees.</p>
+</dd>
+    <dt><code>declination</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>Declination in degrees.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>(<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-system.double,system.double-.rightascension">RightAscension</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-system.double,system.double-.declination">Declination</a>)</dt>
+    <dd><p>Zero-based horizontal and vertical pixel coordinates.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_CelestialWorldCoordinateSystem_TryCreate_" data-uid="AstroView.Core.CelestialWorldCoordinateSystem.TryCreate*"></a>
+
+  <h3 id="AstroView_Core_CelestialWorldCoordinateSystem_TryCreate_AstroView_Core_FitsHeader_AstroView_Core_CelestialWorldCoordinateSystem__" data-uid="AstroView.Core.CelestialWorldCoordinateSystem.TryCreate(AstroView.Core.FitsHeader,AstroView.Core.CelestialWorldCoordinateSystem@)">
+  TryCreate(FitsHeader, out CelestialWorldCoordinateSystem?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/CelestialWorldCoordinateSystem.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Attempts to construct a celestial WCS; returns false when required coefficients are absent or invalid.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool TryCreate(FitsHeader header, out CelestialWorldCoordinateSystem? wcs)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>header</code> <a class="xref" href="AstroView.Core.FitsHeader.html">FitsHeader</a></dt>
+    <dd><p>The FITS header cards.</p>
+</dd>
+    <dt><code>wcs</code> <a class="xref" href="AstroView.Core.CelestialWorldCoordinateSystem.html">CelestialWorldCoordinateSystem</a></dt>
+    <dd><p>The resulting WCS, or null when construction fails.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>True for supported degree-based equatorial TAN coordinates or legacy headers without CTYPE; otherwise false.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_CelestialWorldCoordinateSystem_TryCreate_" data-uid="AstroView.Core.CelestialWorldCoordinateSystem.TryCreate*"></a>
+
+  <h3 id="AstroView_Core_CelestialWorldCoordinateSystem_TryCreate_System_Collections_Generic_IEnumerable_AstroView_Core_XisfFitsKeyword__AstroView_Core_CelestialWorldCoordinateSystem__" data-uid="AstroView.Core.CelestialWorldCoordinateSystem.TryCreate(System.Collections.Generic.IEnumerable{AstroView.Core.XisfFitsKeyword},AstroView.Core.CelestialWorldCoordinateSystem@)">
+  TryCreate(IEnumerable&lt;XisfFitsKeyword&gt;, out CelestialWorldCoordinateSystem?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/CelestialWorldCoordinateSystem.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Attempts to construct a celestial WCS; returns false when required coefficients are absent or invalid.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool TryCreate(IEnumerable&lt;XisfFitsKeyword&gt; keywords, out CelestialWorldCoordinateSystem? wcs)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>keywords</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="AstroView.Core.XisfFitsKeyword.html">XisfFitsKeyword</a>&gt;</dt>
+    <dd><p>The FITS keywords used to construct the WCS.</p>
+</dd>
+    <dt><code>wcs</code> <a class="xref" href="AstroView.Core.CelestialWorldCoordinateSystem.html">CelestialWorldCoordinateSystem</a></dt>
+    <dd><p>The resulting WCS, or null when construction fails.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>True for supported degree-based equatorial TAN coordinates or legacy headers without CTYPE; otherwise false.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/CelestialWorldCoordinateSystem.cs" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

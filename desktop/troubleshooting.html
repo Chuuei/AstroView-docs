@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Troubleshooting | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Troubleshooting | AstroView documentation ">
+      
+      
+      <link rel="icon" href="../images/astroview.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Chuuei/AstroView/blob/main/docs/desktop/troubleshooting.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="troubleshooting">Troubleshooting</h1>
+
+<p>Start with the error banner and <strong>Feature lab → Activity</strong>. Check the selected
+document/image, the operation you ran and the path it reports before changing
+settings or trying another export.</p>
+<h2 id="launch-problems">Launch problems</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Check and next step</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Executable does not start</td>
+<td>Extract the ZIP first and choose the correct OS/architecture directory</td>
+</tr>
+<tr>
+<td>Permission denied on Linux/macOS</td>
+<td>Restore executable permission with <code>chmod +x AstroView</code></td>
+</tr>
+<tr>
+<td>macOS blocks the download</td>
+<td>The executable is unsigned/not notarized; use your system's normal trusted-software approval process</td>
+</tr>
+<tr>
+<td>Missing .NET runtime</td>
+<td>A framework-dependent CI publish folder needs .NET 10; use the self-contained Release desktop ZIP if available</td>
+</tr>
+<tr>
+<td>Native library/display error</td>
+<td>Check the platform's graphical/native prerequisites and a writable .NET bundle cache</td>
+</tr>
+<tr>
+<td>No window over SSH/headless session</td>
+<td>Use a graphical desktop to launch the UI; <code>--self-test</code> checks installation without a display</td>
+</tr>
+</tbody>
+</table>
+<p>The self-test checks the installation, not the validity of a particular image.
+See <a href="installation.html">installation</a> for the download types and command-line launch.</p>
+<h2 id="a-file-does-not-open">A file does not open</h2>
+<p>Confirm that it is a supported FITS/XISF/XISH document rather than another type
+with a renamed extension. Check filesystem permissions and whether another
+program is still writing it. For distributed XISF, locate the referenced XISB
+file and keep its relative path valid.</p>
+<p>If an error mentions a budget, review <strong>Feature lab → Reader policy</strong> and the
+file's expected size. A compressed file can expand far beyond its download
+size. Raising a budget does not bypass a missing codec or every implementation
+array/memory limit. Reopen the file after changing the reader policy.</p>
+<p>Strict FITS validation can reject a file that tolerant mode opens with findings.
+If your workflow permits tolerant inspection, disable strict-on-open for a new
+read and examine the findings. Do not equate tolerant opening with full format
+conformance.</p>
+<h2 id="the-viewport-is-blank-or-dark">The viewport is blank or dark</h2>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>What to do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Faint real image in Linear mode</td>
+<td>Select Auto stretch and click Apply display</td>
+</tr>
+<tr>
+<td>Empty FITS primary HDU</td>
+<td>Select a later image extension in IMAGES &amp; HDUs</td>
+</tr>
+<tr>
+<td>Table/unknown extension selected</td>
+<td>Use Inspect or Tables rather than expecting image pixels</td>
+</tr>
+<tr>
+<td>Complex image or general scientific cube</td>
+<td>Use the stored-sample inspector; a general preview is not implemented</td>
+</tr>
+<tr>
+<td>Three-plane FITS known to be RGB</td>
+<td>Enable Interpret 3rd axis as RGB/RGBA and apply it</td>
+</tr>
+<tr>
+<td>Missing/bad data block</td>
+<td>Run Integrity validation and inspect the decoding error</td>
+</tr>
+</tbody>
+</table>
+<p>Do not label a three-axis scientific cube RGB simply to force a picture. That
+can change the interpretation used by a subsequent conversion.</p>
+<h2 id="measurements-look-wrong">Measurements look wrong</h2>
+<p>Check histogram bounds against the scientific sample range. A UInt16 image
+often needs a much larger range than <code>0</code> to <code>1</code>. Check the chosen channel and
+include underflow/overflow/non-finite counts when comparing totals.</p>
+<p>Statistics use a sample limit, while the histogram counts the complete chosen
+channel. Normalized statistics and manually chosen histogram bounds are separate.
+Display stretch is another separate transformation. For very large integers,
+compare <strong>Exact stored samples</strong> rather than expecting all Float64 region or
+statistics values to retain exact text.</p>
+<p>If a region read fails, check its X/Y, width/height, channel and 4,096-sample
+interactive limit. That limit counts all channels, even though only the selected
+channel is printed.</p>
+<h2 id="edits-are-missing">Edits are missing</h2>
+<p>Did you click <strong>Apply metadata edit</strong>, <strong>Apply table in memory</strong> or <strong>Apply XML
+in memory</strong> before exporting? Did you save the whole document or an isolated
+image? Document-level content remains in the original when an image is isolated.
+Reopen the actual exported path and inspect the correct scope/image.</p>
+<p>Closing a document or exiting before export loses in-memory edits. The workspace
+does not automatically persist an editing session. A preview PNG cannot retain
+the scientific document's properties or tables.</p>
+<p>For free-text numeric metadata, use decimal points and an explicit TimePoint
+offset. For JSON, check quotes, commas, row lengths and field types. Applying an
+existing document-level table identifier replaces that table rather than adding
+a differently named one.</p>
+<h2 id="export-is-rejected">Export is rejected</h2>
+<p>Choose a new output name when a path is an active source. For distributed output,
+choose a new header filename and retain its generated sibling block file.</p>
+<p>If conversion findings report omitted content, review the report. Select <strong>Allow reported conversion losses</strong> only if
+that output is acceptable. The
+setting does not enable unsupported pixel types. To preserve a native document
+instead, choose <strong>Keep native document</strong>.</p>
+<p>If a requested SHA-3 digest is unavailable on your platform, choose a supported
+digest such as SHA-256. If a signature fails after metadata edits or re-encoding,
+export the intended final content and sign that copy again.</p>
+<h2 id="the-operation-is-slow-or-uses-substantial-memory">The operation is slow or uses substantial memory</h2>
+<p>Analysis/regions can decode a complete block, and typed values plus a preview
+can coexist in memory. Close unneeded documents, use smaller generated examples
+for experiments and avoid opening many very large files together. A statistics
+sample limit does not make the full block decode streaming.</p>
+<p>Use Cancel/Escape when offered, allowing for codecs that finish their current
+block. During output publication, cancellation can be disabled. Do not repeatedly
+start new operations while the status bar shows the previous one is still busy.</p>
+<h2 id="report-a-reproducible-issue">Report a reproducible issue</h2>
+<p>Record the AstroView version, OS/architecture, file format, operation, selected
+sample type/dimensions, relevant reader/export settings and exact error/finding
+code. Prefer a small shareable example or a reference-scene/generator recipe.
+Remove private observation metadata, paths and credential-bearing resource URLs
+before sharing logs or files. A screenshot of the error plus the steps that led
+to it is more useful than an unexplained blank viewport.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/docs/desktop/troubleshooting.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

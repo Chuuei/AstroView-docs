@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>FITS/XISF development checklist | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="FITS/XISF development checklist | AstroView documentation ">
+      
+      
+      <link rel="icon" href="images/astroview.ico">
+      <link rel="stylesheet" href="public/docfx.min.css">
+      <link rel="stylesheet" href="public/main.css">
+      <meta name="docfx:navrel" content="toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Chuuei/AstroView/blob/main/docs/roadmap.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="index.html">
+            <img id="logo" class="svg" src="images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="fitsxisf-development-checklist">FITS/XISF development checklist</h1>
+
+<p>Recorded: 2026-10-31. Status: in progress; unchecked items are not implemented promises.
+Work through the steps in order unless a dependency or a newly discovered defect
+requires a change. Keep the stable task IDs when splitting work into issues or PRs.
+Check a task only after its completion criteria and relevant tests pass.</p>
+<h2 id="starting-point">Starting point</h2>
+<ul>
+<li>Ordinary multi-HDU FITS images, ASCII/binary table reading, scaling, image nulls,
+checksums, long strings and HIERARCH are already supported.</li>
+<li>XISF already supports monolithic/distributed containers, zlib/LZ4/LZ4HC/Zstandard,
+shuffling/subblocks, checksums, unsigned/real/complex pixels, rich properties,
+tables, ancillary metadata, signatures, and native astrometric solutions.</li>
+<li>The restricted FITS WCS helper is separate from the native XISF evaluator, which
+already supports seven projections and distortion models. Unsupported coordinate
+evaluation does not necessarily prevent loading pixels or preserving headers.</li>
+<li>The local example corpus contains eleven FITS files and 73 XISF files (79 images).</li>
+<li>This list comes from code inspection and the <a href="reviews/2026-10-31-code-review.html">code review</a>.
+It is not an exhaustive standards-conformance certification.</li>
+</ul>
+<h2 id="phase-1--define-and-independently-verify-the-support-contract">Phase 1 — Define and independently verify the support contract</h2>
+<ul>
+<li><p>[x] <strong>AV-001 — Publish a feature-support matrix.</strong> Track <strong>read, write, edit,
+preserve, and evaluate</strong> separately for each format feature. Distinguish native
+format requirements, optional conventions, and image-processing features. <strong>Done when:</strong> the matrix describes the
+current APIs accurately, links to tests,
+and explicitly identifies unsupported behaviour without claiming full conformance.</p>
+</li>
+<li><p>[ ] <strong>AV-002 — Expand independent interoperability fixtures.</strong> Add redistributable
+FITS reference fixtures and independently produced XISF examples covering codecs,
+sample types, layouts, containers, tables, and real astrometric solutions.
+Keep large/private photographs local and record provenance and hashes. <strong>Done when:</strong> tests compare independently
+known pixels/metadata, and files written
+here are checked with independent readers. Reference tools are development tools,
+not required runtime dependencies.</p>
+</li>
+<li><p>[x] <strong>AV-003 — Close the optional external-resource timeout gap.</strong> Make HTTP body
+reads observe cancellation/timeouts; document cooperation required from custom
+resolver streams. Preserve default-disabled network access. <strong>Done when:</strong> a local test server stalling after headers
+is cancelled, caller
+ownership remains correct, and no real external service is needed by tests.</p>
+</li>
+</ul>
+<p>Phase 1 evidence (2026-11-01): <a href="support-matrix.html">support matrix</a> completes AV-001;
+<a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/XisfNetworkTimeoutTests.cs">XISF network tests</a> complete AV-003.
+AV-002 is <strong>partial</strong>: 60 committed independent fixtures, 46 reverse-reader checks,
+and independent hashes for all 79 images in the 73-file local XISF corpus are implemented.
+The following substeps retain the original completion criteria:</p>
+<ul>
+<li>[x] <strong>AV-002.1:</strong> Redistributable FITS images, tables and independent TAN reference coordinates.</li>
+<li>[x] <strong>AV-002.2:</strong> Independent XISF codec/type/mono/RGB and attached/embedded fixtures,
+with exact pixels, provenance, hashes and licenses; independent checks of writer output.</li>
+<li>[x] <strong>AV-002.3:</strong> Local real photographs, multiple images, legacy astrometry metadata
+preservation and incomplete-thumbnail negative cases, with repeatable tests.</li>
+<li>[ ] <strong>AV-002.4:</strong> Independent distributed XISF containers, XISF tables, UInt64/complex
+pixels and big-endian/interleaved storage, with known reference values and reverse-reader checks.</li>
+<li>[ ] <strong>AV-002.5:</strong> A real native Revision 1 <code>AstrometricSolution:*</code> solution, including
+distortion and independent coordinate reference values. The downloaded legacy
+<code>PCL:AstrometricSolution:*</code> files cannot validate this evaluator.</li>
+</ul>
+<p>See <a href="interoperability.html">interoperability</a> for provenance, exact coverage and required follow-up.</p>
+<h2 id="phase-2--build-a-consistent-scientific-image-access-foundation">Phase 2 — Build a consistent scientific image-access foundation</h2>
+<ul>
+<li><p>[ ] <strong>AV-004 — Design shared typed image and pixel-access contracts.</strong> Support
+explicit axes, channels, layout, sample types, scaling and missing-value masks.
+Keep native FITS/XISF documents accessible so a common view does not discard
+metadata. Preserve existing APIs or provide a documented migration path. <strong>Done when:</strong> the same operation can consume
+either format without first
+converting the entire file or forcing all samples through <code>double</code>.</p>
+</li>
+<li><p>[ ] <strong>AV-005 — Add exact typed FITS pixel reads.</strong> Expose stored and physical
+values explicitly, including unsigned offset conventions and integer boundaries.
+Define behaviour when arbitrary scaling cannot be represented exactly. <strong>Done when:</strong> UInt64 values above 2^53, signed
+integers, BLANK, floating-point
+special values and overflow policies have independent regression tests. <strong>Depends on:</strong> AV-004.</p>
+</li>
+<li><p>[ ] <strong>AV-006 — Add metadata-only opening and source indexing.</strong> Inspect headers,
+HDUs/images, geometry and block locations without materializing every payload.
+Define source lifetime, ownership and behaviour if source files change. <strong>Done when:</strong> a large-file header scan uses
+bounded memory and selected content
+can be opened without loading unrelated HDUs/images.</p>
+</li>
+<li><p>[ ] <strong>AV-007 — Add format detection and a convenient opening API.</strong> Detect content
+rather than relying solely on filename extensions. Offer native-document access
+alongside shared image access, with clear unsupported/corrupt-input diagnostics. <strong>Done when:</strong> FITS,
+monolithic/distributed XISF headers and supported transport
+wrappers are identified consistently, including misleading filenames. <strong>Depends on:</strong> AV-004, AV-006; extend detection
+as compression is implemented.</p>
+</li>
+</ul>
+<h2 id="phase-3--support-common-compressed-fits-images">Phase 3 — Support common compressed FITS images</h2>
+<ul>
+<li><p>[ ] <strong>AV-008 — Integrate gzip-wrapped FITS (<code>.fits.gz</code>).</strong> Add automatic reading
+and explicit writing options; retain caller-stream ownership and resource limits. <strong>Done when:</strong> path/stream APIs
+handle independently compressed files, truncated
+input and decompression limits. Document sequential-access costs.</p>
+</li>
+<li><p>[ ] <strong>AV-009 — Recognize tiled compressed-image HDUs.</strong> Interpret ZIMAGE,
+ZBITPIX, ZNAXIS, ZTILE and codec metadata instead of exposing compressed images
+only as generic tables. Preserve access to the original storage representation. <strong>Done when:</strong> compressed images
+appear in image discovery with correct geometry,
+and unsupported codecs are reported precisely. <strong>Depends on:</strong> AV-006.</p>
+</li>
+<li><p>[ ] <strong>AV-010 — Implement Rice and GZIP tile decoding/encoding.</strong> Cover applicable
+GZIP variants, edge tiles, integer storage, floating-point quantization/dithering,
+and undefined-pixel handling. Separate lossless storage from explicitly lossy modes. <strong>Done when:</strong> independent
+compressed fixtures decode correctly and reference
+readers accept output; quantized modes have explicit accuracy contracts. <strong>Depends on:</strong> AV-009.</p>
+</li>
+<li><p>[ ] <strong>AV-011 — Add HCOMPRESS and PLIO support.</strong> Implement supported lossless
+modes first and require explicit options for lossy modes. <strong>Done when:</strong> independent fixtures, malformed tiles and
+algorithm-specific
+parameter boundaries are covered, with documented supported modes. <strong>Depends on:</strong> AV-009, AV-010.</p>
+</li>
+</ul>
+<h2 id="phase-4--make-large-image-work-bounded-and-cancellable">Phase 4 — Make large-image work bounded and cancellable</h2>
+<ul>
+<li><p>[ ] <strong>AV-012 — Add row, region, channel and cube-plane reads.</strong> Provide exact
+typed reads and caller-provided buffers through the shared access contract.
+Read uncompressed regions directly and use tile/subblock access where possible. <strong>Done when:</strong> small requests avoid
+unrelated payloads when storage permits;
+whole-codec-block decoding requirements are explicit rather than hidden. <strong>Depends on:</strong> AV-004–AV-006, AV-009 for
+tiled FITS.</p>
+</li>
+<li><p>[ ] <strong>AV-013 — Add streaming writes and compression.</strong> Avoid retaining every
+raw/compressed attachment or complete output image in memory. Support chunked
+access beyond individual CLR-array limits where the format permits it. <strong>Done when:</strong> measured peak memory stays
+bounded as file size increases, while
+checksums, layout, metadata and failure guarantees remain correct. <strong>Depends on:</strong> AV-004, AV-006, AV-012.</p>
+</li>
+<li><p>[ ] <strong>AV-014 — Add asynchronous I/O, decode cancellation and progress.</strong> Go beyond
+worker-thread wrappers; propagate cancellation through reads, codecs and writes
+at documented checkpoints. Keep progress reporting bounded. <strong>Done when:</strong> cancellation during expensive operations
+releases resources and
+preserves existing single-file output; non-interruptible stages are documented. <strong>Depends on:</strong> AV-003, AV-012,
+AV-013.</p>
+</li>
+<li><p>[ ] <strong>AV-015 — Complete the document lifetime and safe-save model.</strong> Provide an
+explicit fully detached/materialized document operation. Design distributed-XISF
+staging, recovery and replacement behaviour without promising impossible atomic
+replacement of two independent files. <strong>Done when:</strong> deleting the original after detachment cannot break a later save,
+and failure/cancellation tests cover each distributed publication stage. <strong>Depends on:</strong> AV-006, AV-013.</p>
+</li>
+</ul>
+<h2 id="phase-5--complete-table-editing-and-cross-format-fidelity">Phase 5 — Complete table editing and cross-format fidelity</h2>
+<ul>
+<li><p>[ ] <strong>AV-016 — Add typed FITS table builders and editable serialization.</strong> Create
+and edit ASCII/binary columns and rows, fixed arrays and variable-length heaps.
+Serialize the edited model rather than requiring callers to construct raw bytes. <strong>Done when:</strong>
+create/edit/save/reload tests cover values, units, scaling, nulls,
+extension metadata, checksums and existing resource budgets.</p>
+</li>
+<li><p>[ ] <strong>AV-017 — Complete table shape, null and precision semantics.</strong> Interpret
+TDIM, preserve logical NULL independently of false, and support exact unsigned
+integer column access where scaling is exactly representable. <strong>Done when:</strong> independent catalog fixtures cover
+multidimensional columns,
+nullable logical values and UInt64 boundaries without hidden precision loss. <strong>Depends on:</strong> AV-016.</p>
+</li>
+<li><p>[ ] <strong>AV-018 — Define preservation-aware document conversion.</strong> Specify mappings
+for tables, array cells, units, global/image properties, extensions, ancillary
+metadata and astrometry. Use documented preservation extensions where appropriate. <strong>Done when:</strong> each feature has an
+explicit preserved/transformed/omitted result;
+lossy conversion still requires opt-in. Do not promise universal losslessness:
+standard FITS image HDUs cannot directly represent XISF complex pixels, and not
+every XISF property/XML structure has a standard FITS counterpart. <strong>Depends on:</strong> AV-001, AV-004, AV-016, AV-017.</p>
+</li>
+</ul>
+<h2 id="phase-6--broaden-astrometry">Phase 6 — Broaden astrometry</h2>
+<ul>
+<li><p>[ ] <strong>AV-019 — Support common FITS SIP/TPV distortions.</strong> Evaluate forward and
+inverse transformations with explicit convergence and precision policies. <strong>Done when:</strong> independent real solutions
+and reference calculations agree across
+image centres, edges and difficult inverse cases; unsupported variants fail clearly.</p>
+</li>
+<li><p>[ ] <strong>AV-020 — Extend FITS projection and coordinate conventions.</strong> Add projections
+by demonstrated need, axis ordering, angular units, alternate WCS solutions and
+supported pole parameters. Keep reference-frame conversion explicit. <strong>Done when:</strong> every advertised convention has
+independent reference values,
+domain-boundary tests and documented units/origins. <strong>Depends on:</strong> AV-019.</p>
+</li>
+<li><p>[ ] <strong>AV-021 — Add spectral/time-axis and reference-frame capabilities.</strong> Define
+supported spectral quantities, time scales and celestial frame transformations
+as separate capabilities. Add table WCS when extending catalog workflows. <strong>Done when:</strong> supported
+standards/conventions, required metadata, precision and
+unsupported cases are explicit and independently tested. <strong>Depends on:</strong> AV-020; prioritize optical imaging before
+specialist workflows.</p>
+</li>
+<li><p>[ ] <strong>AV-022 — Bridge native XISF and FITS astrometry where representable.</strong> Keep
+their distinct pixel origins and distortion models explicit; never substitute
+an approximate transform silently during conversion. <strong>Done when:</strong> supported conversions have coordinate-error bounds
+and report
+unrepresentable models without discarding the original solution. <strong>Depends on:</strong> AV-018–AV-020.</p>
+</li>
+</ul>
+<h2 id="phase-7--add-shared-image-processing-features">Phase 7 — Add shared image-processing features</h2>
+<p>These are useful application capabilities, not requirements for reading either format.</p>
+<ul>
+<li><p>[ ] <strong>AV-023 — Add geometry-aware crop, rotation, resize and reprojection.</strong> Update
+geometry, WCS/native astrometry, CFA and ancillary metadata consistently. <strong>Done when:</strong> known sky/pixel
+correspondences remain valid or incompatible
+metadata is explicitly removed with a diagnostic; scientific pixels remain owned. <strong>Depends on:</strong> AV-004, AV-012,
+AV-019–AV-022 as applicable.</p>
+</li>
+<li><p>[ ] <strong>AV-024 — Add CFA debayering.</strong> Interpret native/FITS CFA metadata and offsets;
+define initial algorithms, edge handling and output sample precision. <strong>Done when:</strong> independent mosaics verify
+orientation, offsets, colour channels,
+source preservation and metadata updates for both formats. <strong>Depends on:</strong> AV-004, AV-023 metadata rules.</p>
+</li>
+<li><p>[ ] <strong>AV-025 — Extend analysis to cubes and complex data.</strong> Add plane/spectrum
+selection and explicit real/imaginary/magnitude/phase views rather than treating
+arbitrary axes as colour channels. <strong>Done when:</strong> shared operations handle these views with correct axes, units,
+sample precision and missing values. <strong>Depends on:</strong> AV-004, AV-012, AV-021 where physical axes are evaluated.</p>
+</li>
+<li><p>[ ] <strong>AV-026 — Define later scientific-processing modules.</strong> Scope calibration,
+registration, stacking, photometry and plate solving individually before implementing
+them. Separate display enhancements from scientific measurements. <strong>Done when:</strong> each selected module has accuracy
+requirements, provenance rules,
+independent validation datasets and a focused follow-up checklist. <strong>Depends on:</strong> shared image access and the
+relevant geometry/astrometry capabilities.</p>
+</li>
+</ul>
+<h2 id="phase-8--profile-and-fill-specialist-coverage">Phase 8 — Profile and fill specialist coverage</h2>
+<ul>
+<li><p>[ ] <strong>AV-027 — Benchmark remaining allocation hotspots.</strong> Measure table-cell
+boxing, matrix decoding, rectangular-array factories, typed row copies and
+per-pixel Lab transforms before specializing them. <strong>Done when:</strong> reproducible before/after throughput and allocation
+results show a
+benefit without weakening precision, ownership, checksums or readability.
+Can proceed alongside earlier phases when real workloads identify a bottleneck.</p>
+</li>
+<li><p>[ ] <strong>AV-028 — Add specialist FITS capabilities by demand.</strong> Assess random-groups/
+UVFITS, compressed tables and other survey/radio conventions separately from
+common optical-image support. <strong>Done when:</strong> chosen features appear in the support matrix with independent
+fixtures and explicit read/write/edit/preservation guarantees. <strong>Depends on:</strong> AV-001; defer until common image/table
+workflows are dependable.</p>
+</li>
+</ul>
+<h2 id="completion-rules-for-every-implementation-step">Completion rules for every implementation step</h2>
+<ul>
+<li>Preserve existing public contracts or document intentional compatibility changes.</li>
+<li>Include independent fixtures or reference values as well as round-trip tests.</li>
+<li>Test corrupt/truncated data, resource limits, precision boundaries and cancellation
+relevant to the change. Do not use machine-dependent performance assertions.</li>
+<li>Run relevant checks and Windows/Linux/macOS CI; keep large/private datasets outside Git.</li>
+<li>Update the support matrix, usage documentation and this checklist with evidence.</li>
+</ul>
+<p>Primary references: <a href="https://fits.gsfc.nasa.gov/standard40/fits_standard40aa-le.pdf">FITS 4.0</a>,
+<a href="https://fits.gsfc.nasa.gov/fits_wcs.html">FITS WCS</a>,
+<a href="https://fits.gsfc.nasa.gov/registry/tilecompression.html">FITS tile compression</a>,
+<a href="https://pixinsight.com/doc/docs/XISF-1.0-spec/XISF-1.0-spec.html">XISF specification</a>.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/docs/roadmap.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

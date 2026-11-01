@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>GitHub releases | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="GitHub releases | AstroView documentation ">
+      
+      
+      <link rel="icon" href="images/astroview.ico">
+      <link rel="stylesheet" href="public/docfx.min.css">
+      <link rel="stylesheet" href="public/main.css">
+      <meta name="docfx:navrel" content="toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Chuuei/AstroView/blob/main/docs/releases.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="index.html">
+            <img id="logo" class="svg" src="images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="github-releases">GitHub releases</h1>
+
+<p>The <strong>Release</strong> Actions workflow creates a GitHub Release when a matching version
+tag is pushed. It adds two downloads:</p>
+<table>
+<thead>
+<tr>
+<th>Asset</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AstroView.Desktop-&lt;version&gt;.zip</code></td>
+<td>One self-contained executable per platform: Windows x64, Linux x64 (glibc), macOS Apple silicon. Includes .NET and native rendering libraries.</td>
+</tr>
+<tr>
+<td><code>AstroView.Core-&lt;version&gt;.zip</code></td>
+<td>Core DLL, required compression/cryptography DLLs, XML documentation, an MSBuild reference file and the normal Core NuGet package. No desktop assemblies.</td>
+</tr>
+</tbody>
+</table>
+<p>GitHub also supplies its standard source-code ZIP and tarball automatically.
+Both AstroView archives contain notices, usage instructions and a manifest with
+the version and each file's SHA-256. Release notes include both archive hashes.</p>
+<p>Single-file .NET applications are specific to an OS and CPU architecture; a single
+executable cannot serve all platforms. Each desktop executable can run by itself.
+Native libraries extract to .NET's temporary bundle cache at launch. Normal OS
+prerequisites still apply. The archive README explains execution permissions,
+supported targets and the unsigned macOS executable (no .app or notarization).
+Executables are not trimmed, preserving Avalonia and XML signature reflection.</p>
+<p>.NET does not provide single-file publishing for a reusable managed class library.
+The Core archive therefore includes its required managed dependencies separately.
+Import its <code>AstroView.Core.props</code> in a .NET 10 project to reference the DLLs, or use
+its <code>.nupkg</code> through a local NuGet source. The package restores its dependencies
+normally; the direct DLL option works without a package restore for Core. Follow
+the archive README when cross-publishing a consumer with an explicit runtime ID.</p>
+<h2 id="publish-a-release">Publish a release</h2>
+<ol>
+<li>Update <code>eng/Versions.props</code> and <code>CHANGELOG.md</code>; commit and push the changes.</li>
+<li>Create a matching tag, for example <code>git tag v0.2.0</code> or <code>git tag v0.2.0-rc.1</code>.</li>
+<li>Push that tag: <code>git push origin v0.2.0</code> (use the actual tag).</li>
+<li>Watch <strong>Release</strong> in Actions. After all checks pass, the workflow creates the
+release, uploads both assets and publishes it. Prerelease tags automatically
+create GitHub prereleases.</li>
+</ol>
+<p>The workflow validates tags against the version policy. Publication uses the
+built-in <code>GITHUB_TOKEN</code> with <code>contents: write</code> only in the final job. No personal
+token or package-registry secret is needed. It requires the remote tag to exist
+and never overwrites an existing release. The GitHub CLI stages the release as a
+draft while uploading, so a failed upload cannot publish a partial release.
+If uploading fails, inspect/delete the incomplete draft before rerunning. Published
+versions should receive a new version/tag for corrections.</p>
+<p>This workflow does not publish to nuget.org. Creating a version commit or manually
+running the workflow does not create a GitHub Release.</p>
+<h2 id="validate-without-publishing">Validate without publishing</h2>
+<p>Choose <strong>Actions → Release → Run workflow</strong> on the desired branch. This runs the
+same checks and produces a <code>release-downloads</code> workflow artifact containing the
+two ZIPs and release notes, but skips publication. Branch runs use the normal
+<code>&lt;version&gt;-ci.&lt;run&gt;.&lt;attempt&gt;</code> version.</p>
+<p>Every release run gates assembly/publication on:</p>
+<ul>
+<li>The existing Windows/Linux/macOS build, Core and headless desktop tests, version
+checks, NuGet packing and independent FITS/XISF reference-reader checks.</li>
+<li>Native self-contained publishing with locked runtime-specific dependencies.</li>
+<li>Running each executable with <code>--self-test</code> in a directory containing only that
+executable: all XISF codecs, FITS samples, XML/PKCS signatures, Core rendering
+and native Skia PNG encoding/decoding. This check does not require a display;
+workspace behavior is covered by the separate headless tests.</li>
+<li>Compiling/publishing/running an independent .NET consumer of each extracted Core
+archive, with no Core ProjectReference, no PackageReferences and cleared package
+sources; cross-publishing also verifies the target's cryptography DLL is selected.</li>
+<li>Archive contract tests, complete payloads, executable permissions, matching
+versions and SHA-256 manifests.</li>
+</ul>
+<h2 id="local-packaging">Local packaging</h2>
+<p>Use the .NET 10 SDK, Python 3.10+ and PowerShell on the target OS:</p>
+<pre><code class="lang-powershell">./eng/Build-Release.ps1 -Runtime win-x64 -Version 0.2.0-dev -Output artifacts/release-local
+</code></pre>
+<p>Use <code>linux-x64</code> or <code>osx-arm64</code> on those platforms. Output must be a new directory.
+This script runs native installation checks and must run on the specified target
+platform. It builds the desktop payload and Core archive; CI combines the three
+desktop payloads into the final desktop ZIP using <code>eng/release_archives.py</code>.</p>
+<p>The ordinary project lock files remain platform-independent. Single-file release
+graphs have <code>packages.release.&lt;runtime&gt;.lock.json</code> in Core and Desktop. When
+changing packages or the SDK/runtime patch used for releases, intentionally
+regenerate each target graph and commit its updated locks:</p>
+<pre><code class="lang-powershell">dotnet restore src/AstroView.Desktop -p:RuntimeIdentifier=win-x64 `
+  -p:PublishRuntimeIdentifier=win-x64 `
+  -p:AstroViewReleaseRuntime=win-x64 -p:PublishSingleFile=true `
+  -p:SelfContained=true -p:IncludeNativeLibrariesForSelfExtract=true `
+  -p:PublishTrimmed=false --force-evaluate
+</code></pre>
+<p>Repeat for the other two RIDs. Do not disable locked restore in the release job.
+Set both runtime properties to the same RID: during restore, .NET 10 otherwise
+can also infer the host's publish runtime when single-file publishing is enabled.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/docs/releases.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

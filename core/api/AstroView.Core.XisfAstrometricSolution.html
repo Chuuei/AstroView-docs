@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Class XisfAstrometricSolution | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class XisfAstrometricSolution | AstroView documentation ">
+      
+      <meta name="description" content="Evaluates Revision 1 astrometric solutions without consulting FITS keywords or solver settings.">
+      <link rel="icon" href="../../images/astroview.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="AstroView.Core.XisfAstrometricSolution">
+
+
+
+  <h1 id="AstroView_Core_XisfAstrometricSolution" data-uid="AstroView.Core.XisfAstrometricSolution" class="text-break">
+Class XisfAstrometricSolution  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/XisfAstrometricSolution.cs"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><span class="xref">AstroView</span>.<a class="xref" href="AstroView.Core.html">Core</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>AstroView.Core.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Evaluates Revision 1 astrometric solutions without consulting FITS keywords or solver settings.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class XisfAstrometricSolution</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">XisfAstrometricSolution</span></div>
+    </dd>
+  </dl>
+
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+  <h2 id="AstroView_Core_XisfAstrometricSolution_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>Image pixel centers are (column + 0.5, row + 0.5). All celestial angles are degrees.
+Both directions use their independently stored transformations. Unavailable layers fall back as specified.</p>
+</div>
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="AstroView_Core_XisfAstrometricSolution_AvailableLayer_" data-uid="AstroView.Core.XisfAstrometricSolution.AvailableLayer*"></a>
+
+  <h3 id="AstroView_Core_XisfAstrometricSolution_AvailableLayer" data-uid="AstroView.Core.XisfAstrometricSolution.AvailableLayer">
+  AvailableLayer
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/XisfAstrometricSolution.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The highest evaluable mathematical layer (0 when the solution is unavailable).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int AvailableLayer { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfAstrometricSolution_CelestialReferenceSystem_" data-uid="AstroView.Core.XisfAstrometricSolution.CelestialReferenceSystem*"></a>
+
+  <h3 id="AstroView_Core_XisfAstrometricSolution_CelestialReferenceSystem" data-uid="AstroView.Core.XisfAstrometricSolution.CelestialReferenceSystem">
+  CelestialReferenceSystem
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/XisfAstrometricSolution.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The reference system of the output coordinates, including unrecognized systems.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string? CelestialReferenceSystem { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfAstrometricSolution_Diagnostics_" data-uid="AstroView.Core.XisfAstrometricSolution.Diagnostics*"></a>
+
+  <h3 id="AstroView_Core_XisfAstrometricSolution_Diagnostics" data-uid="AstroView.Core.XisfAstrometricSolution.Diagnostics">
+  Diagnostics
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/XisfAstrometricSolution.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reasons that a present layer could not be evaluated.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;string&gt; Diagnostics { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfAstrometricSolution_ProjectionSystem_" data-uid="AstroView.Core.XisfAstrometricSolution.ProjectionSystem*"></a>
+
+  <h3 id="AstroView_Core_XisfAstrometricSolution_ProjectionSystem" data-uid="AstroView.Core.XisfAstrometricSolution.ProjectionSystem">
+  ProjectionSystem
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/XisfAstrometricSolution.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The projection identifier, or null when the required properties are unavailable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string? ProjectionSystem { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfAstrometricSolution_Properties_" data-uid="AstroView.Core.XisfAstrometricSolution.Properties*"></a>
+
+  <h3 id="AstroView_Core_XisfAstrometricSolution_Properties" data-uid="AstroView.Core.XisfAstrometricSolution.Properties">
+  Properties
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/XisfAstrometricSolution.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>All original properties, including provenance and unrecognized future properties.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyDictionary&lt;string, XisfProperty&gt; Properties { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="AstroView.Core.XisfProperty.html">XisfProperty</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="AstroView_Core_XisfAstrometricSolution_ApplyTo_" data-uid="AstroView.Core.XisfAstrometricSolution.ApplyTo*"></a>
+
+  <h3 id="AstroView_Core_XisfAstrometricSolution_ApplyTo_AstroView_Core_XisfImageData_" data-uid="AstroView.Core.XisfAstrometricSolution.ApplyTo(AstroView.Core.XisfImageData)">
+  ApplyTo(XisfImageData)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/XisfAstrometricSolution.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Replaces an image's solution properties, preserving unrecognized properties of a loaded solution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ApplyTo(XisfImageData image)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>image</code> <a class="xref" href="AstroView.Core.XisfImageData.html">XisfImageData</a></dt>
+    <dd><p>The editable image with unchanged coordinate geometry.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfAstrometricSolution_CelestialToImage_" data-uid="AstroView.Core.XisfAstrometricSolution.CelestialToImage*"></a>
+
+  <h3 id="AstroView_Core_XisfAstrometricSolution_CelestialToImage_System_Double_System_Double_" data-uid="AstroView.Core.XisfAstrometricSolution.CelestialToImage(System.Double,System.Double)">
+  CelestialToImage(double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/XisfAstrometricSolution.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Transforms right ascension and declination to image coordinates.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public (double X, double Y) CelestialToImage(double rightAscension, double declination)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>rightAscension</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>Right ascension in degrees.</p>
+</dd>
+    <dt><code>declination</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>Declination in degrees.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>(<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-system.double,system.double-.rightascension">RightAscension</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-system.double,system.double-.declination">Declination</a>)</dt>
+    <dd><p>Image coordinates, with pixel centers at half integers.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfAstrometricSolution_Create_" data-uid="AstroView.Core.XisfAstrometricSolution.Create*"></a>
+
+  <h3 id="AstroView_Core_XisfAstrometricSolution_Create_System_Collections_Generic_IReadOnlyDictionary_System_String_AstroView_Core_XisfPropertyData__" data-uid="AstroView.Core.XisfAstrometricSolution.Create(System.Collections.Generic.IReadOnlyDictionary{System.String,AstroView.Core.XisfPropertyData})">
+  Create(IReadOnlyDictionary&lt;string, XisfPropertyData&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/XisfAstrometricSolution.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates and validates a solution from explicitly typed astrometric properties.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static XisfAstrometricSolution Create(IReadOnlyDictionary&lt;string, XisfPropertyData&gt; properties)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>properties</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="AstroView.Core.XisfPropertyData.html">XisfPropertyData</a>&gt;</dt>
+    <dd><p>Properties with full AstrometricSolution identifiers, including both directions of each optional layer.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="AstroView.Core.XisfAstrometricSolution.html">XisfAstrometricSolution</a></dt>
+    <dd><p>The validated mathematical model.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfAstrometricSolution_CreateLinear_" data-uid="AstroView.Core.XisfAstrometricSolution.CreateLinear*"></a>
+
+  <h3 id="AstroView_Core_XisfAstrometricSolution_CreateLinear_System_String_System_Double___System_Double___System_Double_0__0___System_String_" data-uid="AstroView.Core.XisfAstrometricSolution.CreateLinear(System.String,System.Double[],System.Double[],System.Double[0:,0:],System.String)">
+  CreateLinear(string, double[], double[], double[,], string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/XisfAstrometricSolution.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates a first-layer solution with the default WCS native reference and pole parameters.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static XisfAstrometricSolution CreateLinear(string projectionSystem, double[] referenceCelestialCoordinates, double[] referenceImageCoordinates, double[,] linearTransformationMatrix, string celestialReferenceSystem = &quot;ICRS&quot;)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>projectionSystem</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>One of the seven standard projection identifiers.</p>
+</dd>
+    <dt><code>referenceCelestialCoordinates</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>[]</dt>
+    <dd><p>Reference right ascension and declination in degrees.</p>
+</dd>
+    <dt><code>referenceImageCoordinates</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>[]</dt>
+    <dd><p>Reference image coordinates.</p>
+</dd>
+    <dt><code>linearTransformationMatrix</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>[,]</dt>
+    <dd><p>The 2 by 2 transformation in degrees per pixel.</p>
+</dd>
+    <dt><code>celestialReferenceSystem</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The celestial reference system, normally ICRS or GCRS.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="AstroView.Core.XisfAstrometricSolution.html">XisfAstrometricSolution</a></dt>
+    <dd><p>The validated linear solution.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfAstrometricSolution_FromProperties_" data-uid="AstroView.Core.XisfAstrometricSolution.FromProperties*"></a>
+
+  <h3 id="AstroView_Core_XisfAstrometricSolution_FromProperties_System_Collections_Generic_IReadOnlyDictionary_System_String_AstroView_Core_XisfProperty__" data-uid="AstroView.Core.XisfAstrometricSolution.FromProperties(System.Collections.Generic.IReadOnlyDictionary{System.String,AstroView.Core.XisfProperty})">
+  FromProperties(IReadOnlyDictionary&lt;string, XisfProperty&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/XisfAstrometricSolution.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads an image's astrometric properties; returns null when no solution properties exist.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static XisfAstrometricSolution? FromProperties(IReadOnlyDictionary&lt;string, XisfProperty&gt; properties)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>properties</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="AstroView.Core.XisfProperty.html">XisfProperty</a>&gt;</dt>
+    <dd><p>The image properties.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="AstroView.Core.XisfAstrometricSolution.html">XisfAstrometricSolution</a></dt>
+    <dd><p>The solution and its availability diagnostics, or null.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfAstrometricSolution_ImageToCelestial_" data-uid="AstroView.Core.XisfAstrometricSolution.ImageToCelestial*"></a>
+
+  <h3 id="AstroView_Core_XisfAstrometricSolution_ImageToCelestial_System_Double_System_Double_" data-uid="AstroView.Core.XisfAstrometricSolution.ImageToCelestial(System.Double,System.Double)">
+  ImageToCelestial(double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/XisfAstrometricSolution.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Transforms image coordinates to right ascension and declination in degrees.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public (double RightAscension, double Declination) ImageToCelestial(double x, double y)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The image coordinate along columns.</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The image coordinate along rows.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>(<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-system.double,system.double-.rightascension">RightAscension</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-system.double,system.double-.declination">Declination</a>)</dt>
+    <dd><p>The right ascension in [0,360) and declination.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfAstrometricSolution_ImageToProjection_" data-uid="AstroView.Core.XisfAstrometricSolution.ImageToProjection*"></a>
+
+  <h3 id="AstroView_Core_XisfAstrometricSolution_ImageToProjection_System_Double_System_Double_" data-uid="AstroView.Core.XisfAstrometricSolution.ImageToProjection(System.Double,System.Double)">
+  ImageToProjection(double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/XisfAstrometricSolution.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Evaluates the highest available image-to-projection transformation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public (double X, double Y) ImageToProjection(double x, double y)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The image column coordinate.</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The image row coordinate.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>(<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-system.double,system.double-.rightascension">RightAscension</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-system.double,system.double-.declination">Declination</a>)</dt>
+    <dd><p>Projection plane coordinates in degrees.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfAstrometricSolution_ProjectionToImage_" data-uid="AstroView.Core.XisfAstrometricSolution.ProjectionToImage*"></a>
+
+  <h3 id="AstroView_Core_XisfAstrometricSolution_ProjectionToImage_System_Double_System_Double_" data-uid="AstroView.Core.XisfAstrometricSolution.ProjectionToImage(System.Double,System.Double)">
+  ProjectionToImage(double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/XisfAstrometricSolution.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Evaluates the separately stored projection-to-image transformation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public (double X, double Y) ProjectionToImage(double u, double v)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>u</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The projection coordinate along the first axis in degrees.</p>
+</dd>
+    <dt><code>v</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The projection coordinate along the second axis in degrees.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>(<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-system.double,system.double-.rightascension">RightAscension</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-system.double,system.double-.declination">Declination</a>)</dt>
+    <dd><p>Image coordinates.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="AstroView_Core_XisfAstrometricSolution_RemoveFrom_" data-uid="AstroView.Core.XisfAstrometricSolution.RemoveFrom*"></a>
+
+  <h3 id="AstroView_Core_XisfAstrometricSolution_RemoveFrom_AstroView_Core_XisfImageData_" data-uid="AstroView.Core.XisfAstrometricSolution.RemoveFrom(AstroView.Core.XisfImageData)">
+  RemoveFrom(XisfImageData)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/XisfAstrometricSolution.cs"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Removes the entire solution namespace after a geometric transformation that cannot preserve it exactly.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void RemoveFrom(XisfImageData image)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>image</code> <a class="xref" href="AstroView.Core.XisfImageData.html">XisfImageData</a></dt>
+    <dd><p>The transformed editable image.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/XisfAstrometricSolution.cs" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

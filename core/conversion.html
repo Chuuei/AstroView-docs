@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Converting FITS and XISF | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Converting FITS and XISF | AstroView documentation ">
+      
+      
+      <link rel="icon" href="../images/astroview.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Chuuei/AstroView/blob/main/docs/core/conversion.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="converting-fits-and-xisf">Converting FITS and XISF</h1>
+
+<h2 id="preservation-transformation-and-omission">Preservation, transformation and omission</h2>
+<p>Native document copying and cross-format conversion solve different problems.
+Use the native writer when retaining unknown extensions or format-specific
+structure matters. Use <code>FitsConverter</code> when you need a different image model,
+then inspect its findings before writing the destination.</p>
+<p><code>ConversionResult&lt;T&gt;</code> contains <code>Value</code>, <code>Findings</code> and <code>HasLosses</code>.
+<code>ConversionFinding</code> exposes <code>Code</code>, <code>Effect</code> and <code>Message</code>. Effects distinguish
+preserved content, transformed content and omitted content. <code>HasLosses</code> tracks
+omissions; a transformation can still be scientifically important even when
+that Boolean is false. Read the findings rather than reducing them to one flag.</p>
+<h2 id="default-loss-policy">Default loss policy</h2>
+<p>The default policy is <code>ConversionLossPolicy.Reject</code>. A conversion with reported
+omissions throws <code>ConversionLossException</code>, which contains the findings. Use
+that exception to present a review step. Set <code>Allow</code> only when your application
+or user has accepted the omission policy.</p>
+<!-- snippet: conversion -->
+<pre><code class="lang-csharp">public static void Conversion(string directory)
+{
+    var source = XisfReader.Load(Path.Combine(directory, &quot;catalog.xisf&quot;));
+    try
+    {
+        _ = FitsConverter.ConvertToFits(source); // Rejects omissions by default.
+        throw new InvalidOperationException(&quot;Expected metadata loss to require a decision.&quot;);
+    }
+    catch (ConversionLossException error)
+    {
+        foreach (var finding in error.Findings)
+            Console.WriteLine($&quot;{finding.Effect}: {finding.Code}: {finding.Message}&quot;);
+    }
+    // Continue only after your application/user accepts the reported omissions.
+    var accepted = FitsConverter.ConvertToFits(source, ConversionLossPolicy.Allow);
+    FitsWriter.Write(Path.Combine(directory, &quot;converted.fits&quot;), accepted.Value);
+}
+</code></pre>
+<p>Allowing omissions does not force an impossible pixel conversion. Unsupported
+complex image storage or an exactness constraint can still cause a failure.
+Do not catch every exception and retry with a lossy floating-point image unless
+that is a separately designed feature of your application.</p>
+<h2 id="fits-to-xisf">FITS to XISF</h2>
+<p><code>ConvertToXisf(fitsDocument, options)</code> returns editable images and findings.
+<code>FitsConversionOptions.AxisInterpretation</code> defaults to <code>PreserveDimensions</code>.
+Choose <code>RgbOrRgba</code> only for files whose third axis really represents color.
+<code>IncludeStructuralKeywords</code> controls whether structural FITS cards are also
+retained as XISF FITS keywords.</p>
+<p>FITS scaling/blank handling can transform stored integer data into physical
+floating-point samples. Conventional unsigned storage has dedicated typed paths.
+See <a href="fits.html#exact-64-bit-values">FITS exact values</a> before converting Int64 or
+UInt64 data through double precision.</p>
+<p>FITS table conversion can report omission of native table storage, units,
+scaling or extension details; array cells can be flattened to text. Unknown
+extensions may be omitted. Treat the result as a conversion of supported content,
+not a complete archive of the original FITS HDUs.</p>
+<h2 id="xisf-to-fits">XISF to FITS</h2>
+<p>Prefer the <code>XisfDocument</code> conversion overload when reviewing an entire source
+document: it reports document-level as well as image-level omissions. Passing
+only selected image data cannot report content you have already left behind.</p>
+<p>Native XISF properties, astrometric solutions, global metadata, tables, color
+objects and application extensions may not have an equivalent FITS representation
+in this converter. Even if FITS has a related convention in principle, this
+implementation must explicitly support that mapping before it can preserve it.</p>
+<p>For selected-image export, first decide whether to retain or intentionally omit
+global properties and tables. Copying <code>Images[0]</code> into a new document does not
+automatically bring the original document's global content with it.</p>
+<h2 id="verify-a-conversion">Verify a conversion</h2>
+<ol>
+<li>Review every omitted and transformed finding.</li>
+<li>Write to a new path with the chosen checksum policy.</li>
+<li>Reopen the output using your intended reader options.</li>
+<li>Compare dimensions, channel interpretation, sample types and values at the
+precision required by your application.</li>
+<li>Verify expected metadata and tables explicitly; pixel equality alone is not
+a document-fidelity check.</li>
+<li>Use independent readers/reference data for interoperability claims.</li>
+</ol>
+<p>The repository's <a href="../interoperability.html">interoperability evidence</a> records
+independent tools, fixtures and remaining gaps. Self-generated examples and
+forward/backward conversions are useful regression checks but are not a substitute
+for independent validation.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/docs/core/conversion.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

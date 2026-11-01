@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Testing FITS and XISF | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Testing FITS and XISF | AstroView documentation ">
+      
+      
+      <link rel="icon" href="images/astroview.ico">
+      <link rel="stylesheet" href="public/docfx.min.css">
+      <link rel="stylesheet" href="public/main.css">
+      <meta name="docfx:navrel" content="toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Chuuei/AstroView/blob/main/docs/testing.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="index.html">
+            <img id="logo" class="svg" src="images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="testing-fits-and-xisf">Testing FITS and XISF</h1>
+
+<p>The solution also includes <a href="desktop.html#development-and-verification">desktop workflow and rendering checks</a>
+for the Avalonia application. They run headlessly on all three CI platforms and
+keep GUI dependencies out of the Core project. Large desktop corpus checks are
+separately opt-in with <code>ASTROVIEW_DESKTOP_EXAMPLES</code>.</p>
+<h2 id="portable-regression-suite">Portable regression suite</h2>
+<pre><code class="lang-sh">dotnet restore AstroView.sln --locked-mode
+dotnet build AstroView.sln -c Release --no-restore
+dotnet test AstroView.sln -c Release --no-build --collect:&quot;XPlat Code Coverage&quot;
+</code></pre>
+<p>CI runs the same suite and package build on Windows, Linux, and macOS. Generated
+fixtures require no network or photograph corpus. Tests exercise:</p>
+<ul>
+<li>Independent FITS/XISF bytes, truncated headers/payloads/padding, invalid UTF-8,
+malformed text encodings, unsupported headers, DTD rejection, and resource limits.</li>
+<li>FITS empty HDUs, zero-sized axes, floating-point special values, big-endian
+storage, scaling, integer BLANK, unsigned boundaries, and variable-array heap bounds.</li>
+<li>Every XISF codec/checksum combination in both byte orders, shuffle/subblock tails,
+planar/interleaved channels, and deliberate payload corruption before decompression.</li>
+<li>One-byte and short reads through seekable/non-seekable streams, sync/async APIs,
+exact buffering limits, stream ownership, Unicode filenames, atomic replacement,
+and invariant parsing under German, French, and Turkish cultures.</li>
+<li>Existing metadata, conversion, rendering, cancellation, and signature regressions.</li>
+</ul>
+<p>These checks establish behaviour on the tested runners, not universal support for
+all operating systems, architectures, or file variants. Tests do not contact external
+URLs. The local corpus is not uploaded to GitHub.</p>
+<h2 id="local-example-corpus">Local example corpus</h2>
+<p>The corpus test is explicitly skipped unless <code>ASTROVIEW_EXAMPLES</code> is set. A
+configured missing/empty directory fails rather than silently passing. Run it
+separately because the photographs can require hundreds of MB per document:</p>
+<pre><code class="lang-powershell">$env:ASTROVIEW_EXAMPLES = 'C:\Code\AstroExamples'
+$env:ASTROVIEW_EXAMPLE_REPORT = &quot;$PWD\artifacts\local-examples\report.json&quot;
+$env:ASTROVIEW_XISF_EXAMPLE_REPORT = &quot;$PWD\artifacts\local-examples\xisf-report.json&quot;
+dotnet test AstroView.sln -c Release --filter Category=LocalExamples
+Remove-Item Env:ASTROVIEW_EXAMPLES
+Remove-Item Env:ASTROVIEW_EXAMPLE_REPORT
+Remove-Item Env:ASTROVIEW_XISF_EXAMPLE_REPORT
+</code></pre>
+<p>On Linux/macOS use <code>ASTROVIEW_EXAMPLES=/path/to/images dotnet test AstroView.sln -c Release --filter Category=LocalExamples</code> (on one line). The report path is
+optional. Reports belong under ignored <code>artifacts/</code>.</p>
+<p>The local test recursively checks <code>.fits</code>, <code>.fit</code>, and <code>.fts</code> files, one at a time,
+without modifying them. It independently scans physical header cards to compare
+image axes and BITPIX, checks the payload sizes, compares SHA-256 of <strong>every loaded
+payload byte</strong> against the original file, verifies present checksums, and requires
+no error-level diagnostics or unread trailing bytes. Missing checksums are accepted
+and do not establish integrity. The report records filenames, lengths, payload
+hashes, failures, OS, runtime, and process architecture.</p>
+<p>This validates loading/storage fidelity, not image aesthetics or independently
+calibrated pixel/astrometric correctness. The supplied corpus currently contains
+11 FITS files plus 73 downloaded XISF files containing 79 primary images. The
+XISF test checks the committed <code>Fixtures/LocalXisf/manifest.json</code> against files in
+the <code>XISF</code> subdirectory (or the configured directory itself). Every listed file
+must exist and match its original SHA-256. Independent reference hashes come from
+the pinned Python reader or the separately identified base64/zlib oracle. The
+test checks pixels/geometry/layout/types, then saves/reloads the 71 complete files
+in a temporary directory and compares all pixels and preserved XML metadata.
+Two sources have missing thumbnail attachments: their primary pixels are checked,
+but thumbnail access and complete saving must fail. Source files are never edited.</p>
+<p>Set <code>ASTROVIEW_XISF_EXAMPLE_REPORT</code> to record per-file results and semantic
+diagnostics separately from the FITS report. Successful pixel decoding does not
+require these legacy producer files to pass strict semantic validation. The large
+local corpus has been exercised on Windows; the 60 small committed independent
+fixtures run on Windows/Linux/macOS CI. No external images enter the package.</p>
+<h2 id="review-and-performance-measurements">Review and performance measurements</h2>
+<p>See the <a href="reviews/2026-10-31-code-review.html">code review</a> for resolved findings,
+compatibility changes, remaining limitations, and the median/MAD benchmark.
+Run the benchmark with <code>dotnet run --project tools/AstroView.Performance -c Release</code>.
+It checks result equivalence and reports timing/allocation measurements; CI does
+not assert machine-dependent timing thresholds.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/docs/testing.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

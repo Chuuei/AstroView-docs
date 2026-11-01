@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Rendering and analysis | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Rendering and analysis | AstroView documentation ">
+      
+      
+      <link rel="icon" href="../images/astroview.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Chuuei/AstroView/blob/main/docs/core/imaging-analysis.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="rendering-and-analysis">Rendering and analysis</h1>
+
+<p>Scientific samples, display pixels and measurements serve different purposes.
+Choose the representation deliberately and preserve the original scientific
+samples when producing a preview.</p>
+<h2 id="render-a-display-image">Render a display image</h2>
+<p><code>XisfDisplayRenderer.Render</code> accepts a parsed or editable image. It returns an
+<code>XisfBgra32Image</code>: dimensions, DPI and owned BGRA pixels with straight alpha.
+The output is suitable for a graphics adapter but is not an encoded PNG/JPEG.
+Choose an image encoder in your application if you need a preview file.</p>
+<table>
+<thead>
+<tr>
+<th>Stretch argument</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>null</code></td>
+<td>Linear normalization for display</td>
+</tr>
+<tr>
+<td><code>XisfStretchOptions.Auto</code></td>
+<td>Adaptive display stretch with linked channels by default</td>
+</tr>
+<tr>
+<td><code>XisfStretchOptions.DisplayFunction</code></td>
+<td>Uses a stored display function where applicable</td>
+</tr>
+<tr>
+<td>New <code>XisfStretchOptions</code></td>
+<td>Configure target background, shadow clipping, channel linking and stored-function use</td>
+</tr>
+</tbody>
+</table>
+<p>The Core automatic stretch defaults to target background <code>0.25</code> and shadow
+clipping <code>-2.8</code>. The desktop chooses <code>0.22</code> for its initial preview. Do not assume
+that every caller uses the same application-level defaults.</p>
+<p>The renderer supports supported two-dimensional real images and interprets
+orientation, relevant color metadata and alpha. Complex magnitude/phase display
+and a general scientific cube-plane renderer are not implemented. Read those
+samples through the scientific APIs instead.</p>
+<h2 id="statistics-histogram-and-region-example">Statistics, histogram and region example</h2>
+<!-- snippet: analysis-rendering -->
+<pre><code class="lang-csharp">public static void AnalyzeAndRender(string directory)
+{
+    var image = XisfReader.Load(Path.Combine(directory, &quot;image.xisf&quot;)).Images[0];
+    var statistics = image.CalculateStatistics(new()
+    {
+        Normalize = false,
+        MaximumSamplesPerChannel = 100_000
+    });
+    var histogram = image.CalculateHistogram(channel: 0, binCount: 256,
+        lowerBound: 0, upperBound: 65535);
+    ushort[] region = image.ReadRegion&lt;ushort&gt;(0, 0, 2, 1);
+    var preview = XisfDisplayRenderer.Render(image, XisfStretchOptions.Auto);
+    Console.WriteLine($&quot;Mean: {statistics[0].Mean}; preview: {preview.Width} × {preview.Height}&quot;);
+    if (histogram.Bins.Sum() != 4 || !region.SequenceEqual(new ushort[] { 0, 100 }))
+        throw new InvalidOperationException(&quot;Analysis example failed.&quot;);
+    // preview.Pixels is BGRA32 display data. It is not a PNG file.
+}
+</code></pre>
+<p><code>ReadRegion&lt;T&gt;</code> returns all image channels in the requested layout. To read a
+whole channel, use <code>ReadChannel&lt;T&gt;(channel)</code>. Region coordinates are zero-based;
+width and height must be positive and remain within a two-dimensional image.
+The region method still decodes the complete source block before extracting
+the requested rectangle.</p>
+<h2 id="interpret-measurements-correctly">Interpret measurements correctly</h2>
+<p><code>CalculateStatistics</code> returns one <code>XisfChannelStatistics</code> per channel. It exposes
+sampled count, finite/non-finite counts, extrema, mean, standard deviation,
+median and median absolute deviation (MAD). <code>MaximumSamplesPerChannel</code> defaults
+to 1,000,000 in Core. Sampling can miss an isolated extreme or rare invalid value;
+these statistics are not guaranteed full-image extrema when sampling occurs.</p>
+<p><code>Normalize = true</code> expresses measurements relative to declared image bounds.
+It is independent of display stretching. Values outside declared bounds can
+remain outside the normalized interval rather than being silently clamped.
+Median/MAD and other measurements use floating-point representations, so very
+large integer values can round.</p>
+<p>Histograms examine every sample in one chosen channel. The result separates
+in-range bin counts, underflow, overflow and non-finite counts. A histogram's
+bin sum alone is not necessarily the total number of pixels: include the other
+counts when checking totals. Bounds use scientific values, not automatically
+the units shown in a normalized statistics table or stretched preview.</p>
+<p>Do not derive a scientific histogram from 8-bit preview pixels. That would
+measure the display transformation rather than the source image.</p>
+<h2 id="color-and-display-utilities">Color and display utilities</h2>
+<p><code>XisfColorSpace</code> provides RGB ↔ XYZ, RGB ↔ Lab and grayscale/luminance operations.
+Its default working space is D50-adapted sRGB. <code>XisfDisplayFunctions</code> contains
+display/midtones utilities. Specify a supported working space when a file's
+metadata requires a different interpretation.</p>
+<p>These transforms are not a full ICC engine, an image calibration workflow or a
+general photometry package. <code>AstronomyMetadata</code> and coordinate models provide
+specific metadata/astrometry support; broader astronomical algorithms should
+be documented separately as they are added.</p>
+<h2 id="memory-and-ui-integration">Memory and UI integration</h2>
+<p>A BGRA preview requires roughly four bytes per output pixel in addition to
+source/decompressed data. Typed reads allocate arrays; normalization adds
+double buffers. Avoid retaining several previews and sample copies for every
+open large document. Perform expensive rendering and analysis away from your
+UI thread, then transfer owned output to your UI framework. Read
+<a href="resources-performance.html">resource policy and performance</a> for practical limits.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/docs/core/imaging-analysis.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

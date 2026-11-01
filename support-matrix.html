@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>FITS/XISF support matrix | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="FITS/XISF support matrix | AstroView documentation ">
+      
+      
+      <link rel="icon" href="images/astroview.ico">
+      <link rel="stylesheet" href="public/docfx.min.css">
+      <link rel="stylesheet" href="public/main.css">
+      <meta name="docfx:navrel" content="toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Chuuei/AstroView/blob/main/docs/support-matrix.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="index.html">
+            <img id="logo" class="svg" src="images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="fitsxisf-support-matrix">FITS/XISF support matrix</h1>
+
+<p>Baseline updated against the source, regression tests and independent fixtures on 2026-11-01.
+This is an implementation contract and gap inventory, not certification of full
+FITS 4.0 or XISF Revision 1 conformance. Update the matrix with each release and
+link new independent interoperability evidence as it becomes available.</p>
+<h2 id="how-to-read-the-matrix">How to read the matrix</h2>
+<ul>
+<li><strong>Yes:</strong> the documented API implements the capability for the stated scope.</li>
+<li><strong>Partial:</strong> a restriction or preservation condition in the notes matters.</li>
+<li><strong>No:</strong> the capability is not implemented as a supported high-level operation.</li>
+<li><strong>—:</strong> not applicable to that feature.</li>
+</ul>
+<p>The columns are deliberately independent:</p>
+<ul>
+<li><strong>Read</strong> means expose the content as a supported model, not merely retain bytes.</li>
+<li><strong>Write</strong> means serialize supported content; raw-payload passthrough is identified.</li>
+<li><strong>Edit</strong> means change the supported model and save it using public APIs. Replacing
+a complete image is different from a random-access or in-place file edit.</li>
+<li><strong>Preserve</strong> means retain the stated information through the relevant save path.
+It does not promise byte-identical files, preservation of arbitrary unknown
+content in every editing path, or lossless conversion between formats.</li>
+<li><strong>Evaluate</strong> means interpret the feature's semantics, such as physical sample
+scaling, integrity verification or a coordinate transform. Keeping a WCS header
+does not mean its transform can be evaluated.</li>
+</ul>
+<p>Classes of features: <strong>Format</strong> covers native format structures/semantics; <strong>Convention</strong> covers a particular
+FITS/application convention; <strong>API</strong> covers
+access, editing or workflow behaviour; <strong>Processing</strong> covers image/astronomy work
+above file-format I/O. A missing processing operation is not missing format decoding.</p>
+<h2 id="fits-containers-pixels-and-headers">FITS containers, pixels and headers</h2>
+<table>
+<thead>
+<tr>
+<th>Feature / class</th>
+<th>Read</th>
+<th>Write</th>
+<th>Edit</th>
+<th>Preserve</th>
+<th>Evaluate</th>
+<th>Scope and evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Primary image and IMAGE extension HDUs; multiple HDUs — Format</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Public models support complete image replacement. Geometry and payload bytes are retained; records/cards are reserialized. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsDocument.cs">Models</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/Imported/FitsTests.cs">tests</a>.</td>
+</tr>
+<tr>
+<td>Standard BITPIX image storage: 8, 16, 32, 64, -32, -64 — Format</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Partial</td>
+<td>Raw storage is available. <code>GetPhysicalSamples()</code> returns doubles, so not every large integer is exactly representable in that view. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsDocument.cs">Samples</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/FitsEdgeCaseTests.cs">independent-byte tests</a>.</td>
+</tr>
+<tr>
+<td>BSCALE/BZERO, integer BLANK and standard unsigned image offsets — Format/convention</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Partial</td>
+<td>Physical doubles apply scaling and map integer BLANK to NaN. Exact unsigned conversion paths exist in <code>FitsConverter</code>; arbitrary scaling can round and inexact signed-64 conversion is rejected. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsConverter.cs">Converter</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/Imported/FitsPerformanceRegressionTests.cs">boundary tests</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/Imported/ReviewRegressionTests.cs">conversion tests</a>.</td>
+</tr>
+<tr>
+<td>Scientific N-dimensional image storage — Format</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Partial</td>
+<td>Axis lengths remain scientific dimensions unless RGB/RGBA interpretation is explicitly requested. No general cube-plane/physical-axis processing API. <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/Imported/ApiContractTests.cs">axis tests</a>.</td>
+</tr>
+<tr>
+<td>Header values, ordered/repeated COMMENT and HISTORY — Format</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Partial</td>
+<td>Yes</td>
+<td>Typed/custom keyword access is supported. Structural image cards are guarded and regenerated with the payload. Header order/formatting is not a byte-copy guarantee. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsDocument.cs">Header</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/Imported/AdditionalMetadataTests.cs">metadata tests</a>.</td>
+</tr>
+<tr>
+<td>HIERARCH and long strings with CONTINUE — Convention</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Partial</td>
+<td>Yes</td>
+<td>Strings, escaped apostrophes and final continuation comments are handled. Writer rejects non-printable/non-ASCII or overlong cards instead of silently truncating semantic content. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsWriter.cs">Writer</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/FitsLongStringRegressionTests.cs">regressions</a>.</td>
+</tr>
+<tr>
+<td>CHECKSUM/DATASUM — Convention</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>—</td>
+<td>Partial</td>
+<td>Yes</td>
+<td>Writer can recompute checksums; reader reports nullable results when missing. Re-encoding changes serialized checksums. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsChecksum.cs">Checksum</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/Imported/FitsPerformanceRegressionTests.cs">tests</a>.</td>
+</tr>
+<tr>
+<td>Unknown extension payloads — Format/API</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>No</td>
+<td>Opaque HDU payloads can be retained/replaced and re-emitted. Their application semantics are not decoded, and cross-format conversion may omit them. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsDocument.cs">HDU model</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/Imported/FitsTests.cs">tests</a>.</td>
+</tr>
+<tr>
+<td>Gzip-wrapped <code>.fits.gz</code> — Transport/API</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>—</td>
+<td>No integrated detection/wrapper. A caller can provide a decompression stream to the ordinary FITS reader. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsReader.cs">Path/stream entry points</a>. Planned AV-008.</td>
+</tr>
+<tr>
+<td>Tiled compressed images / <code>.fits.fz</code> — Format/convention</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>Partial</td>
+<td>No</td>
+<td>No ZIMAGE/ZCMPTYPE image interpretation or tile codecs. Generic table/raw storage may survive a FITS save; this is not compressed-image support. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsReader.cs">HDU dispatch</a>. Planned AV-009–AV-011.</td>
+</tr>
+<tr>
+<td>Random groups / radio UVFITS — Format/convention</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>Some enum/length recognition exists, but there is no supported random-groups document/data model. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsReader.cs">Reader</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsDocument.cs">document validation</a>. Planned AV-028.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="fits-tables">FITS tables</h2>
+<table>
+<thead>
+<tr>
+<th>Feature / class</th>
+<th>Read</th>
+<th>Write</th>
+<th>Edit</th>
+<th>Preserve</th>
+<th>Evaluate</th>
+<th>Scope and evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ASCII tables — Format</td>
+<td>Yes</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>Decoded rows are read-only. Existing tables can be saved from retained raw storage; there is no typed table builder or serialization of edited decoded rows. Unscaled I fields retain Int64; scaled numeric fields use double. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsReader.Tables.cs">Reader</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/FitsTableRegressionTests.cs">tests</a>.</td>
+</tr>
+<tr>
+<td>Binary scalar/fixed-array fields, bit/complex/logical fields — Format</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>Supported type codes decode; typed vectors are exposed. Logical missing-value handling is incomplete, and scaled integer values may lose precision through double. Writing/editing requires retained or manually rebuilt raw storage. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsReader.Tables.cs">Reader</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/Imported/FitsTests.cs">tests</a>.</td>
+</tr>
+<tr>
+<td>P/Q variable-length heap arrays — Format</td>
+<td>Yes</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>Yes</td>
+<td>Zero/one descriptor repetition, empty arrays, bounds and decoded-element budgets are checked. No public typed heap builder. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsReader.Tables.cs">Reader</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/FitsTableRegressionTests.cs">boundary tests</a>.</td>
+</tr>
+<tr>
+<td>Table TSCAL/TZERO/TNULL and units — Format</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>Metadata and supported null/scaling semantics are decoded. ASCII null text is recognized before conversion. Exact unsigned-64 scaled columns and logical null semantics need further work. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsDocument.cs">Column model</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/FitsTableRegressionTests.cs">tests</a>.</td>
+</tr>
+<tr>
+<td>Multidimensional columns / TDIM — Format</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>No</td>
+<td>Partial</td>
+<td>No</td>
+<td>The keyword can be read/preserved through the header, but decoded array fields remain flat and TDIM shape semantics are not evaluated. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsKnownKeywords.Standard.cs">Keyword catalog</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsReader.Tables.cs">table parser</a>. Planned AV-017.</td>
+</tr>
+<tr>
+<td>Compressed tables — Format/convention</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>Partial</td>
+<td>No</td>
+<td>No decompression/editing API; opaque supported storage may be retained as a generic table. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsReader.cs">Table dispatch</a>. Planned AV-028.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="xisf-containers-samples-and-metadata">XISF containers, samples and metadata</h2>
+<table>
+<thead>
+<tr>
+<th>Feature / class</th>
+<th>Read</th>
+<th>Write</th>
+<th>Edit</th>
+<th>Preserve</th>
+<th>Evaluate</th>
+<th>Scope and evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Monolithic XISF; distributed XISH + indexed XISB — Format</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Partial</td>
+<td>Yes</td>
+<td>Distributed output is two sequential files, not a transaction. Original sources may remain necessary for opaque blocks. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfWriter.cs">Writer</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/Imported/SpecificationRevisionTests.cs">container tests</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/XisfWriterPathRegressionTests.cs">path tests</a>.</td>
+</tr>
+<tr>
+<td>Attached, embedded and inline Base64/hex data; both byte orders — Format</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Size limits apply before text decoding/allocation. Editing is through owned models, not arbitrary in-place updates. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfDataBlock.cs">Blocks</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/Imported/SpecificationRevisionTests.cs">storage tests</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/XisfResourceRegressionTests.cs">resource tests</a>.</td>
+</tr>
+<tr>
+<td>zlib, LZ4, LZ4HC, Zstandard; shuffle/subblocks/alignment — Format</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Codecs process full blocks/subblocks; region access does not imply partial decompression. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfDataBlock.cs">Reader</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfWriter.Blocks.cs">writer</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/XisfEdgeCaseTests.cs">codec matrix tests</a>.</td>
+</tr>
+<tr>
+<td>SHA-1, SHA-256/512, SHA3-256/512 block digests — Format</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>—</td>
+<td>Partial</td>
+<td>Yes</td>
+<td>Digests verify serialized bytes before decompression. Lazy blocks are not verified merely by reading the XML header; re-encoding computes new digests. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfDataBlock.cs">Blocks</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/Imported/SpecificationRevisionTests.cs">SHA-3 tests</a>.</td>
+</tr>
+<tr>
+<td>UInt8/16/32/64, Float32/64, Complex32/64 image samples — Format</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Partial</td>
+<td>Exact matching-type sample paths exist. Complex values can be read, but the ordinary display/statistics/region helpers do not process complex images. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfImage.cs">Image</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfImageData.cs">editable image</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/Imported/PerformanceRegressionTests.cs">numeric tests</a>.</td>
+</tr>
+<tr>
+<td>Arbitrary axes; planar/interleaved channels; Gray/RGB/CIELab — Format</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Partial</td>
+<td>Storage is supported; built-in rendering, regions, statistics and histograms are mainly 2D real-image APIs. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs">Utilities</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/Imported/ApiContractTests.cs">layout tests</a>.</td>
+</tr>
+<tr>
+<td>Scalar properties, vectors/matrices, Boolean/String/TimePoint — Format</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Typed and custom identifiers; case-sensitive property access. Known-field/property editing is distinct from preserving arbitrary unknown XML. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfPropertyCollection.cs">Properties</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/Imported/XisfPropertyTypeTests.cs">type tests</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/Imported/KnownPropertyTests.cs">catalog tests</a>.</td>
+</tr>
+<tr>
+<td>128-bit integer and binary128 real/complex property storage — Format</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Partial</td>
+<td>Precise storage/parsing/formatting is supported; these types are not a general quadruple-precision arithmetic or image-pixel engine. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfFloat128.cs">Types</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/Imported/SpecificationRevisionTests.cs">tests</a>.</td>
+</tr>
+<tr>
+<td>XISF document/image tables, including array cells — Format</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Partial</td>
+<td>Yes</td>
+<td>Editable fields/rows are supported. Unknown/unavailable cells may retain source-backed opaque representations. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfDocument.cs">Table models</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfDocumentData.cs">document editing</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/Imported/ApiContractTests.cs">tests</a>.</td>
+</tr>
+<tr>
+<td>FITS keywords, ICC, thumbnail, CFA, RGB working space, display function, resolution and orientation — Format</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>Color/display transforms are implemented. CFA is metadata, not debayering; ICC data is retained, not a full ICC colour-management engine. Orientation affects previews, not automatically scientific storage. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfDocument.cs">Models</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfDisplayRenderer.cs">renderer</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/Imported/XisfWriterTests.cs">tests</a>.</td>
+</tr>
+<tr>
+<td>Unknown extensions/types and unavailable optional objects — Format/API</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>No</td>
+<td>Preserve through document-aware save paths without interpreting unsupported semantics. Rebuilding an editable image does not guarantee arbitrary unknown attributes survive. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfDocumentData.cs">Editable document</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/Imported/SpecificationRevisionTests.cs">preservation tests</a>.</td>
+</tr>
+<tr>
+<td>Detached XML signatures — Format</td>
+<td>Yes</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>RSA signing and embedded-key integrity checks are implemented. An edit/layout change generally requires re-signing. Verification does not establish signer identity, certificate-chain trust or arbitrary XML-subset transform support. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfWriter.Signing.cs">Signing</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/Imported/SpecificationRevisionTests.cs">tests</a>.</td>
+</tr>
+<tr>
+<td>Header-relative/external resources and URL resolution — Format/API</td>
+<td>Partial</td>
+<td>Yes</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>Filesystem/network access follows explicit policies; network access is disabled by default. Custom resolvers are optional. HTTP acquisition/body reads honor NetworkTimeout; custom resolvers/streams must cooperate. See <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/XisfNetworkTimeoutTests.cs">timeout tests</a>. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfReaderOptions.cs">Options</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfDataBlock.cs">blocks</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/XisfResourceRegressionTests.cs">policy tests</a>.</td>
+</tr>
+<tr>
+<td>Semantic and caller-supplied XSD validation — Format/API</td>
+<td>Yes</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Partial</td>
+<td>Diagnostics and <code>Validate(XmlSchemaSet)</code> exist. The library does not ship an exhaustive certification oracle or imply that loading a header verifies every lazy payload. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfValidation.cs">Validation</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfDocument.cs">API</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/Imported/XisfValidationTests.cs">tests</a>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="coordinates-and-astronomical-semantics">Coordinates and astronomical semantics</h2>
+<table>
+<thead>
+<tr>
+<th>Feature / class</th>
+<th>Read</th>
+<th>Write</th>
+<th>Edit</th>
+<th>Preserve</th>
+<th>Evaluate</th>
+<th>Scope and evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FITS WCS keywords as header metadata — Format/convention</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Partial</td>
+<td>Reading/preserving CTYPE, distortion or alternate-WCS cards does not imply their transform is supported. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsKnownKeywords.Wcs.cs">Typed keys</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/Imported/AdditionalMetadataTests.cs">metadata tests</a>.</td>
+</tr>
+<tr>
+<td>Degree-based RA/DEC TAN, CD or PC/CDELT — Format/convention</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>The convenience evaluator supports this axis order and its documented pole/default restrictions. Headers without both CTYPE values retain a legacy linear mode. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/CelestialWorldCoordinateSystem.cs">WCS evaluator</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/WorldCoordinateRegressionTests.cs">tests</a>.</td>
+</tr>
+<tr>
+<td>FITS SIP/TPV, other projections, alternate/axis-swapped/non-degree WCS, spectral/time/table WCS — Convention/Format</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+<td>Metadata remains accessible; unsupported explicit transforms are rejected rather than approximated. Coordinate-frame transformations are also not implemented. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/CelestialWorldCoordinateSystem.cs">WCS gate</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/WorldCoordinateRegressionTests.cs">rejection tests</a>. Planned AV-019–AV-022.</td>
+</tr>
+<tr>
+<td>Native XISF Revision 1 astrometry — Format</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>Yes</td>
+<td>Seven projections, spherical rotation, both stored projective directions, spline distortion layers and fallback are implemented. Known properties can be edited, but the library does not fit/solve the models. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/XisfAstrometricSolution.cs">Evaluator</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/Imported/SpecificationRevisionTests.cs">projection/distortion tests</a>.</td>
+</tr>
+<tr>
+<td>Future/unknown native astrometric revisions — Format/API</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>No</td>
+<td>Partial</td>
+<td>No</td>
+<td>Retain unavailable representations through preserving save paths; do not claim evaluation of unknown revisions. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/XisfAstrometricSolution.cs">Evaluator</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/Imported/SpecificationRevisionTests.cs">preservation tests</a>.</td>
+</tr>
+<tr>
+<td>Common object/instrument/observation metadata — API</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>A normalized view exposes selected known fields; it is not a complete physical-unit/time-scale conversion system. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Astronomy/AstronomyMetadata.cs">Metadata</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/AstronomyMetadataRegressionTests.cs">quote/case tests</a>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="access-interchange-and-image-work">Access, interchange and image work</h2>
+<table>
+<thead>
+<tr>
+<th>Feature / class</th>
+<th>Read</th>
+<th>Write</th>
+<th>Edit</th>
+<th>Preserve</th>
+<th>Evaluate</th>
+<th>Scope and evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Full FITS↔XISF image conversion with findings — API</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>Images/selected metadata convert; tables/global properties/ancillary objects may be transformed or omitted. Losses reject by default. No universal losslessness: complex XISF pixels have no standard FITS image-HDU equivalent. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsConverter.cs">Converter</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/Imported/ApiContractTests.cs">loss tests</a>.</td>
+</tr>
+<tr>
+<td>Shared format-neutral scientific image facade — API</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>—</td>
+<td>No</td>
+<td>Existing image utilities are principally XISF-oriented. FITS users can convert or use native models. Planned AV-004–AV-007.</td>
+</tr>
+<tr>
+<td>Metadata-only/selective opening — API</td>
+<td>Partial</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>XISF path opening keeps image blocks lazy; FITS materializes all HDU payloads. No general shared header-only/index API. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Fits/FitsReader.cs">FITS reader</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfReader.cs">XISF reader</a>.</td>
+</tr>
+<tr>
+<td>Region/channel access — API</td>
+<td>Partial</td>
+<td>No</td>
+<td>No</td>
+<td>—</td>
+<td>Partial</td>
+<td>XISF 2D real-image helpers return selected data after reading/decompressing the complete source block. No native FITS ROI/cube-plane or bounded-memory shared interface. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs">Utilities</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/Imported/XisfUtilityTests.cs">tests</a>.</td>
+</tr>
+<tr>
+<td>Unbounded-size/chunked image storage and streaming compression — API</td>
+<td>No</td>
+<td>No</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Current data models use whole arrays/int-sized blocks and intermediate compression buffers. Defaults impose additional limits; raising them does not remove CLR-array ceilings. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfReaderOptions.cs">Options</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfWriter.Blocks.cs">writer blocks</a>.</td>
+</tr>
+<tr>
+<td>Async APIs, cancellation and progress — API</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Worker-thread wrappers with cooperative checkpoints exist; this is not fully async I/O, cancellable lazy decode, or general progress reporting. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfWriter.Async.cs">Async writer</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/Imported/ReviewRegressionTests.cs">ownership/cancellation tests</a>.</td>
+</tr>
+<tr>
+<td>Atomic single-file path save — API</td>
+<td>—</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>—</td>
+<td>Stage then replace on success; caller streams and distributed two-file saves have different guarantees. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Internal/IoUtilities.cs">Helper</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/Imported/ReviewRegressionTests.cs">failure tests</a>.</td>
+</tr>
+<tr>
+<td>Explicit full document detachment/safe distributed publication — API</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>Partial</td>
+<td>—</td>
+<td>Materializing editable pixels may leave opaque metadata source-backed. Two files cannot be assumed to publish atomically. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Xisf/XisfDocumentData.cs">Editable document contract</a>. Planned AV-015.</td>
+</tr>
+<tr>
+<td>2D real-image statistics, histograms and display stretching/rendering — Processing</td>
+<td>Yes</td>
+<td>Partial</td>
+<td>No</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Utilities return derived values/BGRA previews without modifying scientific samples. Preview pixels can be consumed by an application; no general raster-file encoder is included. <a href="https://github.com/Chuuei/AstroView/blob/main/src/AstroView.Core/Imaging/XisfImageUtilities.cs">Utilities</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/Imported/DisplayRendererTests.cs">renderer tests</a>, <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/ImageStatisticsRegressionTests.cs">numeric tests</a>.</td>
+</tr>
+<tr>
+<td>Geometry-aware scientific crop/rotate/resize/reprojection — Processing</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>Reading a region or orienting a preview is not an editing pipeline that updates WCS, CFA and ancillary metadata. Planned AV-023.</td>
+</tr>
+<tr>
+<td>CFA debayering, cube/complex analysis views — Processing</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>—</td>
+<td>No</td>
+<td>These data/metadata can be stored, but equivalent shared processing operations are absent. Planned AV-024–AV-025.</td>
+</tr>
+<tr>
+<td>Calibration, registration, stacking, photometry and plate solving — Processing</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>—</td>
+<td>No</td>
+<td>No claims are made merely because image pixels and astrometric solutions can be loaded. Planned AV-026.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="evidence-and-interpretation-limits">Evidence and interpretation limits</h2>
+<p>Source/test links identify the implementation and representative regressions, not
+exhaustive proof of all combinations. Existing generated-byte, round-trip, malformed
+input and cross-platform tests are complemented by Phase 1 independent-reader
+fixtures; the fixture provenance/manifests must distinguish independently produced
+files from files produced by AstroView for reverse-direction checks.</p>
+<p>The optional <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/LocalExampleTests.cs">local corpus test</a>
+checks user photographs outside Git. Eleven FITS photographs passed the previous
+review. The <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/LocalXisfExampleTests.cs">local XISF test</a>
+now checks independent pixel hashes for 73 files/79 images, metadata/attachment
+preservation for complete files and two known missing-thumbnail failures. Sixty
+small committed independent fixtures run on all three CI platforms. Real native
+XISF distortion solutions still need independent reference evidence
+before broad interoperability claims are made. Keep external fixture redistribution
+licenses and source hashes alongside the fixtures.</p>
+<p>Use the <a href="roadmap.html">roadmap</a> to select the next gap, and <a href="testing.html">testing</a> for
+commands and the distinction between portable fixtures and local photographs.
+Format references: <a href="https://fits.gsfc.nasa.gov/standard40/fits_standard40aa-le.pdf">FITS 4.0</a>,
+<a href="https://fits.gsfc.nasa.gov/fits_wcs.html">FITS WCS</a>,
+<a href="https://fits.gsfc.nasa.gov/registry/tilecompression.html">FITS tile compression</a>,
+<a href="https://pixinsight.com/doc/docs/XISF-1.0-spec/XISF-1.0-spec.html">XISF specification</a>.</p>
+<p>Phase 1 evidence: <a href="interoperability.html">independent corpus and limitations</a>,
+<a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/InteroperabilityTests.cs">offline fixture tests</a>.</p>
+<p>The <a href="desktop.html">desktop workspace</a> exposes the currently implemented capabilities
+through a feature guide and interactive tools. Its demonstration files are not
+independent producer fixtures. GUI integration also protects the optional absence
+of an ordered interval for complex
+samples: <a href="https://github.com/Chuuei/AstroView/blob/main/tests/AstroView.Core.Tests/XisfComplexValidationTests.cs">bounds validation regressions</a>.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/docs/support-matrix.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

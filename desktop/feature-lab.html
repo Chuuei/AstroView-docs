@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Feature lab and reader settings | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Feature lab and reader settings | AstroView documentation ">
+      
+      
+      <link rel="icon" href="../images/astroview.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Chuuei/AstroView/blob/main/docs/desktop/feature-lab.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="feature-lab-and-reader-settings">Feature lab and reader settings</h1>
+
+<p><strong>Feature lab</strong> contains a capability guide, a scientific image generator, a
+color calculator, reader-policy settings and activity history.</p>
+<p><img src="../images/desktop-feature-lab.png" alt="Feature lab listing Core capabilities and their workspace entry points"></p>
+<h2 id="feature-guide">Feature guide</h2>
+<p>Use the search box to find a capability or workspace. Each row lists an area,
+feature, <strong>Try it here</strong> entry point and scope. Read the scope before assuming
+that visible metadata implies a corresponding processing feature. Rows marked
+as planned/unimplemented cannot be enabled by changing a setting.</p>
+<p>The guide is useful when deciding whether to inspect a native file, re-encode it
+or convert it. For example, CFA metadata can be preserved without debayering,
+and an ICC profile can be retained without a complete ICC color-management engine.</p>
+<h2 id="image-generator">Image generator</h2>
+<ol>
+<li>Select <strong>Image generator</strong>.</li>
+<li>Choose a <strong>Sample format</strong> and <strong>Pixel layout</strong>.</li>
+<li>Set <strong>Width</strong>, <strong>Height</strong> and <strong>Channels</strong>.</li>
+<li>Optionally select <strong>Big-endian sample bytes</strong>.</li>
+<li>Click <strong>Create reference image</strong>.</li>
+<li>Select the new document and inspect, validate or export it.</li>
+</ol>
+<p>The generator accepts 1–2,048 pixels per axis and 1–4 channels. Supported sample
+formats are UInt8, UInt16, UInt32, UInt64, Float32, Float64, Complex32 and
+Complex64. Planar and interleaved layouts demonstrate the different linear
+storage orderings used by the sample inspector.</p>
+<p>Real-valued patterns use a horizontal gradient with channel offsets. Complex
+patterns include real and imaginary components. UInt64 repeats these exact
+values: <code>0</code>, <code>1</code>, <code>9007199254740993</code>, <code>18446744073709551615</code>. That makes it useful
+for observing why an exact integer inspector differs from Float64 statistics.</p>
+<p>To try this, generate a small UInt64 image, open <strong>Analyze</strong>, read four stored
+samples starting at zero, then compare a Float64 region view. The large integer
+representations need not match exactly after conversion to double.</p>
+<p>Generated files are demonstrations created by AstroView. They are not independent
+evidence of compatibility with another XISF/FITS producer. Complex and scientific
+cube samples remain inspectable even when a display preview is unavailable.</p>
+<h2 id="colour-calculator">Colour calculator</h2>
+<p>Open <strong>Colour calculator</strong>, enter normalized Red/Green/Blue values and a Midtones
+parameter, then click <strong>Evaluate transforms</strong>. Results show XYZ, Lab, a Lab-to-RGB
+round trip, luminance and the midtones transfer of the red component.</p>
+<p>The calculator uses Core's default D50-adapted sRGB working space. It operates
+on the entered numbers and does not recolor the selected document. To change an
+image's preview, use <strong>Image → DISPLAY</strong> instead. The calculator is not an ICC
+profile editor or a photometric calibration tool.</p>
+<h2 id="reader-policy">Reader policy</h2>
+<p>Settings here apply to <strong>files opened after the changes</strong>. They do not replace
+the policy already captured by a previously opened lazy document. Close and
+reopen a file when you need it read under different settings.</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Initial value</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Maximum XISF block (MiB)</td>
+<td>1024</td>
+<td>Bounds an individual decoded XISF block</td>
+</tr>
+<tr>
+<td>Total decoded FITS bytes (MiB)</td>
+<td>2047</td>
+<td>Bounds retained raw FITS HDU payloads</td>
+</tr>
+<tr>
+<td>Strict FITS validation on open</td>
+<td>Off</td>
+<td>Rejects supported error-level conformance findings instead of retaining them in tolerant mode</td>
+</tr>
+<tr>
+<td>Allow network resources</td>
+<td>Off</td>
+<td>Permits a file to request supported network resources under the reader's policy</td>
+</tr>
+<tr>
+<td>Allow general external filesystem paths</td>
+<td>Off</td>
+<td>Permits supported general external block paths</td>
+</tr>
+<tr>
+<td>Allow header-relative paths outside the header directory</td>
+<td>Off</td>
+<td>Permits relative traversal outside the header's directory</td>
+</tr>
+<tr>
+<td>Network timeout (seconds)</td>
+<td>30</td>
+<td>Bounds supported network resource operations</td>
+</tr>
+</tbody>
+</table>
+<p>Header-directory-relative blocks remain enabled for distributed files. Keep the
+referenced block file beside its header when that is the intended layout; there
+is no need to allow arbitrary external paths just for a normal sibling XISB file.</p>
+<p>Core's other budgets remain at their defaults. Raising one setting does not
+remove every other limit, make decoding incremental, or ensure enough memory.
+Permit external access only when it is actually required by a file/location you
+intend to read. The app stays local for ordinary files under its default policy.</p>
+<h2 id="activity">Activity</h2>
+<p><strong>Activity</strong> records recent operations and results for the current workspace.
+Use it to confirm which files opened, which output path was saved and which
+operation failed or was canceled. It complements the status bar and error banner.
+It is not a persistent project/session file or an automatic backup of your edits.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/docs/desktop/feature-lab.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

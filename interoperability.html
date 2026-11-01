@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Independent interoperability evidence | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Independent interoperability evidence | AstroView documentation ">
+      
+      
+      <link rel="icon" href="images/astroview.ico">
+      <link rel="stylesheet" href="public/docfx.min.css">
+      <link rel="stylesheet" href="public/main.css">
+      <meta name="docfx:navrel" content="toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Chuuei/AstroView/blob/main/docs/interoperability.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="index.html">
+            <img id="logo" class="svg" src="images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="independent-interoperability-evidence">Independent interoperability evidence</h1>
+
+<p>Phase 1 adds 60 small independently serialized fixtures and reverse-direction
+checks using development-only reference tools. The library has no Python,
+Astropy, or Python XISF runtime dependency.</p>
+<h2 id="committed-corpus">Committed corpus</h2>
+<p><code>tests/AstroView.Core.Tests/Fixtures/Interoperability/manifest.json</code> records
+producer versions, each file's SHA-256, expected geometry, exact sample values,
+metadata and independent Astropy WCS reference points. Fixture pixel values and
+metadata in the original 14 fixtures are original synthetic data. The additional
+46 external fixtures retain their source revisions, hashes and MIT notices in
+the <code>libxisf/</code> and <code>external/</code> subdirectories. No telescope photographs are
+redistributed as part of the local corpus; the committed external samples have
+their own MIT repository provenance.</p>
+<table>
+<thead>
+<tr>
+<th>Producer</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Astropy 8.0.2</td>
+<td>UInt16 offsets, exact UInt64 boundaries, Float32 cube, multiple HDUs, binary table Int64/Float32/logical/vector columns, checksums and plain TAN coordinates</td>
+</tr>
+<tr>
+<td>Python xisf 0.9.7</td>
+<td>UInt8/16/32 and Float32/64, planar mono/RGB, uncompressed/zlib/LZ4/LZ4HC/Zstandard with shuffle, UTF-8/string/vector properties and quoted FITS metadata</td>
+</tr>
+<tr>
+<td>libXISF via xisf-rs corpus generator</td>
+<td>40 independent codec/type files, monochrome and RGB, exact producer-defined byte patterns and typed channel access including IEEE floating-point bits</td>
+</tr>
+<tr>
+<td>PixInsight files from MIT repositories</td>
+<td>Six compatibility/negative cases: attached/embedded storage, embedded zlib, two-channel pixels, shuffled zlib/SHA-256, and missing thumbnail attachments</td>
+</tr>
+</tbody>
+</table>
+<p><code>InteroperabilityTests</code> verifies all file hashes and independently specified
+pixels/metadata without Python or network access. The independent FITS table
+exposed and now protects the omitted-repeat-count default in TFORM. Reverse
+checksum verification also motivated conventional standard-card comment alignment.</p>
+<p><code>LibXisfInteroperabilityTests</code> checks all 40 libXISF files against the upstream
+generator's deterministic byte pattern, not values derived with AstroView.
+<code>LocalXisfExampleTests.SmallExternalSamplesMatchIndependentPixelsAndKnownStorageDefects</code>
+runs six small external cases offline on all three CI platforms. Their independent
+pixel expectations come from Python xisf for attached images and a separate Python
+standard-library base64/zlib oracle for embedded images. The manifest records which
+oracle was used. The two truncated thumbnail cases deliberately require complete
+saves to fail while leaving their primary images accessible.</p>
+<h2 id="reverse-direction-checks">Reverse-direction checks</h2>
+<p><code>tools/AstroView.Interop</code> writes one checksummed FITS image and five XISF images,
+one per codec including uncompressed. Astropy and Python xisf read these exports
+and compare known pixels and metadata. Astropy additionally verifies FITS checksums.
+CI performs these checks separately from the three-platform offline .NET suite.
+It also checks all 40 original libXISF files and AstroView's preserving rewrites
+against the independent producer pattern using Python xisf.</p>
+<pre><code class="lang-sh">python -m pip install setuptools==84.2.1 wheel==0.48.0
+python -m pip install --no-build-isolation -r tools/interop/requirements.txt
+dotnet run --project tools/AstroView.Interop -c Release -- artifacts/interop/exports
+python tools/interop/fixtures.py verify
+python tools/interop/xisf_samples.py verify-fixtures
+python tools/interop/xisf_samples.py verify-fixtures --directory artifacts/interop/exports/libxisf
+</code></pre>
+<p>Use an isolated virtual environment for the Python tools. To intentionally
+regenerate the committed corpus, run <code>python tools/interop/fixtures.py generate</code>
+and review both binaries and manifest changes. Producers write creation times and
+checksum comments, so regeneration can change byte hashes without changing pixels.
+Expected values come from generator input, not from decoding with AstroView.</p>
+<p>The pinned tools retain their own licenses: Astropy is BSD-3-Clause, Python xisf
+is GPL-3.0, NumPy is BSD-3-Clause, and their codec dependencies retain their own
+notices. No source from those tools is copied into AstroView or its NuGet package.
+Running a separate development tool does not make it a library dependency. The
+synthetic fixture data have their own redistribution notice alongside the manifest.</p>
+<h2 id="local-photographs-and-real-producer-files">Local photographs and real producer files</h2>
+<p><code>Fixtures/LocalXisf/manifest.json</code> records provenance, original file hashes and
+independent pixel hashes for <strong>73 local XISF files containing 79 primary images</strong>
+(2,739,639,831 original file bytes). The images remain outside Git at
+<code>C:\Code\AstroExamples\XISF</code>. Python xisf decoded 75 images; four embedded images
+were checked separately with the standard-library oracle. All 79 match AstroView's
+decoded bytes. The existing 11 local FITS files remain separate.</p>
+<p>The opt-in local XISF test verifies every original hash, geometry, sample type,
+layout and independently decoded pixel hash. It then saves/reloads the 71 complete
+files, compares the independent pixel expectations again and checks preservation
+of the original XML metadata, allowing changed attachment offsets and added block
+digests. Twelve files contain legacy <code>PCL:AstrometricSolution:*</code> metadata, which
+survives that save path. These tests prove preservation, not coordinate evaluation.
+All attached serialized blocks are also hashed directly from the original and
+rewritten files, including thumbnails and binary property matrices/vectors.
+The two incomplete samples must reject thumbnail access and complete saving.</p>
+<p>Semantic validation diagnostics remain in the optional local report. Existing
+files trigger findings for missing explicit UTF-8 declarations, legacy creation
+time typing and ICC flags. Pixel compatibility does not mean strict conformance.
+See <a href="testing.html">testing</a> for commands and report paths. Regenerate independent
+expectations explicitly, then review the manifest diff:</p>
+<pre><code class="lang-sh">python tools/interop/xisf_samples.py record-local --corpus C:/Code/AstroExamples/XISF
+python tools/interop/xisf_samples.py import-fixtures --corpus C:/Code/AstroExamples/XISF
+python tools/interop/xisf_samples.py import-embedded --corpus C:/Code/AstroExamples/XISF
+</code></pre>
+<p>The local sample provenance is documentation of public availability and stated
+usage terms, not permission to redistribute the photographs. Only small fixtures
+distributed by MIT repositories are committed, with their notices.</p>
+<h2 id="coverage-gaps--av-002-remains-partial">Coverage gaps — AV-002 remains partial</h2>
+<p>The new corpus is independent evidence for the combinations above, not a claim of
+universal producer compatibility or complete XISF conformance. In particular:</p>
+<ul>
+<li>No independently produced real native XISF astrometric/distortion solution with
+confirmed redistribution permission is available in the current corpus.</li>
+<li>Independently produced distributed XISF, XISF tables, complex/UInt64 pixels,
+big-endian and interleaved files are not yet represented. Python xisf's writer
+does not cover all of these capabilities. Existing generated .NET tests remain
+useful regressions but do not close the independent-producer evidence gap.</li>
+<li>Python xisf 0.9.7 fails on embedded image data (<code>KeyError: value</code>); embedded
+images are therefore excluded from its reverse-reader checks. AstroView's
+embedded-image tests are separate; the reference tool is not patched to pass.</li>
+<li>Native astrometry must not be confused with the legacy <code>PCL:</code> properties in
+twelve local files. No local file has a native <code>AstrometricSolution:*</code> solution.</li>
+</ul>
+<p>AV-001 and AV-003 can be completed independently. AV-002 stays unchecked until the
+remaining independently produced fixtures, provenance/permissions, and reference
+expectations are collected. Add files and tests incrementally without relabeling
+AstroView-generated fixtures as independent producer data.</p>
+<p>Reference implementations:
+<a href="https://docs.astropy.org/en/stable/io/fits/">Astropy FITS</a>,
+<a href="https://docs.astropy.org/en/stable/wcs/">Astropy WCS</a>,
+<a href="https://pypi.org/project/xisf/">Python xisf</a>.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/docs/interoperability.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Validation, checksums and signatures | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Validation, checksums and signatures | AstroView documentation ">
+      
+      
+      <link rel="icon" href="../images/astroview.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Chuuei/AstroView/blob/main/docs/core/validation-signatures.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="validation-checksums-and-signatures">Validation, checksums and signatures</h1>
+
+<h2 id="choose-the-question-you-need-to-answer">Choose the question you need to answer</h2>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Mechanism</th>
+<th>What it does not establish</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Can the header be parsed under my limits?</td>
+<td>Reader and reader options</td>
+<td>That every lazy block exists or decodes</td>
+</tr>
+<tr>
+<td>Is the supported structure semantically consistent?</td>
+<td>XISF/FITS diagnostics</td>
+<td>Complete implementation of every format convention</td>
+</tr>
+<tr>
+<td>Does XML satisfy a particular schema?</td>
+<td><code>XisfDocument.Validate(XmlSchemaSet)</code></td>
+<td>Valid pixels, cryptographic trust or a universal bundled schema</td>
+</tr>
+<tr>
+<td>Do stored blocks match their declared digests?</td>
+<td>Decode the XISF blocks</td>
+<td>Who produced the file</td>
+</tr>
+<tr>
+<td>Do FITS checksum cards verify?</td>
+<td>Nullable HDU checksum results</td>
+<td>Presence of checksum cards when the result is null</td>
+</tr>
+<tr>
+<td>Is signed XML intact for its embedded key?</td>
+<td><code>XisfReader.VerifyXmlSignature</code></td>
+<td>An authenticated signer identity</td>
+</tr>
+</tbody>
+</table>
+<h2 id="validate-a-loaded-document">Validate a loaded document</h2>
+<!-- snippet: reader-limits -->
+<pre><code class="lang-csharp">public static void ReaderLimits(string directory)
+{
+    var options = new XisfReaderOptions
+    {
+        MaximumDataBlockSize = 256 * 1024 * 1024,
+        MaximumDecompressionRatio = 1000,
+        AllowNetworkResources = false,
+        AllowExternalFilePaths = false,
+        AllowHeaderRelativeDataBlocks = true,
+        AllowHeaderDirectoryTraversal = false
+    };
+    var document = XisfReader.Load(Path.Combine(directory, &quot;image.xisf&quot;), options);
+    var diagnostics = document.Validate();
+    foreach (var diagnostic in diagnostics) Console.WriteLine(diagnostic);
+    _ = document.Images[0].ReadRawData(); // Forces the primary block to decode and check its digest.
+}
+</code></pre>
+<p><code>Validate()</code> returns diagnostics with severity, code, message and location.
+Loading and validating a header do not necessarily access all payloads. To check
+an entire XISF document, decode every primary image and available thumbnail and
+access any relevant ancillary blocks. Handle an unavailable optional object as
+a distinct result rather than discarding its preserved XML.</p>
+<p>For FITS, tolerant mode retains diagnostics; strict mode rejects error-level
+findings. Inspect both document diagnostics and <code>ChecksumValid</code> /
+<code>DataChecksumValid</code> on each HDU. Null means a corresponding checksum was absent,
+not that verification succeeded. Writers can generate checksums explicitly.</p>
+<h2 id="supply-an-xsd-deliberately">Supply an XSD deliberately</h2>
+<p>The library accepts a caller-created <code>XmlSchemaSet</code>. Select the XISF schema and
+revision appropriate to your interchange contract. When loading arbitrary schema
+files, disable DTD processing and external XML resolution unless your application
+deliberately supplies a trusted resolver. Schema validation and semantic
+validation complement each other; neither replaces payload decoding.</p>
+<p>Do not download schemas implicitly while opening an image in an offline tool.
+Ship or configure the trusted schema resources you require. The desktop XSD
+workflow uses a local caller-selected file and disables network/DTD resolution.</p>
+<h2 id="sign-and-verify-a-copy">Sign and verify a copy</h2>
+<p>Use <code>using System.Security.Cryptography;</code> for this recipe.</p>
+<!-- snippet: signatures -->
+<pre><code class="lang-csharp">public static void Signatures(string directory)
+{
+    var document = XisfReader.Load(Path.Combine(directory, &quot;image.xisf&quot;));
+    using RSA key = RSA.Create(3072);
+    string signedPath = Path.Combine(directory, &quot;signed.xisf&quot;);
+    XisfWriter.WriteSigned(signedPath, document, key);
+    var signed = XisfReader.Load(signedPath);
+    if (!XisfReader.VerifyXmlSignature(signed))
+        throw new InvalidOperationException(&quot;XML signature verification failed.&quot;);
+    // Decoding checks declared block digests too; signature verification alone does not decode all pixels.
+    _ = signed.Images[0].GetSamples&lt;ushort&gt;();
+}
+</code></pre>
+<p>The example owns a temporary RSA key and disposes it when finished. A production
+application needs its own key storage, identity and trust policy. Verification
+against a key embedded in the document demonstrates internal integrity; anyone
+can generate a different key and sign a different document.</p>
+<p>Signing requires appropriate digests for attached/external data blocks. Do not
+strip block checksums before signing. Verification of signed XML is separate
+from reading all signed image data, so force the blocks to decode when your
+acceptance policy requires both checks.</p>
+<p>Changing signed metadata, image content or relevant serialization requires a
+fresh signature. Editable re-encoding drops the original signature; preserve
+the private key separately if you intend to sign new outputs with the same
+identity. Merely copying the old Signature element is not re-signing.</p>
+<h2 id="handle-errors-by-category">Handle errors by category</h2>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Typical exception/result</th>
+<th>Recommended application behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Malformed or inconsistent format</td>
+<td><code>FitsFormatException</code>, <code>XisfFormatException</code></td>
+<td>Show the operation, file and diagnostic context</td>
+</tr>
+<tr>
+<td>Declared digest mismatch</td>
+<td><code>XisfChecksumException</code> or FITS invalid checksum result</td>
+<td>Distinguish corruption from a missing digest</td>
+</tr>
+<tr>
+<td>Unsupported capability/type</td>
+<td><code>NotSupportedException</code></td>
+<td>Explain which operation is unavailable; retain native content if possible</td>
+</tr>
+<tr>
+<td>Rejected conversion loss</td>
+<td><code>ConversionLossException</code></td>
+<td>Present its findings and request an explicit loss decision</td>
+</tr>
+<tr>
+<td>Reader policy/budget failure</td>
+<td>Format, IO or policy exception with explanation</td>
+<td>Review limits/policy; do not silently retry with unlimited access</td>
+</tr>
+<tr>
+<td>Cancellation</td>
+<td><code>OperationCanceledException</code></td>
+<td>Treat as cancellation and release application-owned partial state</td>
+</tr>
+</tbody>
+</table>
+<p>Individual API pages describe their declared exceptions; this table is an
+integration guide rather than an exhaustive exception list. Logging a failed
+operation should not expose credential-bearing external resource URLs.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/docs/core/validation-signatures.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

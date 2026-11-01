@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Desktop development guide | AstroView documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Desktop development guide | AstroView documentation ">
+      
+      
+      <link rel="icon" href="images/astroview.ico">
+      <link rel="stylesheet" href="public/docfx.min.css">
+      <link rel="stylesheet" href="public/main.css">
+      <meta name="docfx:navrel" content="toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Chuuei/AstroView/blob/main/docs/desktop.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="index.html">
+            <img id="logo" class="svg" src="images/astroview.svg" alt="AstroView">
+            AstroView
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="desktop-development-guide">Desktop development guide</h1>
+
+<p>For task-oriented application instructions, read the
+<a href="desktop/index.html">desktop user manual</a>. This page covers development and the
+connection between workspaces and Core features.</p>
+<p>AstroView is an Avalonia 12.1 desktop application targeting .NET 10. Its scientific
+operations run through <code>AstroView.Core</code>; the library has no Avalonia dependency.
+The app starts with an original synthetic reference scene, so it works without
+downloads, internet access or the large local photograph corpus.</p>
+<pre><code class="lang-sh">dotnet restore AstroView.sln --locked-mode
+dotnet run --project src/AstroView.Desktop -c Release
+</code></pre>
+<p>Open FITS, XISF or distributed XISH headers with <strong>Open images</strong>, drag files onto
+the window, or pass paths after <code>--</code> on the command line. Detection reads the
+content rather than trusting extensions. The left sidebar selects documents and
+their image/HDU entries. Close documents to release retained pixels and previews.</p>
+<h2 id="workspaces">Workspaces</h2>
+<table>
+<thead>
+<tr>
+<th>Workspace</th>
+<th>What can be exercised</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Image</td>
+<td>Pan/zoom, fit and 1:1, orientation and alpha through Core, linear/adaptive/stored display functions, linked channels, target background, shadow clipping, observation metadata, explicit FITS RGB-axis interpretation, PNG display export.</td>
+</tr>
+<tr>
+<td>Inspect</td>
+<td>Search scoped FITS cards, creation/document/image properties and ancillary metadata; edit scalar metadata in memory; view formatted headers/XML; edit full XISF XML for advanced properties and extensions.</td>
+</tr>
+<tr>
+<td>Analyze</td>
+<td>Configurable sampled statistics (finite counts, extrema, mean, deviation, median, MAD), optional normalization, full-channel histograms, exact stored samples including UInt64/complex, and rectangular Float64 region inspection.</td>
+</tr>
+<tr>
+<td>Tables</td>
+<td>Native FITS ASCII/binary and XISF tables, exact integer text, array summaries, 200-row/16-column pages; create/replace XISF tables with typed scalar/vector/matrix JSON.</td>
+</tr>
+<tr>
+<td>Coordinates</td>
+<td>Supported FITS WCS and native XISF solutions, forward/inverse transforms, seven-projection synthetic calculator. All sky angles are degrees; displayed image coordinates use zero-based pixel centres.</td>
+</tr>
+<tr>
+<td>Integrity</td>
+<td>Semantic diagnostics, primary/thumbnail decoding with declared checksums, FITS CHECKSUM/DATASUM results, caller-supplied XSD, detached XML signature verification and signed-copy demonstration.</td>
+</tr>
+<tr>
+<td>Export</td>
+<td>Native document preservation, XISF re-encoding, FITS conversion, distributed XISF, fidelity reports and explicit loss opt-in; codecs, digests, shuffle, subblocks, alignment, text storage, hex/Base64 and string blocks. Isolate an image into a separate document when only that image is wanted.</td>
+</tr>
+<tr>
+<td>Feature lab</td>
+<td>Searchable capability guide, generated scientific images in all eight sample formats, both layouts and byte orders, RGB/XYZ/Lab/luminance/midtones calculator, reader budgets/policies and activity history.</td>
+</tr>
+</tbody>
+</table>
+<p>The reference scene contains synthetic Float32 RGB emission data, a UInt16
+gradient, a scientific cube, a complex wave, a native linear astrometric solution,
+and a typed reference-star catalog. Generated data are demonstration data, not
+independent interoperability evidence and do not close AV-002's remaining gaps.</p>
+<p>The feature guide records the UI entry point and scope for each capability. Core
+features still on the roadmap are labelled unavailable. Complex and scientific
+cube samples remain inspectable; Core currently has no general magnitude/phase
+or cube-plane bitmap renderer. FITS table editing and broader WCS evaluation
+remain Core roadmap work. CFA and ICC metadata are inspectable/preservable; this
+does not imply debayering or a full ICC colour-management engine.</p>
+<h2 id="scientific-values-editing-and-output">Scientific values, editing and output</h2>
+<p>Display stretching changes previews only. Histograms count all samples in one
+channel; statistics are estimates controlled by the sample limit. Their limits
+do not make the underlying full-image decoding a streaming operation. Large
+documents can retain substantial memory. Region access currently decodes full
+blocks. Integer statistics/Float64 region views can round very large integers;
+the stored-sample inspector prints UInt64 directly with exact integer text.</p>
+<p>Metadata and table edits apply to the in-memory document. Export a copy to persist
+them; active source filenames are guarded against replacement. Native copies use
+Core's document-preserving writer. Re-encoding materializes editable content and
+does not retain the original signature. Isolating an image copies its image
+metadata; document-level content stays in the original document. Conversion losses
+are rejected unless the user explicitly allows them. Inspect the fidelity report
+before accepting omissions; unrepresentable pixel types fail explicitly.</p>
+<p>Distributed output requires a new header name and creates a unique sibling block
+file. It is a two-file operation, not an atomic transaction; the app removes its
+new partial outputs on failure. The signed-copy demonstration generates an
+ephemeral RSA key, signs a copy and discards the private key. Embedded-key
+verification demonstrates integrity and does not authenticate an identity.</p>
+<p>The table JSON editor's example shows its schema. It supports scalar String,
+Boolean, TimePoint and the ordinary signed/unsigned integer and real types, plus
+integer/real vectors and rectangular matrices. It bounds interactive input to
+1,000 rows, 32 fields and 4,096 elements per array cell. Core serializes the cells;
+the editor inserts embedded table XML without copying the original image blocks.
+Other types remain accessible through full XISF XML or the native Core API.</p>
+<p>Network resources, general external paths and directory traversal default off.
+Header-relative sibling blocks default on. Reader policy changes apply to newly
+opened documents. XSD loading disables DTD and network resolution. Long work runs
+off the UI thread; cancellation is cooperative and some codec/CPU operations finish
+their current block before returning. Publication operations disable cancellation
+in the UI while committing output.</p>
+<h2 id="keyboard-and-mouse">Keyboard and mouse</h2>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Shortcut</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Open files</td>
+<td>Ctrl+O; Command+O on macOS</td>
+</tr>
+<tr>
+<td>Export document</td>
+<td>Ctrl+E</td>
+</tr>
+<tr>
+<td>Fit / 1:1</td>
+<td>Ctrl+0 / Ctrl+1</td>
+</tr>
+<tr>
+<td>Zoom / pan / fit</td>
+<td>Mouse wheel / left drag / double-click</td>
+</tr>
+<tr>
+<td>Select image pixel</td>
+<td>Click the image; coordinates adapt the stored orientation</td>
+</tr>
+<tr>
+<td>Cancel cooperative operation</td>
+<td>Escape or Cancel</td>
+</tr>
+</tbody>
+</table>
+<h2 id="development-and-verification">Development and verification</h2>
+<pre><code class="lang-sh">dotnet build AstroView.sln -c Release --no-restore
+dotnet test AstroView.sln -c Release --no-build
+dotnet publish src/AstroView.Desktop -c Release --no-build -o artifacts/desktop-app
+</code></pre>
+<p>The desktop workflow tests use Avalonia's headless platform with real Skia drawing
+and Inter fonts. They exercise native file loading, UI state, typed generation,
+metadata/table edits, exact samples, coordinates, validation, conversion loss
+rejection, re-encoding, distributed files, signatures and PNG output. Every
+workspace is rendered to <code>tests/AstroView.Desktop.Tests/bin/Release/net10.0/ui-artifacts</code>.
+Set <code>ASTROVIEW_UI_ARTIFACTS</code> to override that path. The headless dispatcher uses an
+explicit async result overload so tests await their complete workflow.</p>
+<p>CI runs both library and desktop tests on Windows, Linux and macOS. It uploads
+test results, the synthetic workspace screenshots and framework-dependent desktop
+publish directories. These builds require the .NET 10 runtime and the platform's
+ordinary Avalonia native prerequisites. Run <code>dotnet AstroView.dll</code> from a downloaded
+publish directory; no installer, signing/notarization or file association is supplied.</p>
+<p>Tagged <a href="releases.html">GitHub releases</a> provide a separate desktop ZIP with
+self-contained single-file executables. These include .NET and can run by
+themselves. Each is checked in isolation with <code>--self-test</code> before publication.</p>
+<p>The opt-in local desktop test renders the user's Bubble FITS and Carina Ha XISF
+files from <code>C:\Code\AstroExamples</code>, checks original hashes and keeps screenshots
+local under <code>local-ui-artifacts</code> in the test output. These photographs and captures
+are excluded from Git and CI uploads:</p>
+<pre><code class="lang-powershell">dotnet test tests/AstroView.Desktop.Tests -c Release `
+  --environment ASTROVIEW_DESKTOP_EXAMPLES=C:/Code/AstroExamples `
+  --filter FullyQualifiedName~LocalDesktopTests
+</code></pre>
+<p><code>Models</code> adapt native documents for display; <code>Services</code> handle file dialogs,
+loading, table editing and export; <code>ViewModels</code> group operations by workspace;
+<code>Views</code> contain XAML; <code>Controls</code> draw the image viewport and histogram. Add a Core
+feature to the feature guide, its relevant workspace, a workflow test and this
+coverage table as it becomes available. Keep format/astronomy algorithms in Core.</p>
+<p>Avalonia's build-time telemetry can be disabled with
+<code>AVALONIA_TELEMETRY_OPTOUT=1</code> (already set in CI). Desktop dependency notices ship
+beside the app; they do not add GUI dependencies or GUI binaries to the Core NuGet.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chuuei/AstroView/blob/main/docs/desktop.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          AstroView · Scientific images, clearly understood.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
